@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { Button, Grid, Typography } from "@mui/material";
-import signupimg from "../Images/signup.png";
+import signupimg from "../Images/signupimg1.avif";
 import Header from "../layout/header";
 import { useNavigate } from "react-router-dom";
 import { postApihandler } from "../Apihandler";
 import swal from "sweetalert";
-
+import GoogleIcon from "@mui/icons-material/Google";
+import FacebookIcon from "@mui/icons-material/Facebook";
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -19,12 +20,17 @@ export default function Login() {
     };
     console.log("login data is --->", data);
     const res = await postApihandler("/userLogin", data);
-    console.log("login api response is ---->", res)
+    // console.log("login api response is ---->", res)
+    localStorage.setItem("userData", JSON.stringify(res.data));
+
     if (res.status === 200) {
       swal(" Login Successfully");
-      navigate("/");
+      // navigate("/home");
     }
-    console.log("login api response is ------->", res);
+    // console.log("login api response is ------->", res);
+    else {
+      swal("Error", res.message || "An unknown error occurred.", "error");
+    }
   };
   return (
     <div>
@@ -103,7 +109,7 @@ export default function Login() {
                   type="submit"
                   variant="contained"
                   sx={{
-                    backgroundColor: "#348ef6",
+                    backgroundColor: "#30a830",
                     width: "240px",
                     borderRadius: "20px",
                     fontSize: "16px",
@@ -122,11 +128,41 @@ export default function Login() {
                 }}
               >
                 Don’t have an account?{" "}
-                <a href="/" style={{ textDecoration: "none" }}>
+                <a
+                  href="/"
+                  style={{
+                    textDecoration: "none",
+                    color: "#30a830",
+                    fontWeight: "600",
+                  }}
+                >
                   Sign Up
                 </a>
               </Typography>
             </form>
+            <div>
+              <Button
+                variant="contained"
+                className="mt-3"
+                sx={{ padding: "5px 23px", backgroundColor: "#30a830" }}
+              >
+                <GoogleIcon
+                  sx={{
+                    color: "white",
+                    marginRight: "5px",
+                  }}
+                />{" "}
+                Sign in with Google
+              </Button>
+              <Button
+                variant="contained"
+                className="mt-3"
+                sx={{ backgroundColor: "#30a830" }}
+              >
+                <FacebookIcon sx={{ color: "white", marginRight: "5px" }} />{" "}
+                Sign in with Facebook
+              </Button>
+            </div>
           </Grid>
         </Grid>
       </div>

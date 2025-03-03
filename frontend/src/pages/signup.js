@@ -1,10 +1,14 @@
 import React, { useState } from "react";
 import { Button, Card, Container, Grid, Typography } from "@mui/material";
-import signupimg from "../Images/signup.png";
+// import signupimg from "../Images/signup.png";
 import Header from "../layout/header";
 import swal from "sweetalert";
 import { useNavigate } from "react-router-dom";
 import { postApihandler } from "../Apihandler";
+import GoogleIcon from "@mui/icons-material/Google";
+import FacebookIcon from "@mui/icons-material/Facebook";
+// import signupimg from "../Images/signupimg.avif";
+import signupimg from "../Images/signupimg1.avif";
 const countryCodeList = [
   {
     code: "AF",
@@ -1241,7 +1245,7 @@ export default function Signup() {
       user_Name: name,
       user_Email: email,
       password: password,
-      confirmPassword: confirmpassword,
+      // confirmPassword: confirmpassword,
       mobile_no: phonenumber,
       country_code: country_code,
     };
@@ -1251,6 +1255,8 @@ export default function Signup() {
     if (res.status === 200) {
       swal("Successfully Signup");
       navigate("/login");
+    } else {
+      swal("Error", res.message || "An unknown error occurred.", "error");
     }
   };
   return (
@@ -1260,7 +1266,11 @@ export default function Signup() {
         <Grid container spacing={2}>
           <Grid item xs={12} md={8}>
             <div className="signupimg">
-              <img src={signupimg} alt="Mechanic" style={{ width: "100%" }} />
+              <img
+                src={signupimg}
+                alt="Mechanic"
+                style={{ width: "100%", objectFit: "cover" }}
+              />
             </div>
           </Grid>
           <Grid item xs={12} md={4}>
@@ -1397,7 +1407,7 @@ export default function Signup() {
                     onChange={(e) => setPassword(e.target.value)}
                   />
                 </div>
-                <div>
+                {/* <div>
                   <input
                     type="password"
                     label=""
@@ -1416,7 +1426,7 @@ export default function Signup() {
                     }}
                     onChange={(e) => setConfirmPassword(e.target.value)}
                   />
-                </div>
+                </div> */}
               </div>
 
               <div style={{}}>
@@ -1424,7 +1434,7 @@ export default function Signup() {
                   type="submit"
                   variant="contained"
                   sx={{
-                    backgroundColor: "#348ef6",
+                    backgroundColor: "#30a830",
                     width: "240px",
                     borderRadius: "20px",
                     fontSize: "16px",
@@ -1437,17 +1447,47 @@ export default function Signup() {
                 variant="body2"
                 textAlign="start"
                 sx={{
-                  fontSize: "14px",
+                  fontSize: "16px",
                   fontWeight: "500",
                   marginTop: "20px",
                 }}
               >
                 Already have an account?{" "}
-                <a href="/login" style={{ textDecoration: "none" }}>
+                <a
+                  href="/login"
+                  style={{
+                    textDecoration: "none",
+                    color: "#30a830",
+                    fontWeight: "600",
+                  }}
+                >
                   Log in
                 </a>
               </Typography>
             </form>
+            <div>
+              <Button
+                variant="contained"
+                className="mt-3"
+                sx={{ padding: "5px 23px", backgroundColor: "#30a830" }}
+              >
+                <GoogleIcon
+                  sx={{
+                    color: "white",
+                    marginRight: "5px",
+                  }}
+                />{" "}
+                Sign in with Google
+              </Button>
+              <Button
+                variant="contained"
+                className="mt-3"
+                sx={{ backgroundColor: "#30a830" }}
+              >
+                <FacebookIcon sx={{ color: "white", marginRight: "5px" }} />{" "}
+                Sign in with Facebook
+              </Button>
+            </div>
           </Grid>
         </Grid>
       </div>
