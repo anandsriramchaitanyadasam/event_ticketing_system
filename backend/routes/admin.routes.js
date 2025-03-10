@@ -1,14 +1,15 @@
 module.exports = (app)=>{
     const admin  = require('../controllers/admin.controller')
-    const plants = require('../controllers/plant.controller')
-    // const Plant = require('../models/plant.model');
+    
+
     app.post('/api/createAdmin', admin.createAdmin);
 
     app.post('/api/adminLogin', admin.adminLogin);
 
 
-    //  get all user 
-    app.get('/api/getAllUsers', admin.getAllUsers);
+    app.get('/api/admin/getAllUsers', admin.getAllUsers);
+
+    app.get('/api/admin/getAllVendors', admin.getAllVendors);
 
     // Edit user route
     app.put('/api/editUser/:userId', admin.editUser);
@@ -16,22 +17,9 @@ module.exports = (app)=>{
     // Delete user route
     app.delete('/api/deleteUser/:userId', admin.deleteUser);
 
+    // app.get('/api/admin/getUserIssues/:userId', issue.getUserIssues);
 
-    // add plants
-    app.post('/api/addPlant',plants.upload.fields([{ name: "photos", maxCount: 50 }]),plants.addPlant);
+    // app.get('/api/admin/getAllIssues', issue.getAllIssues);
 
-    // get plants
-    app.get('/api/getPlant',plants.getPlants);
-
-    // update plants
-    app.put('/api/updatePlant/:plantId',plants.upload.fields([{ name: "photos", maxCount: 50 }]), plants.updatePlants);
-
-    // delete plants
-    app.delete('/api/deletePlant/:plantId',plants.deletePlant);
-
-    // add tag 
-    app.put('/api/addTag/:plantId',plants.addTag);
-
-    app.get('/api/getCount',admin.getCounts)
 
 }

@@ -5,7 +5,7 @@ var ObjectId = Schema.ObjectId;
 const adminSchema = mongoose.Schema({
     admin_Name: {
         type: String,
-        required: [true, "please enter admin full name"],
+        required: [true, "please enter admin name"],
     },
     admin_Email: {
         type: String,

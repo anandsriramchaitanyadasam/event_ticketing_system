@@ -1,3 +1,3 @@
 module.exports = {
-    secret: "event-management-secure-secret-key"
+    secret: "online-ticket-system-secret-key"
 };

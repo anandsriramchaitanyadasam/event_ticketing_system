@@ -3,14 +3,14 @@ const Schema = mongoose.Schema;
 const ObjectId = Schema.ObjectId;
 
 
-const userSchema = new Schema({
-    user_Name: {
+const vendorSchema = new Schema({
+    vendor_Name: {
         type: String,
-        required: [true, "please enter user name"],
+        required: [true, "please enter vendor full name"],
     },
-    user_Email: {
+    vendor_Email: {
         type: String,
-        required: [true, "please enter email"],
+        required: [true, "please enter vendor email"],
     },
     country_code:{
         type: String,
@@ -18,11 +18,11 @@ const userSchema = new Schema({
     },
     mobile_no:{
         type: String,
-        required: [true, "please enter mobile_no"],
+        required: [true, "please enter vendor mobile_no"],
     },
     password: {
         type: String,
-        required: [true, "please enter password"]
+        required: [true, "please enter vendor password"]
     },
 
     // fcm_token:{
@@ -42,5 +42,5 @@ const userSchema = new Schema({
 }, {
     timestamps: true
 })
-module.exports = mongoose.model("User", userSchema)
+module.exports = mongoose.model("Vendor", vendorSchema)
 

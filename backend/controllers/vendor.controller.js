@@ -3,19 +3,17 @@ const bcrypt = require("bcryptjs");
 const config = require("../config/auth.config");
 const { Mongoose } = require('mongoose');
 const ObjectId = require('mongodb').ObjectID;
-const user = require('../models/user.model')
-// const mechanic = require('../models/mechanic.model')
-// const Service = require("../models/service.model");
+const Vendor = require('../models/vendor.model')
 
 
-function generateToken(userid) {
-    return jwt.sign({ id: userid }, config.secret, { expiresIn: 15552000 });
+function generateToken(vendorid) {
+    return jwt.sign({ id: vendorid }, config.secret, { expiresIn: 15552000 });
 }
 
 
-exports.userSignUp = async (req, res) => {
-    let user_Email = req.body.user_Email ? req.body.user_Email : "";
-    let user_Name = req.body.user_Name ? req.body.user_Name : "";
+exports.vendorSignUp = async (req, res) => {
+    let vendor_Email = req.body.vendor_Email ? req.body.vendor_Email : "";
+    let vendor_Name = req.body.vendor_Name ? req.body.vendor_Name : "";
     let country_code = req.body.country_code ? req.body.country_code : "";
   
     let mobile_no = req.body.mobile_no ? req.body.mobile_no : "";
@@ -27,17 +25,17 @@ exports.userSignUp = async (req, res) => {
     var passformat = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s)/;
   
     try {
-      if (user_Email === null || user_Email === "") {
+      if (vendor_Email === null || vendor_Email === "") {
         return res
           .status(400)
           .send({ message: "email is required", status: 200 });
       } else {
-        if (!user_Email.match(mailformat)) {
+        if (!vendor_Email.match(mailformat)) {
           return res
             .status(400)
             .send({ message: "email is not in correct form", status: 400 });
         } else {
-          if (user_Name === "" || user_Name === null) {
+          if (vendor_Name === "" || vendor_Name === null) {
             return res
               .status(400)
               .send({ message: "Full name is required", status: 200 });
@@ -122,23 +120,23 @@ exports.userSignUp = async (req, res) => {
         }
       
   
-      let checkEmail = await user.find({ user_Email: user_Email }).lean();
+      let checkEmail = await Vendor.find({ vendor_Email: vendor_Email }).lean();
       if (checkEmail.length > 0) {
         return res
           .status(409)
           .send({ message: "Email already exists", status: 409 });
       }
   
-      let checkMobileNo = await user.find({ mobile_no: mobile_no }).lean();
+      let checkMobileNo = await Vendor.find({ mobile_no: mobile_no }).lean();
       if (checkMobileNo.length > 0) {
         return res
           .status(409)
           .send({ message: "Mobile number already exists", status: 409 });
       }
   
-      let data = await user.create({
-        user_Email: user_Email,
-        user_Name: user_Name,
+      let data = await Vendor.create({
+        vendor_Email: vendor_Email,
+        vendor_Name: vendor_Name,
         
         country_code: country_code,
         mobile_no: mobile_no,
@@ -158,29 +156,29 @@ exports.userSignUp = async (req, res) => {
 
 
 
-exports.userLogin = async (req, res) => {
+exports.vendorLogin = async (req, res) => {
     try {
-        const user_Email = (req.body.user_Email || '').toLowerCase();
+        const vendor_Email = (req.body.vendor_Email || '').toLowerCase();
         const password = req.body.password || '';
 
         // Validation
-        if (!user_Email || !password) {
+        if (!vendor_Email || !password) {
             return res.status(400).send({ message: 'Please provide both email and password.', status: 400 });
         }
 
-        const userData = await user.findOne({ "user_Email": user_Email, deleteFlag: false });
+        const vendorData = await Vendor.findOne({ "vendor_Email": vendor_Email, deleteFlag: false });
 
-        if (!userData) {
+        if (!vendorData) {
             return res.status(404).send({ message: 'Your email is not registered with us.', status: 404 });
         }
 
-        const passwordIsValid = bcrypt.compareSync(password, userData.password);
+        const passwordIsValid = bcrypt.compareSync(password, vendorData.password);
         if (!passwordIsValid) {
             return res.status(401).send({ message: 'Please enter a valid password.', status: 401 });
         }
 
-        const token = generateToken(userData._id);
-        return res.status(200).send({ accessToken: token, data: userData, message: 'Login successful!', status: 200 });
+        const token = generateToken(vendorData._id);
+        return res.status(200).send({ accessToken: token, data: vendorData, message: 'Login successful!', status: 200 });
     } catch (error) {
         return res.status(500).send({ message: 'Internal server error.', status: 500 });
     }
@@ -210,7 +208,7 @@ exports.changeUserPassword = async (req, res) => {
             return res.status(401).send({ message: 'New password and confirm password do not match', status: 401 });
         }
 
-        const existingUser = await user.findOne({ _id: usersRegId }).lean();
+        const existingUser = await Vendor.findOne({ _id: usersRegId }).lean();
         if (!existingUser) {
             return res.status(404).send({ message: 'User not found', status: 404 });
         }
@@ -220,7 +218,7 @@ exports.changeUserPassword = async (req, res) => {
             return res.status(401).send({ message: 'Incorrect old password', status: 401 });
         }
 
-        await user.findOneAndUpdate({ _id: usersRegId }, { $set: { password: bcrypt.hashSync(newPassword, 8) } });
+        await Vendor.findOneAndUpdate({ _id: usersRegId }, { $set: { password: bcrypt.hashSync(newPassword, 8) } });
 
         return res.status(200).send({ message: 'Password changed successfully', status: 200 });
     } catch (err) {
@@ -343,12 +341,3 @@ exports.changeUserPassword = async (req, res) => {
 //   }
 // };
 
-
-// exports.getAllServices = async (req, res) => {
-//   try {
-//       const services = await Service.find({ deleteFlag: false }).select("_id service_name");
-//       return res.status(200).json({ data: services, message: "Services fetched successfully", status: 200 });
-//   } catch (error) {
-//       return res.status(500).json({ message: error.message, status: 500 });
-//   }
-// };
