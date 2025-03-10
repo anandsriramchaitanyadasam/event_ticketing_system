@@ -43,8 +43,8 @@ export default function Header() {
       <AppBar
         position="static"
         sx={{
-          // backgroundColor: "#348ef6",
-          backgroundColor: "#30a830",
+          backgroundColor: "#348ef6",
+          // backgroundColor: "#30a830",
           color: "black",
           boxShadow: "none",
           paddingTop: "10px",

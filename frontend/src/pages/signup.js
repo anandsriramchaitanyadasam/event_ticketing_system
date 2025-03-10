@@ -1,5 +1,16 @@
 import React, { useState } from "react";
-import { Button, Card, Container, Grid, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Card,
+  Container,
+  Grid,
+  Tab,
+  Typography,
+} from "@mui/material";
+import TabContext from "@mui/lab/TabContext";
+import TabList from "@mui/lab/TabList";
+import TabPanel from "@mui/lab/TabPanel";
 // import signupimg from "../Images/signup.png";
 import Header from "../layout/header";
 import swal from "sweetalert";
@@ -8,7 +19,7 @@ import { postApihandler } from "../Apihandler";
 import GoogleIcon from "@mui/icons-material/Google";
 import FacebookIcon from "@mui/icons-material/Facebook";
 // import signupimg from "../Images/signupimg.avif";
-import signupimg from "../Images/signupimg1.avif";
+import signupimg from "../Images/signup.png";
 const countryCodeList = [
   {
     code: "AF",
@@ -1224,6 +1235,11 @@ const countryCodeList = [
   },
 ];
 export default function Signup() {
+  const [value, setValue] = React.useState("1");
+
+  const handleChange = (event: React.SyntheticEvent, newValue: string) => {
+    setValue(newValue);
+  };
   const navigate = useNavigate();
   const [name, setName] = useState("");
   // console.log("name is --->", name);
@@ -1245,7 +1261,7 @@ export default function Signup() {
       user_Name: name,
       user_Email: email,
       password: password,
-      // confirmPassword: confirmpassword,
+      confirmPassword: confirmpassword,
       mobile_no: phonenumber,
       country_code: country_code,
     };
@@ -1254,6 +1270,33 @@ export default function Signup() {
     console.log("signup api response is ----->", res);
     if (res.status === 200) {
       swal("Successfully Signup");
+      navigate("/login");
+    } else {
+      swal("Error", res.message || "An unknown error occurred.", "error");
+    }
+  };
+
+  // ******** vendor signup ***********
+  const [vendorname, setVendorName] = useState("");
+  const [vendoremail, setVendorEmail] = useState("");
+  const [vendorCountryCode, setVendorCountryCode] = useState("");
+  const [vendornumber, setVendorNumber] = useState("");
+  const [vendorpassword, setVendorPassword] = useState("");
+  const [vendorConfirmpassword, setVendorConfirmPassword] = useState("");
+  const vendorSignup = async (e) => {
+    e.preventDefault();
+    const data = {
+      vendor_Name: vendorname,
+      vendor_Email: vendoremail,
+      country_code: vendorCountryCode,
+      mobile_no: vendornumber,
+      password: vendorpassword,
+      confirmPassword: vendorConfirmpassword,
+    };
+    const res = await postApihandler("/vendorSignUp", data);
+    console.log("vendor api res", res);
+    if (res.status === 200) {
+      swal("Successfully Vendor Signup");
       navigate("/login");
     } else {
       swal("Error", res.message || "An unknown error occurred.", "error");
@@ -1274,220 +1317,473 @@ export default function Signup() {
             </div>
           </Grid>
           <Grid item xs={12} md={4}>
-            <form
-              component="form"
-              style={{
-                display: "flex",
-                alignItems: "center",
-                marginTop: "30px",
-                flexDirection: "column",
-                gap: 2,
-                textAlign: "center",
-              }}
-              onSubmit={userSignup}
-            >
-              <div style={{ width: "60%" }}>
-                <div>
-                  <Typography sx={{ textAlign: "start", fontSize: "20px" }}>
-                    Name
-                  </Typography>
-                  <input
-                    type="text"
-                    placeholder="Enter your Name"
-                    fullWidth
+            <Box sx={{ width: "100%", typography: "body1", padding: "0" }}>
+              <TabContext value={value}>
+                <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+                  <TabList
+                    onChange={handleChange}
+                    aria-label="lab API tabs example"
+                  >
+                    <Tab label="User" value="1" />
+                    <Tab label="Vendor" value="2" />
+                  </TabList>
+                </Box>
+                <TabPanel value="1">
+                  <h6>User</h6>
+                  <form
+                    component="form"
                     style={{
-                      background: "#D9D9D929",
-                      border: "2px solid #0000006E",
-                      width: "272px",
-                      height: "40px",
-                      borderRadius: "10px",
-                      fontSize: "14px",
-                      fontWeight: "500",
-                      marginBottom: "20px",
-                      paddingLeft: "10px",
+                      display: "flex",
+                      alignItems: "center",
+                      // marginTop: "30px",
+                      flexDirection: "column",
+                      gap: 2,
+                      textAlign: "center",
                     }}
-                    onChange={(e) => setName(e.target.value)}
-                  />
-                </div>
-                <div>
-                  <Typography sx={{ textAlign: "start", fontSize: "20px" }}>
-                    Email
-                  </Typography>
-                  <input
-                    type="text"
-                    placeholder="Enter your Email"
-                    fullWidth
-                    style={{
-                      background: "#D9D9D929",
-                      border: "2px solid #0000006E",
-                      width: "272px",
-                      height: "40px",
-                      borderRadius: "10px",
-                      fontSize: "14px",
-                      fontWeight: "500",
-                      marginBottom: "20px",
-                      paddingLeft: "10px",
-                    }}
-                    onChange={(e) => setEmail(e.target.value)}
-                  />
-                </div>
-                <div className="">
-                  <Typography sx={{ textAlign: "start", fontSize: "20px" }}>
-                    Mobile
-                  </Typography>
-                  <div className="row">
-                    <div className="col-md-5">
-                      <select
-                        id="country_code"
-                        name="country_code"
-                        required
-                        className="w-full px-4 py-2   focus:outline-none focus:ring-2 focus:ring-purple-600"
-                        onChange={(e) => setCountryCode(e.target.value)}
-                        style={{
-                          background: "#D9D9D929",
-                          border: "2px solid #0000006E",
-                          width: "100%",
-                          height: "40px",
-                          borderRadius: "10px",
-                          fontSize: "14px",
-                          fontWeight: "500",
-                          marginBottom: "20px",
-                          paddingLeft: "10px",
+                    onSubmit={userSignup}
+                  >
+                    <div>
+                      <div>
+                        <Typography
+                          sx={{ textAlign: "start", fontSize: "20px" }}
+                        >
+                          Name
+                        </Typography>
+                        <div>
+                          <input
+                            type="text"
+                            placeholder="Enter your Name"
+                            fullWidth
+                            style={{
+                              background: "#D9D9D929",
+                              border: "2px solid #0000006E",
+                              // width: "272px",
+
+                              width: "100%",
+                              height: "40px",
+                              borderRadius: "10px",
+                              fontSize: "14px",
+                              fontWeight: "500",
+                              marginBottom: "20px",
+                              paddingLeft: "10px",
+                            }}
+                            onChange={(e) => setName(e.target.value)}
+                          />
+                        </div>
+                      </div>
+                      <div>
+                        <Typography
+                          sx={{ textAlign: "start", fontSize: "20px" }}
+                        >
+                          Email
+                        </Typography>
+                        <div>
+                          <input
+                            type="text"
+                            placeholder="Enter your Email"
+                            fullWidth
+                            style={{
+                              background: "#D9D9D929",
+                              border: "2px solid #0000006E",
+                              width: "100%",
+                              height: "40px",
+                              borderRadius: "10px",
+                              fontSize: "14px",
+                              fontWeight: "500",
+                              marginBottom: "20px",
+                              paddingLeft: "10px",
+                            }}
+                            onChange={(e) => setEmail(e.target.value)}
+                          />
+                        </div>
+                      </div>
+                      <div className="">
+                        <Typography
+                          sx={{ textAlign: "start", fontSize: "20px" }}
+                        >
+                          Mobile
+                        </Typography>
+                        <div className="row">
+                          <div className="col-md-5">
+                            <select
+                              id="country_code"
+                              name="country_code"
+                              required
+                              className="w-full px-4 py-2   focus:outline-none focus:ring-2 focus:ring-purple-600"
+                              onChange={(e) => setCountryCode(e.target.value)}
+                              style={{
+                                background: "#D9D9D929",
+                                border: "2px solid #0000006E",
+                                width: "100%",
+                                height: "40px",
+                                borderRadius: "10px",
+                                fontSize: "14px",
+                                fontWeight: "500",
+                                marginBottom: "20px",
+                                paddingLeft: "10px",
+                              }}
+                            >
+                              {countryCodeList.map((val, ind) => (
+                                <option value={`+${val.phoneCode}`} key={ind}>
+                                  {val.countryFlag} +{val.phoneCode}
+                                </option>
+                              ))}
+                            </select>
+                          </div>
+                          <div className=" col-md-7">
+                            <input
+                              type="tel"
+                              placeholder="Enter your Mobile"
+                              fullWidth
+                              style={{
+                                background: "#D9D9D929",
+                                border: "2px solid #0000006E",
+                                //   width: "272px",
+                                height: "40px",
+                                borderRadius: "10px",
+                                fontSize: "14px",
+                                fontWeight: "500",
+                                marginBottom: "20px",
+                                paddingLeft: "10px",
+                                width: "100%",
+                              }}
+                              onChange={(e) => setphonenumber(e.target.value)}
+                            />
+                          </div>
+                        </div>
+                      </div>
+
+                      <div>
+                        <Typography
+                          sx={{ textAlign: "start", fontSize: "20px" }}
+                        >
+                          Password
+                        </Typography>
+                        <div>
+                          <input
+                            type="text"
+                            placeholder="Enter your password"
+                            fullWidth
+                            style={{
+                              background: "#D9D9D929",
+                              border: "2px solid #0000006E",
+                              width: "100%",
+                              height: "40px",
+                              borderRadius: "10px",
+                              fontSize: "14px",
+                              fontWeight: "500",
+                              marginBottom: "20px",
+                              paddingLeft: "10px",
+                            }}
+                            onChange={(e) => setPassword(e.target.value)}
+                          />
+                        </div>
+                      </div>
+                      <div>
+                        <div>
+                          <Typography
+                            sx={{ textAlign: "start", fontSize: "20px" }}
+                          >
+                            Confirm Password
+                          </Typography>
+                          <input
+                            type="password"
+                            label=""
+                            placeholder="Confirm Password"
+                            fullWidth
+                            style={{
+                              background: "#D9D9D929",
+                              border: "2px solid #0000006E",
+                              width: "100%",
+                              height: "40px",
+                              borderRadius: "10px",
+                              fontSize: "14px",
+                              fontWeight: "500",
+                              marginBottom: "20px",
+                              paddingLeft: "10px",
+                            }}
+                            onChange={(e) => setConfirmPassword(e.target.value)}
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div style={{ textAlign: "center" }}>
+                      <Button
+                        type="submit"
+                        variant="contained"
+                        sx={{
+                          backgroundColor: "#348ef6",
+                          width: "240px",
+                          borderRadius: "20px",
+                          fontSize: "16px",
                         }}
                       >
-                        {countryCodeList.map((val, ind) => (
-                          <option value={`+${val.phoneCode}`} key={ind}>
-                            {val.countryFlag} +{val.phoneCode}
-                          </option>
-                        ))}
-                      </select>
+                        Sign Up
+                      </Button>
                     </div>
-                    <div className=" col-md-7">
-                      <input
-                        type="tel"
-                        placeholder="Enter your Mobile"
-                        fullWidth
+                    <Typography
+                      variant="body2"
+                      textAlign="start"
+                      sx={{
+                        fontSize: "16px",
+                        fontWeight: "500",
+                        marginTop: "20px",
+                      }}
+                    >
+                      Already have an account?{" "}
+                      <a
+                        href="/login"
                         style={{
-                          background: "#D9D9D929",
-                          border: "2px solid #0000006E",
-                          //   width: "272px",
-                          height: "40px",
-                          borderRadius: "10px",
-                          fontSize: "14px",
-                          fontWeight: "500",
-                          marginBottom: "20px",
-                          paddingLeft: "10px",
-                          width: "100%",
+                          textDecoration: "none",
+                          color: "#348ef6",
+                          fontWeight: "600",
                         }}
-                        onChange={(e) => setphonenumber(e.target.value)}
-                      />
-                    </div>
+                      >
+                        Log in
+                      </a>
+                    </Typography>
+                  </form>
+                  <div>
+                    <Button
+                      variant="contained"
+                      className="mt-3"
+                      sx={{ padding: "5px 23px", backgroundColor: "#348ef6" }}
+                    >
+                      <GoogleIcon
+                        sx={{
+                          color: "white",
+                          marginRight: "5px",
+                        }}
+                      />{" "}
+                      Sign in with Google
+                    </Button>
+                    <Button
+                      variant="contained"
+                      className="mt-3"
+                      sx={{ backgroundColor: "#348ef6" }}
+                    >
+                      <FacebookIcon
+                        sx={{ color: "white", marginRight: "5px" }}
+                      />{" "}
+                      Sign in with Facebook
+                    </Button>
                   </div>
-                </div>
-
-                <div>
-                  <Typography sx={{ textAlign: "start", fontSize: "20px" }}>
-                    Password
-                  </Typography>
-                  <input
-                    type="text"
-                    placeholder="Enter your password"
-                    fullWidth
+                </TabPanel>
+                <TabPanel value="2">
+                  <h6>Vendor</h6>
+                  <form
+                    component="form"
                     style={{
-                      background: "#D9D9D929",
-                      border: "2px solid #0000006E",
-                      width: "272px",
-                      height: "40px",
-                      borderRadius: "10px",
-                      fontSize: "14px",
-                      fontWeight: "500",
-                      marginBottom: "20px",
-                      paddingLeft: "10px",
+                      display: "flex",
+                      alignItems: "center",
+                      // marginTop: "30px",
+                      flexDirection: "column",
+                      gap: 2,
+                      textAlign: "center",
                     }}
-                    onChange={(e) => setPassword(e.target.value)}
-                  />
-                </div>
-                {/* <div>
-                  <input
-                    type="password"
-                    label=""
-                    placeholder="Confirm Password"
-                    fullWidth
-                    style={{
-                      background: "#D9D9D929",
-                      border: "2px solid #0000006E",
-                      width: "272px",
-                      height: "40px",
-                      borderRadius: "10px",
-                      fontSize: "14px",
-                      fontWeight: "500",
-                      marginBottom: "20px",
-                      paddingLeft: "10px",
-                    }}
-                    onChange={(e) => setConfirmPassword(e.target.value)}
-                  />
-                </div> */}
-              </div>
+                    onSubmit={vendorSignup}
+                  >
+                    <div>
+                      <div>
+                        <Typography
+                          sx={{ textAlign: "start", fontSize: "20px" }}
+                        >
+                          Name
+                        </Typography>
+                        <input
+                          type="text"
+                          placeholder="Enter your Name"
+                          fullWidth
+                          style={{
+                            background: "#D9D9D929",
+                            border: "2px solid #0000006E",
+                            width: "100%",
+                            height: "40px",
+                            borderRadius: "10px",
+                            fontSize: "14px",
+                            fontWeight: "500",
+                            marginBottom: "20px",
+                            paddingLeft: "10px",
+                          }}
+                          onChange={(e) => setVendorName(e.target.value)}
+                        />
+                      </div>
+                      <div>
+                        <Typography
+                          sx={{ textAlign: "start", fontSize: "20px" }}
+                        >
+                          Email
+                        </Typography>
 
-              <div style={{}}>
-                <Button
-                  type="submit"
-                  variant="contained"
-                  sx={{
-                    backgroundColor: "#30a830",
-                    width: "240px",
-                    borderRadius: "20px",
-                    fontSize: "16px",
-                  }}
-                >
-                  Sign Up
-                </Button>
-              </div>
-              <Typography
-                variant="body2"
-                textAlign="start"
-                sx={{
-                  fontSize: "16px",
-                  fontWeight: "500",
-                  marginTop: "20px",
-                }}
-              >
-                Already have an account?{" "}
-                <a
-                  href="/login"
-                  style={{
-                    textDecoration: "none",
-                    color: "#30a830",
-                    fontWeight: "600",
-                  }}
-                >
-                  Log in
-                </a>
-              </Typography>
-            </form>
-            <div>
-              <Button
-                variant="contained"
-                className="mt-3"
-                sx={{ padding: "5px 23px", backgroundColor: "#30a830" }}
-              >
-                <GoogleIcon
-                  sx={{
-                    color: "white",
-                    marginRight: "5px",
-                  }}
-                />{" "}
-                Sign in with Google
-              </Button>
-              <Button
-                variant="contained"
-                className="mt-3"
-                sx={{ backgroundColor: "#30a830" }}
-              >
-                <FacebookIcon sx={{ color: "white", marginRight: "5px" }} />{" "}
-                Sign in with Facebook
-              </Button>
-            </div>
+                        <input
+                          type="text"
+                          placeholder="Enter your Email"
+                          fullWidth
+                          style={{
+                            background: "#D9D9D929",
+                            border: "2px solid #0000006E",
+                            width: "100%",
+                            height: "40px",
+                            borderRadius: "10px",
+                            fontSize: "14px",
+                            fontWeight: "500",
+                            marginBottom: "20px",
+                            paddingLeft: "10px",
+                          }}
+                          onChange={(e) => setVendorEmail(e.target.value)}
+                        />
+                      </div>
+                      <div className="">
+                        <Typography
+                          sx={{ textAlign: "start", fontSize: "20px" }}
+                        >
+                          Mobile
+                        </Typography>
+                        <div className="row">
+                          <div className="col-md-5">
+                            <select
+                              id="country_code"
+                              name="country_code"
+                              required
+                              className="w-full px-4 py-2   focus:outline-none focus:ring-2 focus:ring-purple-600"
+                              onChange={(e) =>
+                                setVendorCountryCode(e.target.value)
+                              }
+                              style={{
+                                background: "#D9D9D929",
+                                border: "2px solid #0000006E",
+                                width: "100%",
+                                height: "40px",
+                                borderRadius: "10px",
+                                fontSize: "14px",
+                                fontWeight: "500",
+                                marginBottom: "20px",
+                                paddingLeft: "10px",
+                              }}
+                            >
+                              {countryCodeList.map((val, ind) => (
+                                <option value={`+${val.phoneCode}`} key={ind}>
+                                  {val.countryFlag} +{val.phoneCode}
+                                </option>
+                              ))}
+                            </select>
+                          </div>
+                          <div className=" col-md-7">
+                            <input
+                              type="tel"
+                              placeholder="Enter your Mobile"
+                              fullWidth
+                              style={{
+                                background: "#D9D9D929",
+                                border: "2px solid #0000006E",
+                                //   width: "272px",
+                                height: "40px",
+                                borderRadius: "10px",
+                                fontSize: "14px",
+                                fontWeight: "500",
+                                marginBottom: "20px",
+                                paddingLeft: "10px",
+                                width: "100%",
+                              }}
+                              onChange={(e) => setVendorNumber(e.target.value)}
+                            />
+                          </div>
+                        </div>
+                      </div>
+
+                      <div>
+                        <Typography
+                          sx={{ textAlign: "start", fontSize: "20px" }}
+                        >
+                          Password
+                        </Typography>
+                        <input
+                          type="text"
+                          placeholder="Enter your password"
+                          fullWidth
+                          style={{
+                            background: "#D9D9D929",
+                            border: "2px solid #0000006E",
+                            width: "100%",
+                            height: "40px",
+                            borderRadius: "10px",
+                            fontSize: "14px",
+                            fontWeight: "500",
+                            marginBottom: "20px",
+                            paddingLeft: "10px",
+                          }}
+                          onChange={(e) => setVendorPassword(e.target.value)}
+                        />
+                      </div>
+                      <div>
+                        <Typography
+                          sx={{ textAlign: "start", fontSize: "20px" }}
+                        >
+                          Confirm Password
+                        </Typography>
+                        <input
+                          type="password"
+                          label=""
+                          placeholder="Confirm Password"
+                          fullWidth
+                          style={{
+                            background: "#D9D9D929",
+                            border: "2px solid #0000006E",
+                            width: "100%",
+                            height: "40px",
+                            borderRadius: "10px",
+                            fontSize: "14px",
+                            fontWeight: "500",
+                            marginBottom: "20px",
+                            paddingLeft: "10px",
+                          }}
+                          onChange={(e) =>
+                            setVendorConfirmPassword(e.target.value)
+                          }
+                        />
+                      </div>
+                    </div>
+
+                    <div style={{ textAlign: "center" }}>
+                      <Button
+                        type="submit"
+                        variant="contained"
+                        sx={{
+                          backgroundColor: "#348ef6",
+                          width: "240px",
+                          borderRadius: "20px",
+                          fontSize: "16px",
+                        }}
+                      >
+                        Sign Up
+                      </Button>
+                    </div>
+                    <Typography
+                      variant="body2"
+                      textAlign="start"
+                      sx={{
+                        fontSize: "16px",
+                        fontWeight: "500",
+                        marginTop: "20px",
+                      }}
+                    >
+                      Already have an account?{" "}
+                      <a
+                        href="/login"
+                        style={{
+                          textDecoration: "none",
+                          color: "#348ef6",
+                          fontWeight: "600",
+                        }}
+                      >
+                        Log in
+                      </a>
+                    </Typography>
+                  </form>
+                </TabPanel>
+              </TabContext>
+            </Box>
           </Grid>
         </Grid>
       </div>
