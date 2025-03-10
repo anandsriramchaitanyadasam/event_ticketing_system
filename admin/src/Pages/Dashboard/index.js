@@ -4,24 +4,24 @@ import { getApihandler } from "../../Apihandler";
 import { Card, CardContent, Typography, Grid } from "@mui/material";
 
 export default function Dashboard() {
-  const [data, setData] = useState(null);
+  // const [data, setData] = useState(null);
 
-  useEffect(() => {
-    getCount();
-  }, []);
+  // useEffect(() => {
+  //   getCount();
+  // }, []);
 
-  const getCount = async () => {
-    const res = await getApihandler("/getCount");
-    console.log("get count api response is -->", res);
-    if (res.message === "Counts get successfully") {
-      setData(res);
-    }
-  };
+  // const getCount = async () => {
+  //   const res = await getApihandler("/getCount");
+  //   console.log("get count api response is -->", res);
+  //   if (res.message === "Counts get successfully") {
+  //     setData(res);
+  //   }
+  // };
 
   return (
     <AdminLayout>
       <h1>Dashboard</h1>
-      <Grid container spacing={3}>
+      {/* <Grid container spacing={3}>
         <Grid item xs={12} sm={4}>
           <Card
             sx={{ minWidth: 275, textAlign: "center", background: "#f5f5f5" }}
@@ -50,7 +50,7 @@ export default function Dashboard() {
             </CardContent>
           </Card>
         </Grid>
-      </Grid>
+      </Grid> */}
     </AdminLayout>
   );
 }

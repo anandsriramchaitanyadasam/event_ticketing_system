@@ -38,9 +38,9 @@ export default function Users() {
   }, []);
 
   const getUsers = async () => {
-    const res = await getApihandler("/getAllUsers");
-    console.log("Get user API response:", res);
-    if (res.status === 200) {
+    const res = await getApihandler("/admin/getAllUsers");
+    console.log("get userapi ", res);
+    if (res.message === "Users fetched successfully") {
       setData(res.data);
     }
   };
@@ -111,7 +111,7 @@ export default function Users() {
               <TableCell sx={{ fontWeight: "bold" }}>Name</TableCell>
               <TableCell sx={{ fontWeight: "bold" }}>Email</TableCell>
               <TableCell sx={{ fontWeight: "bold" }}>Mobile</TableCell>
-              <TableCell sx={{ fontWeight: "bold" }}>Action</TableCell>
+              {/* <TableCell sx={{ fontWeight: "bold" }}>Action</TableCell> */}
             </TableRow>
           </TableHead>
           <TableBody>
@@ -122,7 +122,7 @@ export default function Users() {
                 <TableCell>{user.mobile_no}</TableCell>
                 <TableCell>
                   {/* Edit User */}
-                  <IconButton
+                  {/* <IconButton
                     color="primary"
                     onClick={() => {
                       setUserId(user._id);
@@ -131,10 +131,10 @@ export default function Users() {
                     }}
                   >
                     <EditIcon />
-                  </IconButton>
+                  </IconButton> */}
 
                   {/* Delete User with Confirmation */}
-                  <IconButton
+                  {/* <IconButton
                     onClick={() => {
                       Swal.fire({
                         title: "Are you sure?",
@@ -153,7 +153,7 @@ export default function Users() {
                     color="error"
                   >
                     <DeleteIcon />
-                  </IconButton>
+                  </IconButton> */}
                 </TableCell>
               </TableRow>
             ))}

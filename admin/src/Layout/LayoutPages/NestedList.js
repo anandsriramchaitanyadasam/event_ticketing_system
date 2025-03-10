@@ -96,17 +96,17 @@ export default function NestedList() {
           <ListItemText primary="Users" sx={{ color: "white" }} />
         </ListItemButton>
       </Link>
-      <Link to="/plants" style={{ textDecoration: "none" }}>
+      <Link to="/vendors" style={{ textDecoration: "none" }}>
         <ListItemButton>
           <ListItemIcon>
             <IconButton>
               <ForestIcon sx={{ fill: "white" }} />
             </IconButton>
           </ListItemIcon>
-          <ListItemText primary="Plants" sx={{ color: "white" }} />
+          <ListItemText primary="Vendors" sx={{ color: "white" }} />
         </ListItemButton>
       </Link>
-      <Link to="/tags" style={{ textDecoration: "none" }}>
+      {/* <Link to="/tags" style={{ textDecoration: "none" }}>
         <ListItemButton>
           <ListItemIcon>
             <IconButton>
@@ -115,7 +115,7 @@ export default function NestedList() {
           </ListItemIcon>
           <ListItemText primary="Tags" sx={{ color: "white" }} />
         </ListItemButton>
-      </Link>
+      </Link> */}
 
       {/* <Link to="/dashboard" style={{ textDecoration: "none" }}>
         <ListItemButton>
