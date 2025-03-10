@@ -4,9 +4,8 @@ const config = require("../config/auth.config");
 const { Mongoose } = require('mongoose');
 const ObjectId = require('mongodb').ObjectID;
 const admin = require('../models/admin.model');
-// const user = require("../models/userSignUp.model")
 const user = require("../models/user.model");
-const plant = require("../models/plant.model");
+const vendor = require("../models/vendor.model");
 const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
 function generateToken(userid) {
@@ -113,6 +112,33 @@ exports.getAllUsers = async (req, res) => {
 };
 
 
+// to get vendors list
+exports.getAllVendors = async (req, res) => {
+    try {
+        // Fetch all vendors except those marked as deleted
+        const vendors = await vendor.find({ deleteFlag: false }).select('-password'); // Exclude the password field
+        const totalCount = await vendor.countDocuments({ deleteFlag: false }); // Count the total vendors
+
+        return res.status(200).send({ 
+            data: vendors, 
+            totalCount, // Include the total count
+            message: "Vendors fetched successfully", 
+            status: 200 
+        });
+    } catch (error) {
+        return res.status(500).send({ 
+            message: error.message || 'An error occurred while fetching vendors', 
+            status: 500 
+        });
+    }
+};
+
+
+
+
+
+
+
 // Edit user data by admin
 exports.editUser = async (req, res) => {
     try {
@@ -164,27 +190,5 @@ exports.deleteUser = async (req, res) => {
         return res.status(200).send({ message: 'User deleted successfully', status: 200 });
     } catch (error) {
         return res.status(500).send({ message: error.message || 'Error deleting user', status: 500 });
-    }
-};
-
-exports.getCounts = async (req, res) => {
-    try {
-        // Fetch counts of users and plants in parallel
-        const [userCount, plantCount] = await Promise.all([
-            user.countDocuments({ deleteFlag: false }), // Count users excluding deleted ones
-            plant.countDocuments({}) // Count all plants
-        ]);
-
-        return res.status(200).json({
-            userCount,
-            plantCount,
-            message: "Counts get successfully",
-            status: 200
-        });
-    } catch (error) {
-        return res.status(500).json({
-            message: error.message || 'An error occurred while fetching counts',
-            status: 500
-        });
     }
 };
