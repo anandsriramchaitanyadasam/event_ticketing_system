@@ -1,3 +1,5 @@
+/** @format */
+
 import React, { useEffect, useState } from "react";
 import AdminLayout from "../../Layout/AdminLayout";
 import {
@@ -47,7 +49,7 @@ export default function Users() {
 
   // ****** Delete API ******
   const deleteUser = async (id) => {
-    const res = await deleteApihandler(`/deleteUser/${id}`);
+    const res = await deleteApihandler(`/admin/deleteUser/${id}`);
     if (res.status === 200) {
       Swal.fire({
         icon: "success",
@@ -83,7 +85,7 @@ export default function Users() {
       mobile_no: mobileno,
     };
 
-    const res = await putApihandler(`/editUser/${userid}`, item);
+    const res = await putApihandler(`/admin/editUser/${userid}`, item);
     console.log("Update API response:", res);
 
     if (res.status === 200) {
@@ -111,7 +113,7 @@ export default function Users() {
               <TableCell sx={{ fontWeight: "bold" }}>Name</TableCell>
               <TableCell sx={{ fontWeight: "bold" }}>Email</TableCell>
               <TableCell sx={{ fontWeight: "bold" }}>Mobile</TableCell>
-              {/* <TableCell sx={{ fontWeight: "bold" }}>Action</TableCell> */}
+              <TableCell sx={{ fontWeight: "bold" }}>Action</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -122,7 +124,7 @@ export default function Users() {
                 <TableCell>{user.mobile_no}</TableCell>
                 <TableCell>
                   {/* Edit User */}
-                  {/* <IconButton
+                  <IconButton
                     color="primary"
                     onClick={() => {
                       setUserId(user._id);
@@ -131,10 +133,10 @@ export default function Users() {
                     }}
                   >
                     <EditIcon />
-                  </IconButton> */}
+                  </IconButton>
 
                   {/* Delete User with Confirmation */}
-                  {/* <IconButton
+                  <IconButton
                     onClick={() => {
                       Swal.fire({
                         title: "Are you sure?",
@@ -153,7 +155,7 @@ export default function Users() {
                     color="error"
                   >
                     <DeleteIcon />
-                  </IconButton> */}
+                  </IconButton>
                 </TableCell>
               </TableRow>
             ))}

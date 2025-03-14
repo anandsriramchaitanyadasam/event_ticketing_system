@@ -16,14 +16,13 @@ import { Grid } from "@mui/material";
 import swal from "sweetalert";
 import { postApihandler } from "../../Apihandler";
 
-
 const Login = () => {
   const Navigate = useNavigate();
   const [validated, setValidated] = useState(false);
   const { register, handleSubmit, reset, setValue, watch } = useForm();
 
   const SubmitLogins = async (value) => {
-    console.log("value is ------>" , value)
+    console.log("value is ------>", value);
     let result = await postApihandler("/adminLogin", value);
     console.log("login result is", result);
 
@@ -59,7 +58,7 @@ const Login = () => {
               boxShadow: 3,
               padding: "60px 40px 30px !important",
               borderRadius: "20px",
-              background: "#348ef6",
+              background: "#60156d",
             }}
           >
             <div className="form-field-wrapper">
