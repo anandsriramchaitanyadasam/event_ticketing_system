@@ -1,0 +1,103 @@
+/* Main Container */
+.why-container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 50px 20px;
+    text-align: center;
+  }
+  
+  /* Title */
+  .why-title {
+    font-size: 28px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 40px;
+    position: relative;
+  }
+  
+  .why-title::after {
+    content: "";
+    display: block;
+    width: 60px;
+    height: 4px;
+    background: linear-gradient(90deg, #ff416c, #ff4b2b);
+    margin: 8px auto 0;
+    border-radius: 2px;
+  }
+  
+  /* Grid Layout */
+  .why-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+    justify-content: center;
+  }
+  
+  /* Cards */
+  .why-card {
+    background: #fff;
+    padding: 25px;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.08), -4px -4px 10px rgba(255, 255, 255, 1);
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .why-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 6px 6px 15px rgba(0, 0, 0, 0.12), -6px -6px 15px rgba(255, 255, 255, 1);
+  }
+  
+  /* Gradient Number Circle */
+  .why-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 55px;
+    height: 55px;
+    margin: 0 auto 15px;
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #ff416c, #ff4b2b);
+    box-shadow: 0px 4px 10px rgba(255, 75, 43, 0.4);
+  }
+  
+  /* Card Title */
+  .why-card-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #333;
+  }
+  
+  /* Card Description */
+  .why-card-text {
+    font-size: 14px;
+    color: #555;
+    line-height: 1.6;
+  }
+  
+  /* Hover Effect */
+  .why-card:hover .why-icon {
+    transform: scale(1.1);
+    transition: transform 0.3s ease;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .why-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .why-grid {
+      grid-template-columns: repeat(1, 1fr);
+    }
+  }
+  
