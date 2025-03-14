@@ -145,7 +145,7 @@ export default function LayoutTemplate({ children }) {
             sx={{
               display: "flex",
               justifyContent: "space-between",
-              backgroundColor: "#348ef6",
+              backgroundColor: "#60156d",
             }}
           >
             <IconButton
@@ -168,7 +168,7 @@ export default function LayoutTemplate({ children }) {
                   backgroundColor: "white",
                   borderRadius: "50%",
                   padding: "7px",
-                  color: "#348ef6",
+                  color: "#60156d",
                 }}
               >
                 <NotificationsIcon />
@@ -176,14 +176,14 @@ export default function LayoutTemplate({ children }) {
             </IconButton>
           </Toolbar>
         </AppBar>
-        <Drawer variant="permanent" open={open}>
+        <Drawer variant="permanent"  open={open} >
           <Toolbar
             sx={{
               display: "flex",
               alignItems: "center",
               justifyContent: "flex-end",
               px: [1],
-              backgroundColor: "#348ef6",
+              backgroundColor: "#60156d",
             }}
           >
             <IconButton onClick={toggleDrawer}>
