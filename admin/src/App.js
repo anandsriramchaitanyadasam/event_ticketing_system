@@ -24,7 +24,8 @@ function App() {
           <Route path="/vendors" element={<Vendors />} />
           <Route path="/category" element={<Category />} />
           <Route path="/events" element={<Events />} />
-      
+          {/* <Route path='/plants' element={<Plants/>}/>
+          <Route path='/tags' element={<Tags/>}/> */}
         </Routes>
       </BrowserRouter>
     </div>

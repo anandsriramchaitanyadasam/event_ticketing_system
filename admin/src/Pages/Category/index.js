@@ -42,22 +42,33 @@ export default function Category() {
   const handleClose = () => setOpen(false);
   const [categoryname, setCategoryName] = useState("");
   const [data, setData] = useState([]);
-  console.log("data is --->", data);
+  const [photos, setPhotos] = useState([]);
+
+  const handleFileChange = (e) => {
+    setPhotos(Array.from(e.target.files));
+  };
+
   const AddCategory = async () => {
-    const data = {
-      category_name: categoryname,
-    };
-    const res = await postApihandler("/admin/categories", data);
+    const formData = new FormData();
+    formData.append("category_name", categoryname);
+    photos.forEach((photo) => {
+      formData.append("photo", photo);
+    });
+    const res = await postApihandler("/admin/categories", formData);
     console.log("add ctegory res -->", res);
     if (res.message === "Category added successfully") {
       Swal.fire({ title: "Add category Successfully", icon: "success" });
+      getCategory();
       setOpen(false);
     }
   };
+
   //   ***** get category api *********
   useEffect(() => {
     getCategory();
   }, []);
+
+  // ==== get category ========
   const getCategory = async () => {
     const res = await getApihandler("/admin/getAllCategories");
     console.log("get api res is --->", res);
@@ -84,19 +95,24 @@ export default function Category() {
   const [open1, setOpen1] = React.useState(false);
   const handleOpen1 = () => setOpen1(true);
   const handleClose1 = () => setOpen1(false);
+
   useEffect(() => {
     if (index !== null && data[index]) {
       const { category_name } = data[index] || {};
       setCategoryName(category_name || "");
     }
   }, [data, index]);
+
+
   const updateCategory = async () => {
-    const data = {
-      category_name: categoryname,
-    };
+    const formData = new FormData();
+    formData.append("category_name", categoryname);
+    photos.forEach((photo) => {
+      formData.append("photo", photo);
+    });
     const res = await putApihandler(
       `/admin/updateCategory/${categoryid}`,
-      data
+      formData
     );
     console.log("update res --->", res);
     if (res.message === "Category updated successfully") {
@@ -108,6 +124,7 @@ export default function Category() {
       setOpen1(false);
     }
   };
+
   return (
     <AdminLayout>
       <h1>Category</h1>
@@ -133,31 +150,35 @@ export default function Category() {
             className="mt-3"
             onChange={(e) => setCategoryName(e.target.value)}
           />
+          <div className="mt-4">
+              <input type="file" multiple onChange={handleFileChange} />
+            </div>
           <Button variant="contained" className="mt-3" onClick={AddCategory}>
             Add Category
           </Button>
         </Box>
       </Modal>
       <TableContainer component={Paper} className="mt-3">
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+        <Table  aria-label="simple table">
           <TableHead>
             <TableRow>
+              <TableCell>Image</TableCell>
               <TableCell>Category Name</TableCell>
               <TableCell>Action</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {data.map((category) => (
-              <TableRow
-                // key={row.name}
+              <TableRow 
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
+                <TableCell component="th" scope="row">{<img style={{width:"10%"}} src={`http://localhost:80/uploads/${category.photoUrl}`}/>}</TableCell>
                 <TableCell component="th" scope="row">
                   {category.category_name}
                 </TableCell>
-                <TableCell>
+                <TableCell component="th" scope="row" sx={{display:"flex"}}>
                   <DeleteIcon
-                    sx={{ marginRight: "5px" }}
+                    sx={{ marginRight: "5px" ,marginTop:"5px"}}
                     onClick={() => {
                       Swal.fire({
                         title: "Are you sure?",
@@ -204,6 +225,9 @@ export default function Category() {
             value={categoryname} // Ensure correct value is set
             onChange={(e) => setCategoryName(e.target.value)}
           />
+           <div className="mt-4">
+              <input type="file" multiple onChange={handleFileChange} />
+            </div>
           <Button variant="contained" className="mt-3" onClick={updateCategory}>
             Update Category
           </Button>
