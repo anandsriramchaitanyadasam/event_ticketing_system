@@ -13,8 +13,7 @@ export default function HomePage() {
   return (
     <>
     
-      <Header />
-    
+      <Header />  
       <Banner />
       <CategoryCards />
       <WhyChooseUs />

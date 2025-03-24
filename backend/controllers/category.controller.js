@@ -1,18 +1,5 @@
 const Category = require('../models/category.model');
-// const Category = require("../models/Category");
 
-
-// Create a new category
-// exports.createCategory = async (req, res) => {
-//     try {
-//         const { category_name } = req.body;
-//         const newCategory = new Category({ category_name });
-//         await newCategory.save();
-//         res.status(201).json(newCategory);
-//     } catch (error) {
-//         res.status(400).json({ message: error.message });
-//     }
-// };
 
 exports.createCategory = async (req, res) => {
     try {
@@ -39,27 +26,6 @@ exports.createCategory = async (req, res) => {
 };
 
 
-// Get all categories
-// exports.getAllCategories = async (req, res) => {
-//     try {
-//         const categories = await Category.find().sort({ createdAt: 1 }); // Sorting by latest created category
-
-//         res.status(200).json({
-//             data: categories,
-//             totalCount: categories.length,
-//             message: "Categories fetched successfully",
-//             status: 200
-//         });
-//     } catch (error) {
-//         res.status(500).json({
-//             data: [],
-//             totalCount: 0,
-//             message: "Server error",
-//             status: 500,
-//             error: error.message
-//         });
-//     }
-// };
 
 // Get all categories (Only Active Categories)
 exports.getAllCategories = async (req, res) => {
