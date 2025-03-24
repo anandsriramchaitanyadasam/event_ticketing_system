@@ -8,10 +8,10 @@ const CategorySchema = new mongoose.Schema({
         required: true,
         unique: true, // Ensure category names are unique
     },
-    // createdAt: {
-    //     type: Date,
-    //     default: Date.now,
-    // },
+    photoUrl: {
+        type: String,
+        required: true,
+    },
     deleteFlag: {
         type: Boolean,
         default: false

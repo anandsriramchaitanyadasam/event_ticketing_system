@@ -148,7 +148,10 @@ exports.editUser = async (req, res) => {
             return res.status(400).send({ message: 'All fields are required', status: 400 });
         }
 
-       
+        // const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+        // if (!user_Email.match(emailRegex)) {
+        //     return res.status(400).send({ message: 'Please provide a valid email address', status: 400 });
+        // }
 
         const existingUser = await user.findOne({ _id: userId }).lean();
         if (!existingUser) {
