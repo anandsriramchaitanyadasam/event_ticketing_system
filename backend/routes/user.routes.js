@@ -20,7 +20,7 @@ module.exports = (app)=>{
     app.put('/api/changeUserPassword/:usersRegId', user.changeUserPassword);
 
 
-
+   
 
     //**************************** VENDOR ***************************/
 
@@ -29,7 +29,6 @@ module.exports = (app)=>{
     app.post('/api/vendorLogin',vendor.vendorLogin);
 
     app.get('/api/vendor/getAllCategoriesByVendor', vendor.getAllCategoriesByVendor); // Get all categories in vendor
-
 
     app.post("/api/addEvent", upload.single("photo"), event.addEvent);
 
