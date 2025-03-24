@@ -9,7 +9,7 @@ exports.addEvent = async (req, res) => {
             return res.status(400).json({ message: "Photo is required" });
         }
 
-        // const { vendor_Id, event_name, country, state, city, event_ticket_price, category_id } = req.body;
+     
 
         // const { vendor_Id, event_name, country, state, city, standard_price, vip_price, category_id } = req.body;
         const { vendor_Id, event_name, country, state, city, standard_price, vip_price, event_date, event_address, event_start_time, event_end_time, category_id } = req.body;

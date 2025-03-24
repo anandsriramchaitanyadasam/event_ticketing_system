@@ -3,10 +3,9 @@
 import axios from "axios";
 
 export const serverUrl = "http://localhost:80/api";
-// export const serverUrl = "https://maalikdesigner.com/api";
-// export const serverUrl = "http://51.20.106.9/api";
+
 export const awsUrl = "https://maalikdesigners3.s3.eu-north-1.amazonaws.com/";
-// export const imageUrl = "https://raadharani.s3.ap-south-1.amazonaws.com/";
+
 
 export const formatDate = (dateString) => {
   const date = new Date(dateString);

@@ -33,9 +33,11 @@ export default function Login() {
     console.log("login data is --->", data);
     const res = await postApihandler("/userLogin", data);
     console.log("login api response is ---->", res);
-    localStorage.setItem("userData", JSON.stringify(res.data));
+    
 
     if (res.status === 200) {
+      localStorage.setItem("userData", JSON.stringify(res.data));
+      localStorage.setItem("role", "user");
       swal(" Login Successfully");
       navigate("/home");
     }
@@ -58,8 +60,10 @@ export default function Login() {
     const res = await postApihandler("/vendorLogin", data);
     console.log("vendor login api res --->", res);
     if (res.status === 200) {
+      localStorage.setItem("userData", JSON.stringify(res.data));
       localStorage.setItem("vendor_Id", res.data._id);
-      localStorage.setItem("accessToken", res.accessToken);
+      localStorage.setItem("role", "vendor");
+      
       swal(" Login Vendor Successfully");
       navigate("/home");
     }

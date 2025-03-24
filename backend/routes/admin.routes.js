@@ -18,9 +18,7 @@ module.exports = (app)=>{
     // Delete user route
     app.delete('/api/admin/deleteUser/:userId', admin.deleteUser);
 
-    // app.get('/api/admin/getUserIssues/:userId', issue.getUserIssues);
-
-    // app.get('/api/admin/getAllIssues', issue.getAllIssues);
+  
 
 
     // Category routes

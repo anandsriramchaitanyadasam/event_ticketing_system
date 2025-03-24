@@ -9,21 +9,7 @@ module.exports = (app)=>{
     const upload = require('../middlewares/uploads'); // ✅ Import uploads middleware
 
 
-    // const category = require('../controllers/category.controller');
-
-    // const issue = require('../controllers/issue.controller');
-    // const upload = require('../middlewares/uploads');
-
-    // const feedback = require('../controllers/feedback.controller');
-
-    // const payment = require('../controllers/payment.controller');
-
-    // const serviceRoutes = require('./service.routes');
-
-    // app.use('/api/mechanic', serviceRoutes);
-
-//     const serviceRoutes = require("./service.routes");
-// app.use("/api/mechanic", serviceRoutes);
+ 
 
 
    
@@ -34,10 +20,6 @@ module.exports = (app)=>{
     app.put('/api/changeUserPassword/:usersRegId', user.changeUserPassword);
 
 
-    // mechanic 
-    // app.post("/api/mechanicSignUp", user.mechanicSignUp);
-
-    // app.post('/api/mechanicLogin',user.mechanicLogin)
 
 
     //**************************** VENDOR ***************************/
