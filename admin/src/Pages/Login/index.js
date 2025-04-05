@@ -9,10 +9,8 @@ import Row from "react-bootstrap/Row";
 import AdminLayout from "../../Layout/AdminLayout";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-// import { postApihandler } from "../../API_Handler";
 import { Container } from "react-bootstrap";
 import { Grid } from "@mui/material";
-// import swal from "sweetalert";
 import swal from "sweetalert";
 import { postApihandler } from "../../Apihandler";
 
@@ -100,7 +98,7 @@ const Login = () => {
                   <Button
                     type="submit"
                     className="border-0 font-bold py-2 px-3"
-                    // sx={{ backgroundColor: "white", color: "black " }}
+                   
                     style={{ backgroundColor: "white", color: "black" }}
                   >
                     Login
