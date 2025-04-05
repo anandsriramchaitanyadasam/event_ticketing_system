@@ -34,7 +34,6 @@ export default function Vendors() {
               <TableCell sx={{ fontWeight: "bold" }}>Name</TableCell>
               <TableCell sx={{ fontWeight: "bold" }}>Email</TableCell>
               <TableCell sx={{ fontWeight: "bold" }}>Mobile</TableCell>
-              {/* <TableCell sx={{ fontWeight: "bold" }}>Action</TableCell> */}
             </TableRow>
           </TableHead>
           <TableBody>
@@ -44,39 +43,7 @@ export default function Vendors() {
                 <TableCell>{user.vendor_Email}</TableCell>
                 <TableCell>{user.mobile_no}</TableCell>
                 <TableCell>
-                  {/* Edit User */}
-                  {/* <IconButton
-                    color="primary"
-                    onClick={() => {
-                      setUserId(user._id);
-                      setIndex(index);
-                      setOpen(true);
-                    }}
-                  >
-                    <EditIcon />
-                  </IconButton> */}
-
-                  {/* Delete User with Confirmation */}
-                  {/* <IconButton
-                    onClick={() => {
-                      Swal.fire({
-                        title: "Are you sure?",
-                        text: "You won't be able to revert this!",
-                        icon: "warning",
-                        showCancelButton: true,
-                        confirmButtonColor: "#d33",
-                        cancelButtonColor: "#3085d6",
-                        confirmButtonText: "Yes, delete it!",
-                      }).then((result) => {
-                        if (result.isConfirmed) {
-                          deleteUser(user._id);
-                        }
-                      });
-                    }}
-                    color="error"
-                  >
-                    <DeleteIcon />
-                  </IconButton> */}
+                 
                 </TableCell>
               </TableRow>
             ))}

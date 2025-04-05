@@ -12,6 +12,7 @@ import Users from "./Pages/Users";
 import Vendors from "./Pages/Vedors";
 import Category from "./Pages/Category";
 import Events from "./Pages/Events";
+import BookedEvents from "./Pages/Events/bookedevents";
 function App() {
   return (
     <div className="App">
@@ -24,8 +25,7 @@ function App() {
           <Route path="/vendors" element={<Vendors />} />
           <Route path="/category" element={<Category />} />
           <Route path="/events" element={<Events />} />
-          {/* <Route path='/plants' element={<Plants/>}/>
-          <Route path='/tags' element={<Tags/>}/> */}
+          <Route path="/bookedevents" element={<BookedEvents />} />
         </Routes>
       </BrowserRouter>
     </div>

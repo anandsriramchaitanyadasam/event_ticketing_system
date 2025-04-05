@@ -17,28 +17,9 @@ import Link from "@mui/material/Link";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import NotificationsIcon from "@mui/icons-material/Notifications";
-// import { mainListItems, secondaryListItems } from "./listItems";
 import NestedList from "./NestedList";
 import { alpha } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
-// import logo from "../../Images/logo.png";
-function Copyright(props) {
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
 
 const drawerWidth = 240;
 
@@ -160,10 +141,9 @@ export default function LayoutTemplate({ children }) {
             >
               <MenuIcon sx={{ color: "white" }} />
             </IconButton>
-            {/* <img src={logo} /> */}
             <IconButton color="secondry">
               <Badge
-                // badgeContent={4}
+                
                 sx={{
                   backgroundColor: "white",
                   borderRadius: "50%",
@@ -203,7 +183,7 @@ export default function LayoutTemplate({ children }) {
                 ? theme.palette.grey[100]
                 : theme.palette.grey[900],
             flexGrow: 1,
-            // height: "100vh",
+          
             overflow: "auto",
           }}
         >
@@ -217,6 +197,3 @@ export default function LayoutTemplate({ children }) {
   );
 }
 
-// export default function Dashboard() {
-//   // return <DashboardContent />;
-// }
