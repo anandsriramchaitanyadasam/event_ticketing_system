@@ -29,29 +29,7 @@ exports.createCategory = async (req, res) => {
 };
 
 
-// Get all categories
-// exports.getAllCategories = async (req, res) => {
-//     try {
-//         const categories = await Category.find().sort({ createdAt: 1 }); // Sorting by latest created category
 
-//         res.status(200).json({
-//             data: categories,
-//             totalCount: categories.length,
-//             message: "Categories fetched successfully",
-//             status: 200
-//         });
-//     } catch (error) {
-//         res.status(500).json({
-//             data: [],
-//             totalCount: 0,
-//             message: "Server error",
-//             status: 500,
-//             error: error.message
-//         });
-//     }
-// };
-
-// Get all categories (Only Active Categories)
 exports.getAllCategories = async (req, res) => {
     try {
         const categories = await Category.find({ deleteFlag: false }) // ✅ Filter out deleted categories

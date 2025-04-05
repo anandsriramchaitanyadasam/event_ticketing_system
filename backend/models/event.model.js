@@ -23,10 +23,7 @@ const eventSchema = new Schema({
         type: String,
         required: true
     },
-    // event_ticket_price: {
-    //     type: Number,
-    //     required: true
-    // },
+   
     standard_price: {  
         type: Number,
         required: true
@@ -35,19 +32,19 @@ const eventSchema = new Schema({
         type: Number,
         required: true
     },
-    event_date: {  // ✅ New field
+    event_date: {  
         type: Date,
         required: true
     },
-    event_address: {  // ✅ New field
+    event_address: {  
         type: String,
         required: true
     },
-    event_start_time: {  // ✅ New field
+    event_start_time: {  
         type: String,
         required: true
     },
-    event_end_time: {  // ✅ New field
+    event_end_time: {  
         type: String,
         required: true
     },
@@ -56,18 +53,15 @@ const eventSchema = new Schema({
         required: true
     },
     category_id: {
-        type: mongoose.Schema.Types.ObjectId, // ✅ Reference to Category Model
+        type: mongoose.Schema.Types.ObjectId, // Reference to Category Model
         ref: 'Category',
         required: true
     },
-    category_name: {  // ✅ Store category_name for convenience
+    category_name: {  // Store category_name for convenience
         type: String,  
         required: true
     },
-    // createdAt: {
-    //     type: Date,
-    //     default: Date.now
-    // },
+   
     deleteFlag: {
         type: Boolean,
         default: false

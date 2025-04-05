@@ -1,45 +1,55 @@
-module.exports = (app)=>{
-    // user
-    const user = require('../controllers/user.controller');
+module.exports = (app) => {
+  // user
+  const user = require("../controllers/user.controller");
 
-    const vendor = require('../controllers/vendor.controller');
+  const vendor = require("../controllers/vendor.controller");
 
-    const event =  require('../controllers/event.controller');
+  const event = require("../controllers/event.controller");
 
-    const upload = require('../middlewares/uploads'); // ✅ Import uploads middleware
+  const upload = require("../middlewares/uploads"); // ✅ Import uploads middleware
 
+  app.post("/api/userSignUp", user.userSignUp);
 
- 
+  app.post("/api/userLogin", user.userLogin);
 
+  app.put("/api/changeUserPassword/:usersRegId", user.changeUserPassword);
 
-   
-    app.post("/api/userSignUp", user.userSignUp);
+  app.post("/api/bookEvent", event.bookEvent);
 
-    app.post('/api/userLogin',user.userLogin)
+  app.post("/api/processPayment", event.processPayment);
 
-    app.put('/api/changeUserPassword/:usersRegId', user.changeUserPassword);
+  app.get("/api/getUserBookings/:userId", event.getUserBookings);
 
+  //**************************** VENDOR ***************************/
 
-   
+  app.post("/api/vendorSignUp", vendor.vendorSignUp);
 
-    //**************************** VENDOR ***************************/
+  app.post("/api/vendorLogin", vendor.vendorLogin);
 
-    app.post("/api/vendorSignUp", vendor.vendorSignUp);
+  app.get(
+    "/api/vendor/getAllCategoriesByVendor",
+    vendor.getAllCategoriesByVendor
+  ); // Get all categories in vendor
 
-    app.post('/api/vendorLogin',vendor.vendorLogin);
+  app.post("/api/addEvent", upload.single("photo"), event.addEvent);
 
-    app.get('/api/vendor/getAllCategoriesByVendor', vendor.getAllCategoriesByVendor); // Get all categories in vendor
+  app.put(
+    "/api/editEventByVendor/:eventId",
+    upload.single("photo"),
+    event.editEventByVendor
+  );
 
-    app.post("/api/addEvent", upload.single("photo"), event.addEvent);
+  app.delete("/api/deleteEvent/:eventId", event.deleteEvent);
 
-    app.put("/api/editEventByVendor/:eventId", upload.single("photo"), event.editEventByVendor);
+  // get all events by vendorId
+  app.get("/api/getVendorEvents/:vendorId", vendor.getVendorEvents);
 
-    app.delete('/api/deleteEvent/:eventId', event.deleteEvent);
+  app.get(
+    "/api/getBookedEventsByVendor/:vendorId",
+    vendor.getBookedEventsByVendor
+  );
 
-    
+  //**************************** USER ***************************/
 
-   //**************************** USER ***************************/
-
-   app.get("/api/searchEvents", event.searchEvents);
-
-}
+  app.get("/api/searchEvents", event.searchEvents);
+};

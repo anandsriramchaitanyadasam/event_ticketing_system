@@ -5,6 +5,9 @@ const { Mongoose } = require('mongoose');
 const ObjectId = require('mongodb').ObjectID;
 const Vendor = require('../models/vendor.model')
 const Category = require('../models/category.model');
+const Event = require('../models/event.model');
+const Booking = require('../models/bookEvent.model');
+const User = require('../models/user.model'); 
 
 
 function generateToken(vendorid) {
@@ -227,27 +230,7 @@ exports.changeUserPassword = async (req, res) => {
     }
 };
 
-// Get all categories in Vendor
-// exports.getAllCategoriesByVendor = async (req, res) => {
-//   try {
-//       const categories = await Category.find().sort({ createdAt: 1 }); // Sorting by latest created category
 
-//       res.status(200).json({
-//           data: categories,
-//           totalCount: categories.length,
-//           message: "Categories fetched successfully",
-//           status: 200
-//       });
-//   } catch (error) {
-//       res.status(500).json({
-//           data: [],
-//           totalCount: 0,
-//           message: "Server error",
-//           status: 500,
-//           error: error.message
-//       });
-//   }
-// };
 // Get all categories (Only Active Categories)
 exports.getAllCategoriesByVendor = async (req, res) => {
   try {
@@ -267,6 +250,100 @@ exports.getAllCategoriesByVendor = async (req, res) => {
           message: "Server error",
           status: 500,
           error: error.message
+      });
+  }
+};
+
+
+exports.getVendorEvents = async (req, res) => {
+  try {
+      const { vendorId } = req.params; // ✅ Get vendorId from URL params
+
+      if (!vendorId) {
+          return res.status(400).json({ message: "Vendor ID is required" });
+      }
+
+      // ✅ Fetch events for the vendor
+      const events = await Event.find({ vendor_Id: vendorId })
+          .populate("category_id", "category_name") // ✅ Fetch category details
+          .sort({ event_date: 1 }); // ✅ Sort by event date (upcoming first)
+
+      // ✅ Get total event count
+      const totalCount = await Event.countDocuments({ vendor_Id: vendorId });
+
+      if (!events.length) {
+          return res.status(404).json({ message: "No events found for this vendor" });
+      }
+
+      res.status(200).json({
+          data: events,
+          message: "Vendor events retrieved successfully",
+          totalCount: totalCount,
+          status: 200
+      });
+  } catch (error) {
+      res.status(500).json({
+          message: "Server error",
+          error: error.message
+      });
+  }
+};
+
+
+
+exports.getBookedEventsByVendor = async (req, res) => {
+  try {
+      const { vendorId } = req.params;
+
+      if (!vendorId) {
+          return res.status(400).json({ message: "Vendor ID is required" });
+      }
+
+      // ✅ Fetch events created by the vendor
+      const events = await Event.find({ vendor_Id: vendorId });
+
+      if (!events.length) {
+          return res.status(404).json({ message: "No events found for this vendor" });
+      }
+
+      // ✅ Extract event IDs
+      const eventIds = events.map(event => event._id);
+
+      // ✅ Fetch bookings for these events & populate user data
+      const bookings = await Booking.find({ eventId: { $in: eventIds } })
+          .populate('eventId', 'event_name standard_price vip_price')
+          .populate('userId', 'user_Name'); // Assuming user model has a "name" field
+
+      if (!bookings.length) {
+          return res.status(404).json({ message: "No bookings found for this vendor's events" });
+      }
+
+      // ✅ Calculate total quantity of all booked tickets
+      const totalTicketCount = bookings.reduce((sum, booking) => sum + booking.quantity, 0);
+
+      // ✅ Format response data
+      const result = bookings.map(booking => ({
+          event_name: booking.eventId.event_name,
+          standard_price: booking.eventId.standard_price,
+          vip_price: booking.eventId.vip_price,
+          user_name: booking.userId.user_Name,
+          quantity: booking.quantity,
+          total_price: booking.total_price,
+          ticketType: booking.ticketType
+      }));
+
+      res.status(200).json({
+          data: result,
+          // totalCount: bookings.length // ✅ Total booked tickets count
+          totalTicketCount: totalTicketCount,
+          message: "Booked events retrieved successfully",
+          status: 200
+      });
+
+  } catch (error) {
+      res.status(500).json({ 
+          message: "Server error",
+          error: error.message 
       });
   }
 };
