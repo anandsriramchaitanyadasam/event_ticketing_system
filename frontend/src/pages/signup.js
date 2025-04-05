@@ -4,8 +4,6 @@ import React, { useState } from "react";
 import {
   Box,
   Button,
-  Card,
-  Container,
   Grid,
   Tab,
   Typography,
@@ -13,15 +11,13 @@ import {
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
-// import signupimg from "../Images/signup.png";
 import Header from "../layout/header";
 import swal from "sweetalert";
 import { useNavigate } from "react-router-dom";
 import { postApihandler } from "../Apihandler";
 import GoogleIcon from "@mui/icons-material/Google";
 import FacebookIcon from "@mui/icons-material/Facebook";
-// import signupimg from "../Images/signupimg.avif";
-import signupimg from "../Images/signup.png";
+
 const countryCodeList = [
   {
     code: "AF",
@@ -1244,16 +1240,9 @@ export default function Signup() {
   };
   const navigate = useNavigate();
   const [name, setName] = useState("");
-  // console.log("name is --->", name);
-
   const [email, setEmail] = useState("");
-  // console.log("email is --->", email);
-
   const [password, setPassword] = useState("");
-  // console.log("password is --->", password);
-
   const [confirmpassword, setConfirmPassword] = useState("");
-  // console.log("confirmpassword is --->", confirmpassword);
   const [phonenumber, setphonenumber] = useState("");
 
   const [country_code, setCountryCode] = React.useState();
@@ -1579,7 +1568,6 @@ export default function Signup() {
                     style={{
                       display: "flex",
                       alignItems: "center",
-                      // marginTop: "30px",
                       flexDirection: "column",
                       gap: 2,
                       textAlign: "center",
@@ -1679,7 +1667,6 @@ export default function Signup() {
                               style={{
                                 background: "#D9D9D929",
                                 border: "2px solid #0000006E",
-                                //   width: "272px",
                                 height: "40px",
                                 borderRadius: "10px",
                                 fontSize: "14px",

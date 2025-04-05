@@ -1,8 +1,7 @@
 /** @format */
 
 import React, { useEffect, useState } from "react";
-import Header from "../../layout/header";
-import Footer from "../../layout/footer";
+
 import UserEvents from "../../components/Events/userevents";
 import VendorEvents from "../../components/Events/vendorevents";
 
@@ -24,7 +23,6 @@ export default function Events() {
 
   return (
     <>
-      {/* <Header /> */}
       {userType === "vendor" ? (
         <VendorEvents />
       ) : userType === "user" ? (
@@ -34,7 +32,6 @@ export default function Events() {
           Please log in to view events.
         </p>
       )}
-      {/* <Footer /> */}
     </>
   );
 }

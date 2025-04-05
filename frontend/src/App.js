@@ -10,6 +10,9 @@ import HomePage from "./pages/HomePage";
 import Events from "./pages/Events";
 import UserEvents from "./components/Events/userevents";
 import VendorProfile from "./pages/Profile/vendorprofile";
+import EventDetail from "./pages/Events/eventdetail";
+import Payment from "./pages/Payment";
+import Booking from "./pages/Booking";
 function App() {
   return (
     <div className="App">
@@ -21,10 +24,10 @@ function App() {
           <Route path="/vendor-profile" element={<VendorProfile />} />
           <Route path="/home" element={<HomePage />} />
           <Route path="/events" element={<Events />} />
-          <Route
-            path="/userevents/:category_name/:event_date/:city"
-            element={<UserEvents />}
-          />
+          <Route path="/userevents" element={<UserEvents />} />
+          <Route path="/eventdetails/:id" element={<EventDetail />} />
+          <Route path="/payment/:id" element={<Payment />} />
+          <Route path="/booking" element={<Booking />} />
         </Routes>
       </BrowserRouter>
     </div>

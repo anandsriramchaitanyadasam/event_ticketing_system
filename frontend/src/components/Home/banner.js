@@ -29,7 +29,17 @@ export default function Banner() {
       console.error("Error fetching categories:", error);
     }
   };
+  // ***** for search functioanlity **************
+  const constructUrl = () => {
+    const params = [];
 
+    if (categoryname) params.push(`category_name=${categoryname}`);
+    if (city) params.push(`city=${city}`);
+    if (eventdate) params.push(`event_date=${eventdate}`);
+
+    // Join parameters with '&' and prepend '/resultpage?'
+    return `/userevents?${params.join("&")}`;
+  };
   return (
     <>
       <section className="banner_sec">
@@ -69,15 +79,16 @@ export default function Banner() {
                   }}
                   InputProps={{ disableUnderline: true }}
                 >
-                  <MenuItem value="" disabled>Select Category</MenuItem> {/* Placeholder */}
+                  <MenuItem value="" disabled>
+                    Select Category
+                  </MenuItem>{" "}
+                  {/* Placeholder */}
                   {categories.map((cat) => (
                     <MenuItem key={cat._id} value={cat.category_name}>
                       {cat.category_name}
                     </MenuItem>
                   ))}
                 </TextField>
-
-
 
                 {/* Date Input */}
                 <TextField
@@ -96,20 +107,16 @@ export default function Banner() {
 
                 {/* City Input */}
 
-                 <input
-                 style={{border:"none" ,padding:"10px" }}
-                            placeholder="city"
-                              fullWidth
-                              value={city}
-                              onChange={(e) => setCity(e.target.value)}
-                              
-                            />
-             
+                <input
+                  style={{ border: "none", padding: "10px" }}
+                  placeholder="city"
+                  fullWidth
+                  value={city}
+                  onChange={(e) => setCity(e.target.value)}
+                />
 
-
-             
                 <Link
-                  to={`/userevents/${categoryname}/${eventdate}/${city}`} // Use URL parameters
+                  to={constructUrl()} // Use URL parameters
                   style={{ textDecoration: "none" }}
                 >
                   <Button

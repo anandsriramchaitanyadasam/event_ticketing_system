@@ -2,7 +2,6 @@
 
 import React, { useState } from "react";
 import { Box, Button, Grid, IconButton, Tab, Typography } from "@mui/material";
-import signupimg from "../Images/signup.png";
 import Header from "../layout/header";
 import { useNavigate } from "react-router-dom";
 import { postApihandler } from "../Apihandler";
@@ -32,11 +31,10 @@ export default function Login() {
     };
     console.log("login data is --->", data);
     const res = await postApihandler("/userLogin", data);
-    console.log("login api response is ---->", res);
-    
 
     if (res.status === 200) {
       localStorage.setItem("userData", JSON.stringify(res.data));
+
       localStorage.setItem("role", "user");
       swal(" Login Successfully");
       navigate("/home");
@@ -63,7 +61,7 @@ export default function Login() {
       localStorage.setItem("userData", JSON.stringify(res.data));
       localStorage.setItem("vendor_Id", res.data._id);
       localStorage.setItem("role", "vendor");
-      
+
       swal(" Login Vendor Successfully");
       navigate("/home");
     }
@@ -307,24 +305,6 @@ export default function Login() {
                             {showPassword ? <VisibilityOff /> : <Visibility />}
                           </IconButton>
                         </div>
-                        {/* <input
-                        type="text"
-                        placeholder="Enter your password"
-                        fullWidth
-                        style={{
-                          background: "#D9D9D929",
-                          border: "2px solid #0000006E",
-                          width: "100%",
-                          height: "40px",
-                          borderRadius: "10px",
-                          fontSize: "14px",
-                          fontWeight: "500",
-                          marginBottom: "30px",
-                          paddingLeft: "10px",
-                        }}
-                        onChange={(e) => setVendorPassword(e.target.value)}
-                        value={vendorpassword}
-                      /> */}
                       </div>
                     </div>
 
