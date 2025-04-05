@@ -25,10 +25,6 @@ const vendorSchema = new Schema({
         required: [true, "please enter vendor password"]
     },
 
-    // fcm_token:{
-    //     type:String,
-    //     default:''
-    // },
 
     isActive: {
         type: Boolean,
