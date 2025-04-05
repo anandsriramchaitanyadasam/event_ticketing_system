@@ -16,7 +16,6 @@ import {
   InputLabel,
   FormControl,
   Modal,
-  CircularProgress,
   Grid,
   Card,
   CardMedia,
@@ -28,15 +27,12 @@ import Header from "../../layout/header";
 import Footer from "../../layout/footer";
 
 const style = {
-  // position: "absolute",
-  // top: "50%",
-  // left: "50%",
-  // transform: "translate(-50%, -50%)",
   width: 400,
   bgcolor: "background.paper",
   border: "2px solid #000",
   boxShadow: 24,
   p: 4,
+  height: "180vh",
 };
 
 export default function VendorEvents() {
@@ -149,7 +145,7 @@ export default function VendorEvents() {
   const handleOpen1 = () => setOpen1(true);
   const handleClose1 = () => setOpen1(false);
   useEffect(() => {
-    if (index !== null && events[index]) {
+    if (index !== "") {
       const {
         event_name,
         country,
@@ -174,8 +170,9 @@ export default function VendorEvents() {
       setEventEndTime(event_end_time || "");
       setEventAddress(event_address || "");
       setSelectedCategory(category || "");
+      setOpen1(true);
     }
-  }, [events, index]);
+  }, [index]);
   const updateEvents = async () => {
     const formData = new FormData();
     formData.append("vendor_Id", vendorId);
@@ -194,6 +191,7 @@ export default function VendorEvents() {
     photos.forEach((photo) => {
       formData.append("photo", photo);
     });
+
     const res = await putApihandler(`/editEventByVendor/${eventid}`, formData);
     console.log("update api res is --->", res);
     try {
@@ -225,7 +223,16 @@ export default function VendorEvents() {
         </Button>
       </div>
 
-      <Modal open={open} onClose={handleClose} sx={{ overflowY: "scroll" }}>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        sx={{
+          overflowY: "scroll",
+          display: "flex",
+          // alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
         <div className="d-flex justify-content-center">
           <Box sx={style}>
             <h6>Add Events</h6>
@@ -233,42 +240,42 @@ export default function VendorEvents() {
               label="Event Name"
               fullWidth
               margin="normal"
-              value={eventname}
+              // value={eventname}
               onChange={(e) => setEventName(e.target.value)}
             />
             <TextField
               label="Country"
               fullWidth
               margin="normal"
-              value={country}
+              // value={country}
               onChange={(e) => setCountry(e.target.value)}
             />
             <TextField
               label="State"
               fullWidth
               margin="normal"
-              value={state}
+              // value={state}
               onChange={(e) => setState(e.target.value)}
             />
             <TextField
               label="City"
               fullWidth
               margin="normal"
-              value={city}
+              // value={city}
               onChange={(e) => setCity(e.target.value)}
             />
             <TextField
               label="Standard Price"
               fullWidth
               margin="normal"
-              value={standardPrice}
+              // value={standardPrice}
               onChange={(e) => setStandardPrice(e.target.value)}
             />
             <TextField
               label="VIP Price"
               fullWidth
               margin="normal"
-              value={vipPrice}
+              // value={vipPrice}
               onChange={(e) => setVipPrice(e.target.value)}
             />
             <TextField
@@ -276,7 +283,7 @@ export default function VendorEvents() {
               type="date"
               fullWidth
               margin="normal"
-              value={eventDate}
+              // value={eventDate}
               onChange={(e) => setEventDate(e.target.value)}
             />
             <TextField
@@ -284,7 +291,7 @@ export default function VendorEvents() {
               type="time"
               fullWidth
               margin="normal"
-              value={eventStartTime}
+              // value={eventStartTime}
               onChange={(e) => setEventStartTime(e.target.value)}
             />
             <TextField
@@ -292,21 +299,21 @@ export default function VendorEvents() {
               type="time"
               fullWidth
               margin="normal"
-              value={eventEndTime}
+              // value={eventEndTime}
               onChange={(e) => setEventEndTime(e.target.value)}
             />
             <TextField
               label="Event Address"
               fullWidth
               margin="normal"
-              value={eventAddress}
+              // value={eventAddress}
               onChange={(e) => setEventAddress(e.target.value)}
             />
 
             <FormControl fullWidth margin="normal">
               <InputLabel>Category</InputLabel>
               <Select
-                value={selectedCategoryId}
+                // value={selectedCategoryId}
                 onChange={(e) => {
                   const selectedCat = categories.find(
                     (cat) => cat._id === e.target.value
@@ -397,7 +404,6 @@ export default function VendorEvents() {
                       onClick={() => {
                         setEventId(event._id); // Set the correct event ID
                         setIndex(index); // Use 'index' instead of undefined 'idx'
-                        setOpen1(true); // Open the modal
                       }}
                     >
                       Update
@@ -410,7 +416,16 @@ export default function VendorEvents() {
         </Grid>
       </Box>
       {/* ******** update modal ******** */}
-      <Modal open={open1} onClose={handleClose1} sx={{ overflowY: "scroll" }}>
+      <Modal
+        open={open1}
+        onClose={handleClose1}
+        sx={{
+          overflowY: "scroll",
+          display: "flex",
+          // alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
         <div className="d-flex justify-content-center">
           <Box sx={style}>
             <h6>Update Events</h6>

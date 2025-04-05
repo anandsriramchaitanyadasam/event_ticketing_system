@@ -17,7 +17,7 @@ import {
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -114,6 +114,12 @@ export default function Header() {
                     Vendor Profile
                   </MenuItem>
                 )}
+                <Link
+                  to="/booking"
+                  style={{ textDecoration: "none", color: "black" }}
+                >
+                  <MenuItem>My Bookings</MenuItem>
+                </Link>
                 <MenuItem onClick={handleLogout}>Logout</MenuItem>
               </Popover>
             </>
