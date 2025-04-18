@@ -1,13 +1,7 @@
 /** @format */
 
 import React, { useState } from "react";
-import {
-  Box,
-  Button,
-  Grid,
-  Tab,
-  Typography,
-} from "@mui/material";
+import { Box, Button, Grid, Tab, Typography } from "@mui/material";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
@@ -15,8 +9,6 @@ import Header from "../layout/header";
 import swal from "sweetalert";
 import { useNavigate } from "react-router-dom";
 import { postApihandler } from "../Apihandler";
-import GoogleIcon from "@mui/icons-material/Google";
-import FacebookIcon from "@mui/icons-material/Facebook";
 
 const countryCodeList = [
   {
@@ -1326,7 +1318,6 @@ export default function Signup() {
                     style={{
                       display: "flex",
                       alignItems: "center",
-                      // marginTop: "30px",
                       flexDirection: "column",
                       gap: 2,
                       textAlign: "center",
@@ -1348,8 +1339,6 @@ export default function Signup() {
                             style={{
                               background: "#D9D9D929",
                               border: "2px solid #0000006E",
-                              // width: "272px",
-
                               width: "100%",
                               height: "40px",
                               borderRadius: "10px",
@@ -1429,7 +1418,6 @@ export default function Signup() {
                               style={{
                                 background: "#D9D9D929",
                                 border: "2px solid #0000006E",
-                                //   width: "272px",
                                 height: "40px",
                                 borderRadius: "10px",
                                 fontSize: "14px",
@@ -1535,31 +1523,6 @@ export default function Signup() {
                       </a>
                     </Typography>
                   </form>
-                  <div className="text-center">
-                    <Button
-                      variant="contained"
-                      className="mt-3"
-                      sx={{ padding: "5px 23px", backgroundColor: "#60156d" }}
-                    >
-                      <GoogleIcon
-                        sx={{
-                          color: "white",
-                          marginRight: "5px",
-                        }}
-                      />{" "}
-                      Sign in with Google
-                    </Button>
-                    <Button
-                      variant="contained"
-                      className="mt-3"
-                      sx={{ backgroundColor: "#60156d" }}
-                    >
-                      <FacebookIcon
-                        sx={{ color: "white", marginRight: "5px" }}
-                      />{" "}
-                      Sign in with Facebook
-                    </Button>
-                  </div>
                 </TabPanel>
                 <TabPanel value="2">
                   <h6>Vendor</h6>

@@ -1,15 +1,42 @@
 import React, { useState } from "react";
 import Header from "../../layout/header";
-import { Box, Button, Card, TextField, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Card,
+  MenuItem,
+  Select,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { postApihandler } from "../../Apihandler";
 import swal from "sweetalert";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
 
 export default function Payment() {
+  // ******* calendar*******
+  const currentYear = new Date().getFullYear();
+  const years = Array.from(new Array(12), (val, index) => currentYear + index);
+  const months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+
   const [cardNumber, setCardNumber] = useState("");
   const [expiryMonth, setExpiryMonth] = useState("");
   const [expiryYear, setExpiryYear] = useState("");
   const [cardHolderName, setCardHolderName] = useState("");
+  const [cvvnumber, setCvvNumber] = useState("");
   const { id } = useParams();
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
@@ -22,6 +49,7 @@ export default function Payment() {
         expiryMonth: expiryMonth,
         expiryYear: expiryYear,
         cardHolderName: cardHolderName,
+        cvv: cvvnumber,
       },
     };
     console.log("payment data", paymentData);
@@ -65,28 +93,57 @@ export default function Payment() {
             className="form-control mb-3"
           />
           <Box display="flex" gap={2}>
-            <input
-              placeholder="Expiry Month"
+            <Select
               value={expiryMonth}
               onChange={(e) => setExpiryMonth(e.target.value)}
+              displayEmpty
               required
               sx={{ width: "50%" }}
               className="form-control mb-3"
-            />
-            <input
-              placeholder="Expiry Year"
+            >
+              <MenuItem value="" disabled>
+                Select Month
+              </MenuItem>
+              {months.map((month, index) => (
+                <MenuItem key={index} value={index + 1}>
+                  {month}
+                </MenuItem>
+              ))}
+            </Select>
+
+            <Select
               value={expiryYear}
               onChange={(e) => setExpiryYear(e.target.value)}
+              displayEmpty
               required
               sx={{ width: "50%" }}
               className="form-control mb-3"
-            />
+            >
+              <MenuItem value="" disabled>
+                Select Year
+              </MenuItem>
+              {years.map((year) => (
+                <MenuItem key={year} value={year}>
+                  {year}
+                </MenuItem>
+              ))}
+            </Select>
           </Box>
           <input
             fullWidth
             placeholder="Cardholder Name"
             value={cardHolderName}
             onChange={(e) => setCardHolderName(e.target.value)}
+            required
+            margin="normal"
+            className="form-control mb-3"
+          />
+          <input
+            fullWidth
+            placeholder="CVV Number"
+            value={cvvnumber}
+            maxLength="3"
+            onChange={(e) => setCvvNumber(e.target.value)}
             required
             margin="normal"
             className="form-control mb-3"

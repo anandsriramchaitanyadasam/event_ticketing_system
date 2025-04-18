@@ -1,64 +1,56 @@
 /** @format */
 
-import React, { useEffect, useState } from "react"; // Importing necessary hooks from React
-import Container from "react-bootstrap/Container"; // For creating a container to wrap the content
-import { Box, Button, MenuItem, TextField } from "@mui/material"; // Importing Material-UI components
-import { Link } from "react-router-dom"; // For navigation to different pages in the app
-import { getApihandler } from "../../Apihandler"; // Importing custom API handler for making requests
+import React, { useEffect, useState } from "react";
 
+import Container from "react-bootstrap/Container";
+import { Box, Button, MenuItem, TextField } from "@mui/material";
+import { Link } from "react-router-dom";
+import { getApihandler } from "../../Apihandler";
 export default function Banner() {
-  // State hooks for managing form input values and fetched data
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // To check if the user is logged in
-  const [categoryname, setCategoryName] = useState(""); // For storing selected category name
-  const [city, setCity] = useState(""); // For storing entered city
-  const [eventdate, setEventDate] = useState(""); // For storing the selected event date
-  const [categories, setCategories] = useState([]); // For storing categories fetched from the API
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [categoryname, setCategoryName] = useState("");
+  const [city, setCity] = useState("");
+  const [eventdate, setEventDate] = useState("");
+  const [categories, setCategories] = useState([]);
 
-  // useEffect hook to check if the user is logged in and fetch categories when the component mounts
   useEffect(() => {
-    const userToken = localStorage.getItem("role"); // Get user role from localStorage
-    setIsLoggedIn(userToken); // Set the login status based on the role
-    getCategory(); // Fetch categories from the API
+    const userToken = localStorage.getItem("role");
+    setIsLoggedIn(userToken);
+    getCategory();
   }, []);
 
-  // Function to fetch categories from the backend API
   const getCategory = async () => {
     try {
-      const res = await getApihandler("/admin/getAllCategories"); // API call to fetch categories
+      const res = await getApihandler("/admin/getAllCategories");
       if (res.message === "Categories fetched successfully") {
-        setCategories(res.data); // Update state with fetched categories
+        setCategories(res.data);
       }
     } catch (error) {
-      console.error("Error fetching categories:", error); // Log error if fetching fails
+      console.error("Error fetching categories:", error);
     }
   };
-
-  // Function to construct the search URL based on selected filters
+  // ***** for search functioanlity **************
   const constructUrl = () => {
-    const params = []; // Initialize an empty array to store query parameters
+    const params = [];
 
-    if (categoryname) params.push(`category_name=${categoryname}`); // Add category name parameter if provided
-    if (city) params.push(`city=${city}`); // Add city parameter if provided
-    if (eventdate) params.push(`event_date=${eventdate}`); // Add event date parameter if provided
+    if (categoryname) params.push(`category_name=${categoryname}`);
+    if (city) params.push(`city=${city}`);
+    if (eventdate) params.push(`event_date=${eventdate}`);
 
-    // Join parameters with '&' and prepend the base URL path
-    return `/userevents?${params.join("&")}`;
+    // Join parameters with '&' and prepend '/resultpage?'
+    return `/events?${params.join("&")}`;
   };
-
   return (
     <>
       <section className="banner_sec">
         <Container>
           {isLoggedIn === "user" && (
-            // Check if the user is logged in as a "user"
             <>
-              {/* Main heading for the search section */}
               <div className="text-center main_heading">
                 <h2>Find Nearby Location</h2>
                 <h5>Explore top-rated attractions, activities and more!</h5>
               </div>
 
-              {/* Search form with category, date, and city inputs */}
               <Box
                 sx={{
                   display: "flex",
@@ -72,70 +64,70 @@ export default function Banner() {
                   margin: "auto",
                 }}
               >
-                {/* Category Dropdown */}
+                {/* Category Input */}
                 <TextField
                   select
                   name="category_name"
-                  value={categoryname} // Set the value of the category input
-                  onChange={(e) => setCategoryName(e.target.value)} // Update the category state on change
+                  value={categoryname}
+                  onChange={(e) => setCategoryName(e.target.value)}
                   variant="standard"
-                  SelectProps={{ displayEmpty: true }} // Ensure placeholder is visible
+                  SelectProps={{ displayEmpty: true }}
                   sx={{
                     minWidth: "200px",
-                    "& .MuiInput-underline:before": { borderBottom: "none" }, // Customize input border
-                    "& .MuiInput-underline:after": { borderBottom: "none" }, // Customize input border
+                    "& .MuiInput-underline:before": { borderBottom: "none" },
+                    "& .MuiInput-underline:after": { borderBottom: "none" },
                   }}
-                  InputProps={{ disableUnderline: true }} // Disable underline for the input field
+                  InputProps={{ disableUnderline: true }}
                 >
                   <MenuItem value="" disabled>
                     Select Category
-                  </MenuItem> {/* Placeholder */}
+                  </MenuItem>{" "}
+                  {/* Placeholder */}
                   {categories.map((cat) => (
-                    // Dynamically populate category dropdown from categories state
                     <MenuItem key={cat._id} value={cat.category_name}>
                       {cat.category_name}
                     </MenuItem>
                   ))}
                 </TextField>
 
-                {/* Date Picker Input */}
+                {/* Date Input */}
                 <TextField
                   type="date"
                   name="event_date"
-                  value={eventdate} // Set the value of the date input
-                  onChange={(e) => setEventDate(e.target.value)} // Update event date state on change
+                  value={eventdate}
+                  onChange={(e) => setEventDate(e.target.value)}
                   variant="standard"
                   sx={{
                     minWidth: "300px",
-                    "& .MuiInput-underline:before": { borderBottom: "none" }, // Customize input border
-                    "& .MuiInput-underline:after": { borderBottom: "none" }, // Customize input border
+                    "& .MuiInput-underline:before": { borderBottom: "none" },
+                    "& .MuiInput-underline:after": { borderBottom: "none" },
                   }}
-                  InputProps={{ disableUnderline: true }} // Disable underline for the input field
+                  InputProps={{ disableUnderline: true }}
                 />
 
                 {/* City Input */}
+
                 <input
                   style={{ border: "none", padding: "10px" }}
-                  placeholder="city" // Placeholder text for the input
+                  placeholder="city"
                   fullWidth
-                  value={city} // Set the value of the city input
-                  onChange={(e) => setCity(e.target.value)} // Update city state on change
+                  value={city}
+                  onChange={(e) => setCity(e.target.value)}
                 />
 
-                {/* Search Button - Links to the constructed URL */}
                 <Link
-                  to={constructUrl()} // Use URL parameters for navigation
+                  to={constructUrl()} // Use URL parameters
                   style={{ textDecoration: "none" }}
                 >
                   <Button
                     variant="contained"
                     sx={{
-                      backgroundColor: "#ff3d7f", // Button background color
+                      backgroundColor: "#ff3d7f",
                       borderRadius: "30px",
                       padding: "10px 20px",
                       fontWeight: "bold",
                       textTransform: "none",
-                      "&:hover": { backgroundColor: "#ff1f5a" }, // Button hover effect
+                      "&:hover": { backgroundColor: "#ff1f5a" },
                     }}
                   >
                     Search

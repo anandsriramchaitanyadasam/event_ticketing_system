@@ -18,10 +18,12 @@ import swal from "sweetalert";
 
 export default function EventDetail() {
   const [events, setEvents] = useState({});
+  console.log("events data --->", events);
   const [ticketType, setTicketType] = useState("standard");
   const [price, setPrice] = useState("");
   const [quantity, setQuantity] = useState("");
   const { id } = useParams();
+
   const navigate = useNavigate();
   useEffect(() => {
     getEventDetails();
@@ -30,7 +32,7 @@ export default function EventDetail() {
     const res = await getApihandler(`/events/${id}`);
     console.log("get event details is --->", res);
     if (res.status === 200) {
-      setEvents(res.data[0]);
+      setEvents(res.data);
     }
   };
 
@@ -51,14 +53,12 @@ export default function EventDetail() {
   const BookNow = async () => {
     const userData = JSON.parse(localStorage.getItem("userData"));
     const userId = userData._id;
-    // console.log("user id is --->", userId);
     const data = {
       userId: userId,
       eventId: id,
       quantity: quantity,
       ticketType: ticketType,
     };
-    console.log("data is ---->", data);
     const res = await postApihandler("/bookEvent", data);
     console.log("book api response is -->", res);
     if (res.status === 200) {
@@ -78,7 +78,7 @@ export default function EventDetail() {
             <img
               src={`http://localhost:80/uploads/${events.photoUrl}`}
               alt={events.event_name}
-              style={{ width: "100%" }}
+              style={{ width: "100%", height: "60vh", objectFit: "cover" }}
             />
             <div style={{ textAlign: "left" }}>
               <Typography variant="h4">{events.event_name}</Typography>

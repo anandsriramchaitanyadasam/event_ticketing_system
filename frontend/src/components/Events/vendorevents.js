@@ -100,7 +100,7 @@ export default function VendorEvents() {
       const res = await postApihandler("/addEvent", formData);
       console.log("Events added successfully:", res);
       if (res.message === "Event added successfully") {
-        getEvents();
+        getVendorEvents();
         Swal.fire({
           title: "Event Add Successfully",
           icon: "success",
@@ -113,15 +113,18 @@ export default function VendorEvents() {
   };
   // ********* get Events ****************
   const [events, setEvents] = useState([]);
+  console.log("event is", events);
   useEffect(() => {
-    getEvents();
+    getVendorEvents();
   }, []);
-  const getEvents = async () => {
-    const res = await getApihandler("/getAllEvents");
-    if (res.message === "Events fetched successfully") {
+  const getVendorEvents = async () => {
+    const userData = JSON.parse(localStorage.getItem("userData"));
+    const vendorId = userData._id;
+    const res = await getApihandler(`/getVendorEvents/${vendorId}`);
+    console.log("get vendor events --->", res);
+    if (res.message === "Vendor events retrieved successfully") {
       setEvents(res.data);
     }
-    console.log("get all events res--->", res);
   };
 
   // ******** delete events ******
@@ -133,7 +136,7 @@ export default function VendorEvents() {
         title: "Delete Event Successfully",
         icon: "success",
       });
-      getEvents();
+      getVendorEvents();
     }
   };
 
@@ -201,7 +204,7 @@ export default function VendorEvents() {
           icon: "success",
         });
         setOpen1(false);
-        getEvents();
+        getVendorEvents();
       }
     } catch (error) {
       console.error("Error adding event:", error);
@@ -229,7 +232,6 @@ export default function VendorEvents() {
         sx={{
           overflowY: "scroll",
           display: "flex",
-          // alignItems: "center",
           justifyContent: "center",
         }}
       >
@@ -240,42 +242,36 @@ export default function VendorEvents() {
               label="Event Name"
               fullWidth
               margin="normal"
-              // value={eventname}
               onChange={(e) => setEventName(e.target.value)}
             />
             <TextField
               label="Country"
               fullWidth
               margin="normal"
-              // value={country}
               onChange={(e) => setCountry(e.target.value)}
             />
             <TextField
               label="State"
               fullWidth
               margin="normal"
-              // value={state}
               onChange={(e) => setState(e.target.value)}
             />
             <TextField
               label="City"
               fullWidth
               margin="normal"
-              // value={city}
               onChange={(e) => setCity(e.target.value)}
             />
             <TextField
               label="Standard Price"
               fullWidth
               margin="normal"
-              // value={standardPrice}
               onChange={(e) => setStandardPrice(e.target.value)}
             />
             <TextField
               label="VIP Price"
               fullWidth
               margin="normal"
-              // value={vipPrice}
               onChange={(e) => setVipPrice(e.target.value)}
             />
             <TextField
@@ -283,7 +279,6 @@ export default function VendorEvents() {
               type="date"
               fullWidth
               margin="normal"
-              // value={eventDate}
               onChange={(e) => setEventDate(e.target.value)}
             />
             <TextField
@@ -291,7 +286,6 @@ export default function VendorEvents() {
               type="time"
               fullWidth
               margin="normal"
-              // value={eventStartTime}
               onChange={(e) => setEventStartTime(e.target.value)}
             />
             <TextField
@@ -299,21 +293,18 @@ export default function VendorEvents() {
               type="time"
               fullWidth
               margin="normal"
-              // value={eventEndTime}
               onChange={(e) => setEventEndTime(e.target.value)}
             />
             <TextField
               label="Event Address"
               fullWidth
               margin="normal"
-              // value={eventAddress}
               onChange={(e) => setEventAddress(e.target.value)}
             />
 
             <FormControl fullWidth margin="normal">
               <InputLabel>Category</InputLabel>
               <Select
-                // value={selectedCategoryId}
                 onChange={(e) => {
                   const selectedCat = categories.find(
                     (cat) => cat._id === e.target.value
@@ -341,9 +332,7 @@ export default function VendorEvents() {
       </Modal>
       {/* ****** get events ***** */}
       <Box sx={{ p: 3 }}>
-        <h2 style={{ textAlign: "center", marginBottom: "20px" }}>
-          All Events
-        </h2>
+        <h2 style={{ textAlign: "center", marginBottom: "20px" }}>Events</h2>
         <Grid container spacing={3} justifyContent="center">
           {events.map((event, index) => (
             <Grid item key={event._id} xs={12} sm={6} md={4} lg={3}>
@@ -402,8 +391,8 @@ export default function VendorEvents() {
                       key={event._id}
                       variant="outlined"
                       onClick={() => {
-                        setEventId(event._id); // Set the correct event ID
-                        setIndex(index); // Use 'index' instead of undefined 'idx'
+                        setEventId(event._id);
+                        setIndex(index);
                       }}
                     >
                       Update
@@ -422,7 +411,7 @@ export default function VendorEvents() {
         sx={{
           overflowY: "scroll",
           display: "flex",
-          // alignItems: "center",
+
           justifyContent: "center",
         }}
       >

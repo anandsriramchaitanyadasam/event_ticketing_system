@@ -6,8 +6,7 @@ import Header from "../layout/header";
 import { useNavigate } from "react-router-dom";
 import { postApihandler } from "../Apihandler";
 import swal from "sweetalert";
-import GoogleIcon from "@mui/icons-material/Google";
-import FacebookIcon from "@mui/icons-material/Facebook";
+
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
@@ -29,7 +28,7 @@ export default function Login() {
       user_Email: email,
       password: password,
     };
-    console.log("login data is --->", data);
+
     const res = await postApihandler("/userLogin", data);
 
     if (res.status === 200) {
@@ -38,9 +37,7 @@ export default function Login() {
       localStorage.setItem("role", "user");
       swal(" Login Successfully");
       navigate("/home");
-    }
-    // console.log("login api response is ------->", res);
-    else {
+    } else {
       swal("Error", res.message || "An unknown error occurred.", "error");
     }
   };
@@ -56,7 +53,7 @@ export default function Login() {
       password: vendorpassword,
     };
     const res = await postApihandler("/vendorLogin", data);
-    console.log("vendor login api res --->", res);
+
     if (res.status === 200) {
       localStorage.setItem("userData", JSON.stringify(res.data));
       localStorage.setItem("vendor_Id", res.data._id);
@@ -64,9 +61,7 @@ export default function Login() {
 
       swal(" Login Vendor Successfully");
       navigate("/home");
-    }
-    // console.log("login api response is ------->", res);
-    else {
+    } else {
       swal("Error", res.message || "An unknown error occurred.", "error");
     }
   };
@@ -102,7 +97,7 @@ export default function Login() {
                     style={{
                       display: "flex",
                       alignItems: "center",
-                      // marginTop: "30px",
+
                       flexDirection: "column",
                       gap: 2,
                       textAlign: "center",
@@ -192,6 +187,7 @@ export default function Login() {
                         fontSize: "14px",
                         fontWeight: "500",
                         marginTop: "20px",
+                        marginBottom: "60px",
                       }}
                     >
                       Don’t have an account?{" "}
@@ -207,31 +203,6 @@ export default function Login() {
                       </a>
                     </Typography>
                   </form>
-                  <div className="text-center">
-                    <Button
-                      variant="contained"
-                      className="mt-3"
-                      sx={{ padding: "5px 23px", backgroundColor: "#60156d" }}
-                    >
-                      <GoogleIcon
-                        sx={{
-                          color: "white",
-                          marginRight: "5px",
-                        }}
-                      />{" "}
-                      Sign in with Google
-                    </Button>
-                    <Button
-                      variant="contained"
-                      className="mt-3"
-                      sx={{ backgroundColor: "#60156d" }}
-                    >
-                      <FacebookIcon
-                        sx={{ color: "white", marginRight: "5px" }}
-                      />{" "}
-                      Sign in with Facebook
-                    </Button>
-                  </div>
                 </TabPanel>
                 <TabPanel value="2">
                   <h6>Vendor</h6>
@@ -240,7 +211,7 @@ export default function Login() {
                     style={{
                       display: "flex",
                       alignItems: "center",
-                      // marginTop: "30px",
+
                       flexDirection: "column",
                       gap: 2,
                       textAlign: "center",

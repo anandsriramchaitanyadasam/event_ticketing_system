@@ -17,7 +17,7 @@ export default function Events() {
     } else if (userData) {
       setUserType("user");
     } else {
-      setUserType(null); // Handle case when neither is logged in
+      setUserType(null);
     }
   }, []);
 
