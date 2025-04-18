@@ -12,15 +12,17 @@ import DashboardIcon from "@mui/icons-material/Dashboard";
 import PeopleIcon from "@mui/icons-material/People";
 import ForestIcon from "@mui/icons-material/Forest";
 import StyleIcon from "@mui/icons-material/Style";
+import PaymentsIcon from "@mui/icons-material/Payments";
+import ReviewsIcon from "@mui/icons-material/Reviews";
 import LogoutIcon from "@mui/icons-material/Logout";
 export default function NestedList() {
   // ******* logout functionality *****
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    localStorage.removeItem("x-access-token"); // Remove token from localStorage
-    localStorage.removeItem("userId"); // Remove user ID if stored
-    navigate("/login"); // Redirect to login page
+    localStorage.removeItem("x-access-token");
+    localStorage.removeItem("userId");
+    navigate("/login");
   };
   return (
     <List
@@ -86,6 +88,26 @@ export default function NestedList() {
             </IconButton>
           </ListItemIcon>
           <ListItemText primary=" Booked Events" sx={{ color: "white" }} />
+        </ListItemButton>
+      </Link>
+      <Link to="/paymenthistory" style={{ textDecoration: "none" }}>
+        <ListItemButton>
+          <ListItemIcon>
+            <IconButton>
+              <PaymentsIcon sx={{ fill: "white" }} />
+            </IconButton>
+          </ListItemIcon>
+          <ListItemText primary="Payment History" sx={{ color: "white" }} />
+        </ListItemButton>
+      </Link>
+      <Link to="/reviews" style={{ textDecoration: "none" }}>
+        <ListItemButton>
+          <ListItemIcon>
+            <IconButton>
+              <ReviewsIcon sx={{ fill: "white" }} />
+            </IconButton>
+          </ListItemIcon>
+          <ListItemText primary="Reviews" sx={{ color: "white" }} />
         </ListItemButton>
       </Link>
       <ListItemButton onClick={handleLogout}>

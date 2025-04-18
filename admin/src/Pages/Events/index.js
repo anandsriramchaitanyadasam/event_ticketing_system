@@ -21,7 +21,7 @@ export default function Events() {
   // ****** get events ******
   const getEvents = async () => {
     const res = await getApihandler("/getAllEvents");
-    console.log("get api res is --->", res);
+    console.log("get events  api res is --->", res);
     if (res.message === "Events fetched successfully") {
       setEvents(res.data);
     }

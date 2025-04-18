@@ -8,7 +8,7 @@ import Box from "@mui/material/Box";
 import MuiAppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import List from "@mui/material/List";
-import Typography from "@mui/material/Typography";
+
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import Badge from "@mui/material/Badge";
@@ -141,22 +141,24 @@ export default function LayoutTemplate({ children }) {
             >
               <MenuIcon sx={{ color: "white" }} />
             </IconButton>
-            <IconButton color="secondry">
-              <Badge
-                
-                sx={{
-                  backgroundColor: "white",
-                  borderRadius: "50%",
-                  padding: "7px",
-                  color: "#60156d",
-                }}
-              >
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
+
+            <a href="/notification">
+              <IconButton color="secondry">
+                <Badge
+                  sx={{
+                    backgroundColor: "white",
+                    borderRadius: "50%",
+                    padding: "7px",
+                    color: "#60156d",
+                  }}
+                >
+                  <NotificationsIcon />
+                </Badge>
+              </IconButton>
+            </a>
           </Toolbar>
         </AppBar>
-        <Drawer variant="permanent"  open={open} >
+        <Drawer variant="permanent" open={open}>
           <Toolbar
             sx={{
               display: "flex",
@@ -183,7 +185,7 @@ export default function LayoutTemplate({ children }) {
                 ? theme.palette.grey[100]
                 : theme.palette.grey[900],
             flexGrow: 1,
-          
+
             overflow: "auto",
           }}
         >
@@ -196,4 +198,3 @@ export default function LayoutTemplate({ children }) {
     </ThemeProvider>
   );
 }
-

@@ -13,6 +13,9 @@ import Vendors from "./Pages/Vedors";
 import Category from "./Pages/Category";
 import Events from "./Pages/Events";
 import BookedEvents from "./Pages/Events/bookedevents";
+import PaymentHistory from "./Pages/PaymentHistory";
+import Reviews from "./Pages/Reviews";
+import Notification from "./Pages/Notification";
 function App() {
   return (
     <div className="App">
@@ -26,6 +29,9 @@ function App() {
           <Route path="/category" element={<Category />} />
           <Route path="/events" element={<Events />} />
           <Route path="/bookedevents" element={<BookedEvents />} />
+          <Route path="/paymenthistory" element={<PaymentHistory />} />
+          <Route path="/reviews" element={<Reviews />} />
+          <Route path="/notification" element={<Notification />} />
         </Routes>
       </BrowserRouter>
     </div>

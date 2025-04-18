@@ -6,8 +6,7 @@ const path = require('path');
 
 const fs = require('fs');
 
-const http = require('http');
-const https = require('https');
+
 
 // const multer = require('multer')
 const mongoose = require('mongoose')

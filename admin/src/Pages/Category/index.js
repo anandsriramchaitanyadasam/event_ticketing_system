@@ -103,7 +103,6 @@ export default function Category() {
     }
   }, [data, index]);
 
-
   const updateCategory = async () => {
     const formData = new FormData();
     formData.append("category_name", categoryname);
@@ -151,15 +150,15 @@ export default function Category() {
             onChange={(e) => setCategoryName(e.target.value)}
           />
           <div className="mt-4">
-              <input type="file" multiple onChange={handleFileChange} />
-            </div>
+            <input type="file" multiple onChange={handleFileChange} />
+          </div>
           <Button variant="contained" className="mt-3" onClick={AddCategory}>
             Add Category
           </Button>
         </Box>
       </Modal>
       <TableContainer component={Paper} className="mt-3">
-        <Table  aria-label="simple table">
+        <Table aria-label="simple table">
           <TableHead>
             <TableRow>
               <TableCell>Image</TableCell>
@@ -169,16 +168,23 @@ export default function Category() {
           </TableHead>
           <TableBody>
             {data.map((category) => (
-              <TableRow 
+              <TableRow
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
-                <TableCell component="th" scope="row">{<img style={{width:"10%"}} src={`http://localhost:80/uploads/${category.photoUrl}`}/>}</TableCell>
+                <TableCell component="th" scope="row">
+                  {
+                    <img
+                      style={{ width: "10%" }}
+                      src={`http://localhost:80/uploads/${category.photoUrl}`}
+                    />
+                  }
+                </TableCell>
                 <TableCell component="th" scope="row">
                   {category.category_name}
                 </TableCell>
-                <TableCell component="th" scope="row" sx={{display:"flex"}}>
+                <TableCell component="th" scope="row" sx={{ display: "flex" }}>
                   <DeleteIcon
-                    sx={{ marginRight: "5px" ,marginTop:"5px"}}
+                    sx={{ marginRight: "5px", marginTop: "5px" }}
                     onClick={() => {
                       Swal.fire({
                         title: "Are you sure?",
@@ -202,7 +208,7 @@ export default function Category() {
                       setCategoryId(category._id);
                       setIndex(
                         data.findIndex((item) => item._id === category._id)
-                      ); // Correctly set index
+                      );
                       setOpen1(true);
                     }}
                   >
@@ -225,9 +231,9 @@ export default function Category() {
             value={categoryname} // Ensure correct value is set
             onChange={(e) => setCategoryName(e.target.value)}
           />
-           <div className="mt-4">
-              <input type="file" multiple onChange={handleFileChange} />
-            </div>
+          <div className="mt-4">
+            <input type="file" multiple onChange={handleFileChange} />
+          </div>
           <Button variant="contained" className="mt-3" onClick={updateCategory}>
             Update Category
           </Button>
