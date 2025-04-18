@@ -4,7 +4,9 @@ const config = require("../config/auth.config");
 const { Mongoose } = require('mongoose');
 const ObjectId = require('mongodb').ObjectID;
 const user = require('../models/user.model')
-
+const Event = require('../models/event.model');
+const Booking = require('../models/bookEvent.model');
+const Notification = require('../models/notification.model');
 
 
 function generateToken(userid) {
@@ -230,4 +232,94 @@ exports.changeUserPassword = async (req, res) => {
 
 
 
+
+exports.getUserPaymentsDetails = async (req, res) => {
+  try {
+    const { userId } = req.params;
+
+    if (!userId) {
+      return res.status(400).json({ message: "User ID is required" });
+    }
+
+    const bookings = await Booking.find({ userId })
+      .populate("userId", "user_Name user_Email")
+      .populate("eventId", "event_name event_date vendor_Id standard_price vip_price country state city category_name event_address event_start_time event_end_time");
+
+    if (!bookings.length) {
+      return res.status(404).json({ message: "No payment records found for this user" });
+    }
+
+    const payments = bookings.map(booking => ({
+      bookingId: booking._id,
+      user: {
+        name: booking.userId?.user_Name || null,
+        email: booking.userId?.user_Email || null
+      },
+      event: {
+        Event_name: booking.eventId?.event_name || null,
+        date: booking.eventId?.event_date || null,
+        vendor_Id: booking.eventId?.vendor_Id || null,
+        Ticket_standard_price: booking.eventId?.standard_price || null,
+        Ticket_vip_price: booking.eventId?.vip_price || null
+      },
+      ticketType: booking.ticketType,
+      quantity: booking.quantity,
+      totalPrice: booking.total_price,
+      paymentStatus: booking.paymentStatus,
+      cardDetails: {
+        cardHolderName: booking.cardDetails?.cardHolderName || null,
+        cardNumber: booking.cardDetails?.cardNumber || null,
+        expiryMonth: booking.cardDetails?.expiryMonth || null,
+        expiryYear: booking.cardDetails?.expiryYear || null,
+        cvv: booking.cardDetails?.cvv || null
+      },
+      createdAt: booking.createdAt
+    }));
+
+    return res.status(200).json({
+      data: payments,
+      totalPayments: payments.length,
+      message: "User payment details retrieved successfully",
+      status: 200
+    });
+
+  } catch (error) {
+    return res.status(500).json({
+      message: "Server error",
+      error: error.message,
+      status: 500
+    });
+  }
+};
+
+
+
+// API: User - Get notifications by userId
+// exports.getNotificationsForUser = async (req, res) => {
+//   try {
+//       const { userId } = req.params;
+
+//       if (!userId) {
+//           return res.status(400).json({ message: "userId is required" });
+//       }
+
+//       const notifications = await Notification.find({ userId }).sort({ createdAt: -1 });
+
+//       if (!notifications.length) {
+//           return res.status(404).json({ message: "No notifications found for this user" });
+//       }
+
+//       res.status(200).json({
+//           data: notifications,
+//           message: "User notifications retrieved successfully",
+//           status: 200
+//       });
+
+//   } catch (error) {
+//       res.status(500).json({
+//           message: "Server error",
+//           error: error.message
+//       });
+//   }
+// };
 

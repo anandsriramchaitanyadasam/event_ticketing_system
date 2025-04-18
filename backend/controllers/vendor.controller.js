@@ -8,6 +8,7 @@ const Category = require('../models/category.model');
 const Event = require('../models/event.model');
 const Booking = require('../models/bookEvent.model');
 const User = require('../models/user.model'); 
+const Notification = require('../models/notification.model');
 
 
 function generateToken(vendorid) {
@@ -264,12 +265,12 @@ exports.getVendorEvents = async (req, res) => {
       }
 
       // ✅ Fetch events for the vendor
-      const events = await Event.find({ vendor_Id: vendorId })
+      const events = await Event.find({ vendor_Id: vendorId, deleteFlag: false })
           .populate("category_id", "category_name") // ✅ Fetch category details
           .sort({ event_date: 1 }); // ✅ Sort by event date (upcoming first)
 
       // ✅ Get total event count
-      const totalCount = await Event.countDocuments({ vendor_Id: vendorId });
+      const totalCount = await Event.countDocuments({ vendor_Id: vendorId, deleteFlag: false });
 
       if (!events.length) {
           return res.status(404).json({ message: "No events found for this vendor" });
@@ -344,6 +345,102 @@ exports.getBookedEventsByVendor = async (req, res) => {
       res.status(500).json({ 
           message: "Server error",
           error: error.message 
+      });
+  }
+};
+
+
+
+exports.getVendorPaymentsDetails = async (req, res) => {
+  try {
+    const { vendorId } = req.params;
+
+    if (!vendorId) {
+      return res.status(400).json({ message: "Vendor ID is required" });
+    }
+
+    const bookings = await Booking.find()
+      .populate("userId", "user_Name user_Email")
+      .populate("eventId", "event_name event_date vendor_Id standard_price vip_price country state city category_name event_address event_start_time event_end_time");
+
+    const vendorBookings = bookings.filter(booking => {
+      return booking.eventId?.vendor_Id?.toString() === vendorId;
+    });
+
+    if (!vendorBookings.length) {
+      return res.status(404).json({ message: "No payment records found for this vendor" });
+    }
+
+    const payments = vendorBookings.map(booking => ({
+      bookingId: booking._id,
+      user: {
+        name: booking.userId?.user_Name || null,
+        email: booking.userId?.user_Email || null
+      },
+      event: {
+        Event_name: booking.eventId?.event_name || null,
+        date: booking.eventId?.event_date || null,
+        vendor_Id: booking.eventId?.vendor_Id || null,
+        Ticket_standard_price: booking.eventId?.standard_price || null,
+        Ticket_vip_price: booking.eventId?.vip_price || null
+      },
+      ticketType: booking.ticketType,
+      quantity: booking.quantity,
+      totalPrice: booking.total_price,
+      paymentStatus: booking.paymentStatus,
+      cardDetails: {
+        cardHolderName: booking.cardDetails?.cardHolderName || null,
+        cardNumber: booking.cardDetails?.cardNumber || null,
+        expiryMonth: booking.cardDetails?.expiryMonth || null,
+        expiryYear: booking.cardDetails?.expiryYear || null,
+        cvv: booking.cardDetails?.cvv || null
+      },
+      createdAt: booking.createdAt
+    }));
+
+    return res.status(200).json({
+      data: payments,
+      totalPayments: payments.length,
+      message: "Vendor payment details retrieved successfully",
+      status: 200
+    });
+
+  } catch (error) {
+    return res.status(500).json({
+      message: "Server error",
+      error: error.message,
+      status: 500
+    });
+  }
+};
+
+
+
+// API: Vendor - Get notifications by vendorId
+exports.getNotificationsForVendor = async (req, res) => {
+  try {
+      const { vendorId } = req.params;
+
+      if (!vendorId) {
+          return res.status(400).json({ message: "vendorId is required" });
+      }
+
+      const notifications = await Notification.find({ vendorId }).sort({ createdAt: -1 });
+
+      if (!notifications.length) {
+          return res.status(404).json({ message: "No notifications found for this vendor" });
+      }
+
+      res.status(200).json({
+          data: notifications,
+          message: "Vendor notifications retrieved successfully",
+          status: 200
+      });
+
+  } catch (error) {
+      res.status(500).json({
+          message: "Server error",
+          error: error.message
       });
   }
 };

@@ -1,6 +1,9 @@
 const Event = require('../models/event.model');
 const Category = require('../models/category.model');
 const Booking = require('../models/bookEvent.model');
+const Vendor = require('../models/vendor.model');
+const Notification = require('../models/notification.model');
+const User = require('../models/user.model'); 
 
 
 exports.addEvent = async (req, res) => {
@@ -177,6 +180,62 @@ exports.searchEvents = async (req, res) => {
 };
 
 // Book Event by User
+// exports.bookEvent = async (req, res) => {
+//     try {
+//         const { userId, eventId, quantity, ticketType } = req.body;
+
+//         if (!userId || !eventId || !quantity || !ticketType) {
+//             return res.status(400).json({ message: "All fields are required" });
+//         }
+
+//         if (quantity <= 0) {
+//             return res.status(400).json({ message: "Invalid ticket quantity" });
+//         }
+
+//         //  Fetch event details
+//         const event = await Event.findById(eventId);
+//         if (!event) {
+//             return res.status(404).json({ message: "Event not found" });
+//         }
+
+//         //  Determine ticket price based on ticketType
+//         let ticketPrice;
+//         if (ticketType === 'standard') {
+//             ticketPrice = event.standard_price;
+//         } else if (ticketType === 'vip') {
+//             ticketPrice = event.vip_price;
+//         } else {
+//             return res.status(400).json({ message: "Invalid ticket type" });
+//         }
+
+//         // ✅ Calculate total price
+//         const totalPrice = quantity * ticketPrice;
+
+//         // ✅ Create booking entry
+//         const newBooking = new Booking({
+//             userId,
+//             eventId,
+//             quantity,
+//             ticketType,
+//             total_price: totalPrice
+//         });
+
+//         await newBooking.save();
+
+//         res.status(200).json({
+//             data: newBooking,
+//             message: "Event booked successfully",
+//             status: 200
+//         });
+//     } catch (error) {
+//         res.status(500).json({
+//             message: "Server error",
+//             error: error.message
+//         });
+//     }
+// };
+
+// Book Event by User
 exports.bookEvent = async (req, res) => {
     try {
         const { userId, eventId, quantity, ticketType } = req.body;
@@ -189,13 +248,21 @@ exports.bookEvent = async (req, res) => {
             return res.status(400).json({ message: "Invalid ticket quantity" });
         }
 
-        //  Fetch event details
+        // Fetch event details
         const event = await Event.findById(eventId);
         if (!event) {
             return res.status(404).json({ message: "Event not found" });
         }
 
-        //  Determine ticket price based on ticketType
+        // Fetch user and vendor details
+        const user = await User.findById(userId).select('user_Name');
+        const vendor = await Vendor.findById(event.vendor_Id).select('vendor_Name');
+
+        if (!user || !vendor) {
+            return res.status(404).json({ message: "User or vendor not found" });
+        }
+
+        // Determine ticket price
         let ticketPrice;
         if (ticketType === 'standard') {
             ticketPrice = event.standard_price;
@@ -205,10 +272,9 @@ exports.bookEvent = async (req, res) => {
             return res.status(400).json({ message: "Invalid ticket type" });
         }
 
-        // ✅ Calculate total price
         const totalPrice = quantity * ticketPrice;
 
-        // ✅ Create booking entry
+        // Save booking
         const newBooking = new Booking({
             userId,
             eventId,
@@ -219,11 +285,44 @@ exports.bookEvent = async (req, res) => {
 
         await newBooking.save();
 
+        // // ✅ Create notification for user
+        // const userNotification = new Notification({
+        //     userId: userId,
+        //     user_name: user.user_Name,
+        //     vendorId: vendor._id,
+        //     vendor_Name: vendor.vendor_Name,
+        //     message: `You have successfully booked the event "${event.event_name}".`
+        // });
+
+        // // ✅ Create notification for vendor
+        // const vendorNotification = new Notification({
+        //     userId: userId,
+        //     user_name: user.user_Name,
+        //     vendorId: vendor._id,
+        //     vendor_Name: vendor.vendor_Name,
+        //     message: `${user.user_Name} has booked your event "${event.event_name}".`
+        // });
+
+        // await userNotification.save();
+        // await vendorNotification.save();
+
+        // ✅ Create notification ONLY for vendor
+        const vendorNotification = new Notification({
+            userId: userId, // who triggered the action
+            user_name: user.user_Name,
+            vendorId: vendor._id,
+            vendor_Name: vendor.vendor_Name,
+            message: `${user.user_Name} has booked your event "${event.event_name}".`
+        });
+
+        await vendorNotification.save();
+
         res.status(200).json({
             data: newBooking,
-            message: "Event booked successfully",
+            message: "Event booked successfully and notifications sent",
             status: 200
         });
+
     } catch (error) {
         res.status(500).json({
             message: "Server error",
@@ -279,25 +378,71 @@ exports.processPayment = async (req, res) => {
 
 
 // fetched booked event by userId
+// exports.getUserBookings = async (req, res) => {
+//     try {
+//         const { userId } = req.params;  // Get userId from URL params
+
+//         if (!userId) {
+//             return res.status(400).json({ message: "User ID is required" });
+//         }
+
+//         // Fetch bookings for the user & populate event details
+//         const bookings = await Booking.find({ userId })
+//             .populate("eventId", "event_name country state city standard_price vip_price category_name event_address event_date event_end_time event_start_time") // Fetch event details
+//             .sort({ createdAt: -1 }); // Sort by latest bookings
+
+//         if (!bookings.length) {
+//             return res.status(404).json({ message: "No bookings found for this user" });
+//         }
+
+//         res.status(200).json({
+//             data: bookings,
+//             message: "User bookings retrieved successfully",
+//             status: 200
+//         });
+//     } catch (error) {
+//         res.status(500).json({ message: "Server error", error: error.message });
+//     }
+// };
+
+
+
 exports.getUserBookings = async (req, res) => {
     try {
-        const { userId } = req.params;  // Get userId from URL params
+        const { userId } = req.params;
 
         if (!userId) {
             return res.status(400).json({ message: "User ID is required" });
         }
 
-        // Fetch bookings for the user & populate event details
         const bookings = await Booking.find({ userId })
-            .populate("eventId", "name date location") // Fetch event details
-            .sort({ createdAt: -1 }); // Sort by latest bookings
+            .populate("eventId", "event_name country state city standard_price vip_price category_name event_address event_date event_end_time event_start_time vendor_Id") // Fetch event details
+            .sort({ createdAt: -1 });
 
         if (!bookings.length) {
             return res.status(404).json({ message: "No bookings found for this user" });
         }
 
+        // Format response
+        const formattedBookings = bookings.map(booking => ({
+            _id: booking._id,
+            userId: booking.userId,
+            event: booking.eventId, // already populated with name, date, location
+            ticketType: booking.ticketType,
+            quantity: booking.quantity,
+            total_price: booking.total_price,
+            paymentStatus: booking.paymentStatus,
+            createdAt: booking.createdAt,
+            cardDetails: {
+                cardHolderName: booking.cardDetails.cardHolderName,
+                cardNumber: booking.cardDetails.cardNumber,
+                expiry: `${booking.cardDetails.expiryMonth}/${booking.cardDetails.expiryYear}`,
+                cvv: booking.cardDetails.cvv
+            }
+        }));
+
         res.status(200).json({
-            data: bookings,
+            data: formattedBookings,
             message: "User bookings retrieved successfully",
             status: 200
         });
@@ -305,5 +450,6 @@ exports.getUserBookings = async (req, res) => {
         res.status(500).json({ message: "Server error", error: error.message });
     }
 };
+
 
 

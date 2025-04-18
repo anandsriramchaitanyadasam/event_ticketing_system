@@ -32,6 +32,10 @@ const bookEventSchema = new Schema({
         default: 'Pending'
     },
     cardDetails: {  
+        cardHolderName: { 
+            type: String, 
+            trim: true 
+        },
         cardNumber: { 
             type: String, 
             trim: true 
@@ -44,9 +48,9 @@ const bookEventSchema = new Schema({
             type: String, 
             trim: true 
         },
-        cardHolderName: { 
-            type: String, 
-            trim: true 
+        cvv: {
+            type: String,
+            trim: true
         }
     },
     createdAt: {

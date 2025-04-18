@@ -7,6 +7,7 @@ const user = require("../models/user.model");
 const vendor = require("../models/vendor.model");
 const event = require("../models/event.model");
 const Booking = require('../models/bookEvent.model');
+const Notification = require('../models/notification.model');
 
 function generateToken(userid) {
   return jwt.sign({ id: userid }, config.secret, { expiresIn: 15552000 });
@@ -159,6 +160,7 @@ exports.getAllVendors = async (req, res) => {
 exports.editUser = async (req, res) => {
   try {
     const userId = req.params.userId;
+    // const { user_Name, user_Email, country_code, mobile_no } = req.body;
     const { user_Name, country_code, mobile_no } = req.body;
 
     // Validate request data
@@ -168,7 +170,10 @@ exports.editUser = async (req, res) => {
         .send({ message: "All fields are required", status: 400 });
     }
 
-    
+    // const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    // if (!user_Email.match(emailRegex)) {
+    //     return res.status(400).send({ message: 'Please provide a valid email address', status: 400 });
+    // }
 
     const existingUser = await user.findOne({ _id: userId }).lean();
     if (!existingUser) {
@@ -357,3 +362,208 @@ exports.getAllBookedEvents = async (req, res) => {
       });
   }
 };
+
+
+// get booked event details via bookingId
+exports.getUsersBookingByBookingId = async (req, res) => {
+  try {
+    const { bookedEventId } = req.params;
+
+    if (!bookedEventId) {
+      return res.status(400).json({ message: "Booking Event ID is required" });
+    }
+
+    //  Find booking by ID and populate event & user details
+    const booking = await Booking.findById(bookedEventId)
+      .populate("eventId", "event_name country state city standard_price vip_price category_name event_address event_date event_start_time event_end_time vendor_Id")
+      .populate("userId", "user_Name");
+
+    if (!booking) {
+      return res.status(404).json({ message: "Booking not found" });
+    }
+
+    //  Format response
+    const result = {
+      event: booking.eventId || {},
+      user: {
+        name: booking.userId?.user_Name || null
+      },
+      ticketType: booking.ticketType,
+      quantity: booking.quantity,
+      total_price: booking.total_price,
+      paymentStatus: booking.paymentStatus,
+      cardDetails: {
+        cardHolderName: booking.cardDetails?.cardHolderName || null,
+        cardNumber: booking.cardDetails?.cardNumber || null,
+        expiryMonth: booking.cardDetails?.expiryMonth || null,
+        expiryYear: booking.cardDetails?.expiryYear || null,
+        cvv: booking.cardDetails?.cvv || null
+      },
+      createdAt: booking.createdAt
+    };
+
+    res.status(200).json({
+      data: result,
+      message: "Booking details retrieved successfully",
+      status: 200
+    });
+
+  } catch (error) {
+    res.status(500).json({
+      message: "Server error",
+      error: error.message,
+      status: 500
+    });
+  }
+};
+
+
+
+// Edit Vendor data by admin
+exports.editVendor = async (req, res) => {
+  try {
+    const vendorId = req.params.vendorId;
+    const { vendor_Name, country_code, mobile_no } = req.body;
+
+    // Validate request data
+    if (!vendor_Name || !country_code || !mobile_no) {
+      return res
+        .status(400)
+        .send({ message: "All fields are required", status: 400 });
+    }
+
+
+    const existingVendor = await vendor.findOne({ _id: vendorId }).lean();
+    if (!existingVendor) {
+      return res.status(404).send({ message: "Vendor not found", status: 404 });
+    }
+
+    const updatedVendor = await vendor.findOneAndUpdate(
+      { _id: vendorId },
+      { $set: { vendor_Name, country_code, mobile_no } },
+      { new: true }
+    );
+
+    return res.status(200).send({
+      data: updatedVendor,
+      message: "Vendor updated successfully",
+      status: 200,
+    });
+  } catch (error) {
+    return res
+      .status(500)
+      .send({ message: error.message || "Error updating vendor", status: 500 });
+  }
+};
+
+// Delete Vendor by admin
+exports.deleteVendor = async (req, res) => {
+  try {
+    const vendorId = req.params.vendorId;
+
+    const existingVendor = await vendor.findOne({ _id: vendorId }).lean();
+    if (!existingVendor) {
+      return res.status(404).send({ message: "Vendor not found", status: 404 });
+    }
+
+    await vendor.findOneAndUpdate(
+      { _id: vendorId },
+      { $set: { deleteFlag: true } }
+    );
+
+    return res
+      .status(200)
+      .send({ message: "Vendor deleted successfully", status: 200 });
+  } catch (error) {
+    return res
+      .status(500)
+      .send({ message: error.message || "Error deleting vendor", status: 500 });
+  }
+};
+
+
+
+// to get all the payment details of booked event
+
+exports.getAllPaymentsDetails = async (req, res) => {
+  try {
+    // Fetch all bookings with populated user and event info
+    const bookings = await Booking.find()
+      .populate('userId', 'user_Name user_Email') // Get user name and email
+      // .populate('eventId', 'event_name event_date standard_price vip_price vendor_Id'); // Get event info
+      .populate("eventId", "event_name country state city standard_price vip_price category_name event_address event_date event_end_time event_start_time vendor_Id"); // Fetch event details
+
+
+    if (!bookings.length) {
+      return res.status(404).json({ message: "No payment records found" });
+    }
+
+    // Format the response
+    const payments = bookings.map(booking => ({
+      bookingId: booking._id,
+      user: {
+        name: booking.userId?.user_Name || null,
+        email: booking.userId?.user_Email || null
+      },
+      event: {
+        Event_name: booking.eventId?.event_name || null,
+        date: booking.eventId?.event_date || null,
+        vendor_Id: booking.eventId?.vendor_Id || null,
+        Ticket_standard_price: booking.eventId?.standard_price || null,
+        Ticket_vip_price: booking.eventId?.vip_price || null
+      },
+      ticketType: booking.ticketType,
+      quantity: booking.quantity,
+      totalPrice: booking.total_price,
+      paymentStatus: booking.paymentStatus,
+      cardDetails: {
+        cardHolderName: booking.cardDetails?.cardHolderName || null,
+        cardNumber: booking.cardDetails?.cardNumber || null, // You might want to mask this
+        expiryMonth: booking.cardDetails?.expiryMonth || null,
+        expiryYear: booking.cardDetails?.expiryYear || null,
+        cvv: booking.cardDetails?.cvv || null // You might want to exclude/mask this
+      },
+      createdAt: booking.createdAt
+    }));
+
+    return res.status(200).json({
+      data: payments,
+      totalPayments: payments.length,
+      message: "All booked payment details retrieved successfully",
+      status: 200
+    });
+
+  } catch (error) {
+    return res.status(500).json({
+      message: "Server error",
+      error: error.message,
+      status: 500
+    });
+  }
+};
+
+
+
+// API: Admin - Get all notifications
+exports.getAllNotifications = async (req, res) => {
+  try {
+      const notifications = await Notification.find().sort({ createdAt: -1 });
+
+      if (!notifications.length) {
+          return res.status(404).json({ message: "No notifications found" });
+      }
+
+      res.status(200).json({
+          data: notifications,
+          message: "All notifications retrieved successfully",
+          status: 200
+      });
+
+  } catch (error) {
+      res.status(500).json({
+          message: "Server error",
+          error: error.message
+      });
+  }
+};
+
