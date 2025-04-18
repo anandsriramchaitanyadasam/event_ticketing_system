@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 module.exports = {
-    secret: "online-ticket-system-secret-key"
+  secret: process.env.JWT_SECRET,
 };
