@@ -9,7 +9,6 @@ import Row from "react-bootstrap/Row";
 import AdminLayout from "../../Layout/AdminLayout";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-<<<<<<< HEAD
 
 import { Container } from "react-bootstrap";
 import { Grid } from "@mui/material";
@@ -17,27 +16,13 @@ import { Grid } from "@mui/material";
 import swal from "sweetalert";
 import { postApihandler } from "../../Apihandler";
 
-=======
-// import { postApihandler } from "../../API_Handler";
-import { Container } from "react-bootstrap";
-import { Grid } from "@mui/material";
-// import swal from "sweetalert";
-import swal from "sweetalert";
-import { postApihandler } from "../../Apihandler";
-
-
->>>>>>> 4470dcc363f614e28f589f2214d595ce2d6d96a7
 const Login = () => {
   const Navigate = useNavigate();
   const [validated, setValidated] = useState(false);
   const { register, handleSubmit, reset, setValue, watch } = useForm();
 
   const SubmitLogins = async (value) => {
-<<<<<<< HEAD
     console.log("value is ------>", value);
-=======
-    console.log("value is ------>" , value)
->>>>>>> 4470dcc363f614e28f589f2214d595ce2d6d96a7
     let result = await postApihandler("/adminLogin", value);
     console.log("login result is", result);
 
@@ -73,11 +58,7 @@ const Login = () => {
               boxShadow: 3,
               padding: "60px 40px 30px !important",
               borderRadius: "20px",
-<<<<<<< HEAD
               background: "#60156d",
-=======
-              background: "#348ef6",
->>>>>>> 4470dcc363f614e28f589f2214d595ce2d6d96a7
             }}
           >
             <div className="form-field-wrapper">
@@ -119,10 +100,6 @@ const Login = () => {
                   <Button
                     type="submit"
                     className="border-0 font-bold py-2 px-3"
-<<<<<<< HEAD
-=======
-                    // sx={{ backgroundColor: "white", color: "black " }}
->>>>>>> 4470dcc363f614e28f589f2214d595ce2d6d96a7
                     style={{ backgroundColor: "white", color: "black" }}
                   >
                     Login

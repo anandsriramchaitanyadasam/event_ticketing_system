@@ -1,15 +1,11 @@
 import React, { useEffect, useState } from "react";
 
 import AdminLayout from "../../Layout/AdminLayout";
-<<<<<<< HEAD
 import {
   deleteApihandler,
   getApihandler,
   putApihandler,
 } from "../../Apihandler";
-=======
-import { getApihandler } from "../../Apihandler";
->>>>>>> 4470dcc363f614e28f589f2214d595ce2d6d96a7
 import {
   Paper,
   Table,
@@ -18,7 +14,6 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-<<<<<<< HEAD
   IconButton,
   TextField,
   Modal,
@@ -36,12 +31,6 @@ export default function Vendors() {
   const [countrycode, setCountryCode] = useState("");
   const [mobileno, setMobileNumber] = useState("");
   const [open, setOpen] = useState(false);
-=======
-} from "@mui/material";
-
-export default function Vendors() {
-  const [data, setData] = useState([]);
->>>>>>> 4470dcc363f614e28f589f2214d595ce2d6d96a7
   useEffect(() => {
     getVendors();
   }, []);
@@ -52,7 +41,6 @@ export default function Vendors() {
       setData(res.data);
     }
   };
-<<<<<<< HEAD
 
   // ********** delete vendors *********
   const deleteVendor = async (id) => {
@@ -110,8 +98,6 @@ export default function Vendors() {
     }
   };
 
-=======
->>>>>>> 4470dcc363f614e28f589f2214d595ce2d6d96a7
   return (
     <AdminLayout>
       <h3>Vendors</h3>
@@ -122,11 +108,7 @@ export default function Vendors() {
               <TableCell sx={{ fontWeight: "bold" }}>Name</TableCell>
               <TableCell sx={{ fontWeight: "bold" }}>Email</TableCell>
               <TableCell sx={{ fontWeight: "bold" }}>Mobile</TableCell>
-<<<<<<< HEAD
               <TableCell sx={{ fontWeight: "bold" }}>Action</TableCell>
-=======
-              {/* <TableCell sx={{ fontWeight: "bold" }}>Action</TableCell> */}
->>>>>>> 4470dcc363f614e28f589f2214d595ce2d6d96a7
             </TableRow>
           </TableHead>
           <TableBody>
@@ -137,33 +119,19 @@ export default function Vendors() {
                 <TableCell>{user.mobile_no}</TableCell>
                 <TableCell>
                   {/* Edit User */}
-<<<<<<< HEAD
                   <IconButton
                     color="primary"
                     onClick={() => {
                       setVendorId(user._id);
-=======
-                  {/* <IconButton
-                    color="primary"
-                    onClick={() => {
-                      setUserId(user._id);
->>>>>>> 4470dcc363f614e28f589f2214d595ce2d6d96a7
                       setIndex(index);
                       setOpen(true);
                     }}
                   >
                     <EditIcon />
-<<<<<<< HEAD
                   </IconButton>
 
                   {/* Delete User with Confirmation */}
                   <IconButton
-=======
-                  </IconButton> */}
-
-                  {/* Delete User with Confirmation */}
-                  {/* <IconButton
->>>>>>> 4470dcc363f614e28f589f2214d595ce2d6d96a7
                     onClick={() => {
                       Swal.fire({
                         title: "Are you sure?",
@@ -175,29 +143,20 @@ export default function Vendors() {
                         confirmButtonText: "Yes, delete it!",
                       }).then((result) => {
                         if (result.isConfirmed) {
-<<<<<<< HEAD
                           deleteVendor(user._id);
-=======
-                          deleteUser(user._id);
->>>>>>> 4470dcc363f614e28f589f2214d595ce2d6d96a7
                         }
                       });
                     }}
                     color="error"
                   >
                     <DeleteIcon />
-<<<<<<< HEAD
                   </IconButton>
-=======
-                  </IconButton> */}
->>>>>>> 4470dcc363f614e28f589f2214d595ce2d6d96a7
                 </TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
       </TableContainer>
-<<<<<<< HEAD
       <Modal open={open} onClose={() => setOpen(false)}>
         <Box
           sx={{
@@ -251,8 +210,6 @@ export default function Vendors() {
           </Box>
         </Box>
       </Modal>
-=======
->>>>>>> 4470dcc363f614e28f589f2214d595ce2d6d96a7
     </AdminLayout>
   );
 }

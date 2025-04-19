@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /** @format */
 
 import React, { useState } from "react";
@@ -6,34 +5,11 @@ import { Box, Button, Grid, Tab, Typography } from "@mui/material";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
-=======
-import React, { useState } from "react";
-import {
-  Box,
-  Button,
-  Card,
-  Container,
-  Grid,
-  Tab,
-  Typography,
-} from "@mui/material";
-import TabContext from "@mui/lab/TabContext";
-import TabList from "@mui/lab/TabList";
-import TabPanel from "@mui/lab/TabPanel";
-// import signupimg from "../Images/signup.png";
->>>>>>> 4470dcc363f614e28f589f2214d595ce2d6d96a7
 import Header from "../layout/header";
 import swal from "sweetalert";
 import { useNavigate } from "react-router-dom";
 import { postApihandler } from "../Apihandler";
-<<<<<<< HEAD
 
-=======
-import GoogleIcon from "@mui/icons-material/Google";
-import FacebookIcon from "@mui/icons-material/Facebook";
-// import signupimg from "../Images/signupimg.avif";
-import signupimg from "../Images/signup.png";
->>>>>>> 4470dcc363f614e28f589f2214d595ce2d6d96a7
 const countryCodeList = [
   {
     code: "AF",
@@ -1256,22 +1232,9 @@ export default function Signup() {
   };
   const navigate = useNavigate();
   const [name, setName] = useState("");
-<<<<<<< HEAD
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmpassword, setConfirmPassword] = useState("");
-=======
-  // console.log("name is --->", name);
-
-  const [email, setEmail] = useState("");
-  // console.log("email is --->", email);
-
-  const [password, setPassword] = useState("");
-  // console.log("password is --->", password);
-
-  const [confirmpassword, setConfirmPassword] = useState("");
-  // console.log("confirmpassword is --->", confirmpassword);
->>>>>>> 4470dcc363f614e28f589f2214d595ce2d6d96a7
   const [phonenumber, setphonenumber] = useState("");
 
   const [country_code, setCountryCode] = React.useState();
@@ -1325,7 +1288,6 @@ export default function Signup() {
   return (
     <div>
       <Header />
-<<<<<<< HEAD
 
       <section className="signup_banner">
         <Grid container spacing={2} sx={{ padding: "30px" }}>
@@ -1339,21 +1301,6 @@ export default function Signup() {
                 borderRadius: "10px",
               }}
             >
-=======
-      <div style={{ padding: "30px" }}>
-        <Grid container spacing={2}>
-          <Grid item xs={12} md={8}>
-            <div className="signupimg">
-              <img
-                src={signupimg}
-                alt="Mechanic"
-                style={{ width: "100%", objectFit: "cover" }}
-              />
-            </div>
-          </Grid>
-          <Grid item xs={12} md={4}>
-            <Box sx={{ width: "100%", typography: "body1", padding: "0" }}>
->>>>>>> 4470dcc363f614e28f589f2214d595ce2d6d96a7
               <TabContext value={value}>
                 <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
                   <TabList
@@ -1371,10 +1318,6 @@ export default function Signup() {
                     style={{
                       display: "flex",
                       alignItems: "center",
-<<<<<<< HEAD
-=======
-                      // marginTop: "30px",
->>>>>>> 4470dcc363f614e28f589f2214d595ce2d6d96a7
                       flexDirection: "column",
                       gap: 2,
                       textAlign: "center",
@@ -1396,11 +1339,6 @@ export default function Signup() {
                             style={{
                               background: "#D9D9D929",
                               border: "2px solid #0000006E",
-<<<<<<< HEAD
-=======
-                              // width: "272px",
-
->>>>>>> 4470dcc363f614e28f589f2214d595ce2d6d96a7
                               width: "100%",
                               height: "40px",
                               borderRadius: "10px",
@@ -1480,10 +1418,6 @@ export default function Signup() {
                               style={{
                                 background: "#D9D9D929",
                                 border: "2px solid #0000006E",
-<<<<<<< HEAD
-=======
-                                //   width: "272px",
->>>>>>> 4470dcc363f614e28f589f2214d595ce2d6d96a7
                                 height: "40px",
                                 borderRadius: "10px",
                                 fontSize: "14px",
@@ -1558,11 +1492,7 @@ export default function Signup() {
                         type="submit"
                         variant="contained"
                         sx={{
-<<<<<<< HEAD
                           backgroundColor: "#60156d",
-=======
-                          backgroundColor: "#348ef6",
->>>>>>> 4470dcc363f614e28f589f2214d595ce2d6d96a7
                           width: "240px",
                           borderRadius: "20px",
                           fontSize: "16px",
@@ -1585,11 +1515,7 @@ export default function Signup() {
                         href="/login"
                         style={{
                           textDecoration: "none",
-<<<<<<< HEAD
                           color: "#60156d",
-=======
-                          color: "#348ef6",
->>>>>>> 4470dcc363f614e28f589f2214d595ce2d6d96a7
                           fontWeight: "600",
                         }}
                       >
@@ -1597,34 +1523,6 @@ export default function Signup() {
                       </a>
                     </Typography>
                   </form>
-<<<<<<< HEAD
-=======
-                  <div>
-                    <Button
-                      variant="contained"
-                      className="mt-3"
-                      sx={{ padding: "5px 23px", backgroundColor: "#348ef6" }}
-                    >
-                      <GoogleIcon
-                        sx={{
-                          color: "white",
-                          marginRight: "5px",
-                        }}
-                      />{" "}
-                      Sign in with Google
-                    </Button>
-                    <Button
-                      variant="contained"
-                      className="mt-3"
-                      sx={{ backgroundColor: "#348ef6" }}
-                    >
-                      <FacebookIcon
-                        sx={{ color: "white", marginRight: "5px" }}
-                      />{" "}
-                      Sign in with Facebook
-                    </Button>
-                  </div>
->>>>>>> 4470dcc363f614e28f589f2214d595ce2d6d96a7
                 </TabPanel>
                 <TabPanel value="2">
                   <h6>Vendor</h6>
@@ -1633,10 +1531,6 @@ export default function Signup() {
                     style={{
                       display: "flex",
                       alignItems: "center",
-<<<<<<< HEAD
-=======
-                      // marginTop: "30px",
->>>>>>> 4470dcc363f614e28f589f2214d595ce2d6d96a7
                       flexDirection: "column",
                       gap: 2,
                       textAlign: "center",
@@ -1736,10 +1630,6 @@ export default function Signup() {
                               style={{
                                 background: "#D9D9D929",
                                 border: "2px solid #0000006E",
-<<<<<<< HEAD
-=======
-                                //   width: "272px",
->>>>>>> 4470dcc363f614e28f589f2214d595ce2d6d96a7
                                 height: "40px",
                                 borderRadius: "10px",
                                 fontSize: "14px",
@@ -1812,11 +1702,7 @@ export default function Signup() {
                         type="submit"
                         variant="contained"
                         sx={{
-<<<<<<< HEAD
                           backgroundColor: "#60156d",
-=======
-                          backgroundColor: "#348ef6",
->>>>>>> 4470dcc363f614e28f589f2214d595ce2d6d96a7
                           width: "240px",
                           borderRadius: "20px",
                           fontSize: "16px",
@@ -1839,11 +1725,7 @@ export default function Signup() {
                         href="/login"
                         style={{
                           textDecoration: "none",
-<<<<<<< HEAD
                           color: "#60156d",
-=======
-                          color: "#348ef6",
->>>>>>> 4470dcc363f614e28f589f2214d595ce2d6d96a7
                           fontWeight: "600",
                         }}
                       >
@@ -1856,11 +1738,7 @@ export default function Signup() {
             </Box>
           </Grid>
         </Grid>
-<<<<<<< HEAD
       </section>
-=======
-      </div>
->>>>>>> 4470dcc363f614e28f589f2214d595ce2d6d96a7
     </div>
   );
 }

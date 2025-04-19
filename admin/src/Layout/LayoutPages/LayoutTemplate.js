@@ -8,11 +8,7 @@ import Box from "@mui/material/Box";
 import MuiAppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import List from "@mui/material/List";
-<<<<<<< HEAD
 
-=======
-import Typography from "@mui/material/Typography";
->>>>>>> 4470dcc363f614e28f589f2214d595ce2d6d96a7
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import Badge from "@mui/material/Badge";
@@ -21,34 +17,9 @@ import Link from "@mui/material/Link";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import NotificationsIcon from "@mui/icons-material/Notifications";
-<<<<<<< HEAD
 import NestedList from "./NestedList";
 import { alpha } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
-=======
-// import { mainListItems, secondaryListItems } from "./listItems";
-import NestedList from "./NestedList";
-import { alpha } from "@mui/material/styles";
-import InputBase from "@mui/material/InputBase";
-// import logo from "../../Images/logo.png";
-function Copyright(props) {
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
->>>>>>> 4470dcc363f614e28f589f2214d595ce2d6d96a7
 
 const drawerWidth = 240;
 
@@ -155,11 +126,7 @@ export default function LayoutTemplate({ children }) {
             sx={{
               display: "flex",
               justifyContent: "space-between",
-<<<<<<< HEAD
               backgroundColor: "#60156d",
-=======
-              backgroundColor: "#348ef6",
->>>>>>> 4470dcc363f614e28f589f2214d595ce2d6d96a7
             }}
           >
             <IconButton
@@ -174,7 +141,6 @@ export default function LayoutTemplate({ children }) {
             >
               <MenuIcon sx={{ color: "white" }} />
             </IconButton>
-<<<<<<< HEAD
 
             <a href="/notification">
               <IconButton color="secondry">
@@ -190,22 +156,6 @@ export default function LayoutTemplate({ children }) {
                 </Badge>
               </IconButton>
             </a>
-=======
-            {/* <img src={logo} /> */}
-            <IconButton color="secondry">
-              <Badge
-                // badgeContent={4}
-                sx={{
-                  backgroundColor: "white",
-                  borderRadius: "50%",
-                  padding: "7px",
-                  color: "#348ef6",
-                }}
-              >
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
->>>>>>> 4470dcc363f614e28f589f2214d595ce2d6d96a7
           </Toolbar>
         </AppBar>
         <Drawer variant="permanent" open={open}>
@@ -215,11 +165,7 @@ export default function LayoutTemplate({ children }) {
               alignItems: "center",
               justifyContent: "flex-end",
               px: [1],
-<<<<<<< HEAD
               backgroundColor: "#60156d",
-=======
-              backgroundColor: "#348ef6",
->>>>>>> 4470dcc363f614e28f589f2214d595ce2d6d96a7
             }}
           >
             <IconButton onClick={toggleDrawer}>
@@ -239,11 +185,7 @@ export default function LayoutTemplate({ children }) {
                 ? theme.palette.grey[100]
                 : theme.palette.grey[900],
             flexGrow: 1,
-<<<<<<< HEAD
 
-=======
-            // height: "100vh",
->>>>>>> 4470dcc363f614e28f589f2214d595ce2d6d96a7
             overflow: "auto",
           }}
         >
@@ -256,10 +198,3 @@ export default function LayoutTemplate({ children }) {
     </ThemeProvider>
   );
 }
-<<<<<<< HEAD
-=======
-
-// export default function Dashboard() {
-//   // return <DashboardContent />;
-// }
->>>>>>> 4470dcc363f614e28f589f2214d595ce2d6d96a7

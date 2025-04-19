@@ -1,156 +1,70 @@
-# Event Management System
+# Getting Started with Create React App
 
-## Project Overview
-Welcome to the **Event Management System**, a streamlined platform for organizing and managing events efficiently. This system is designed to cater to both **users** looking to book events and **administrators** managing event details, registrations, and user engagement.
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
----
-## Key Features
-- **User Authentication** – Secure login & signup process
-- **Event Browsing** – Search and explore various events
-- **Ticket Booking** – Seamless reservation system
-- **Admin Dashboard** – Manage users, bookings, and events
-- **Optimized Performance** – Fast and scalable infrastructure
+## Available Scripts
 
----
-## Tech Stack
-- **Frontend:** React.js, HTML, CSS
-- **Backend:** Node.js, Express.js, MongoDB
-- **Authentication:** JSON Web Tokens (JWT)
-- **API Testing:** Postman
+In the project directory, you can run:
 
----
-## Challenges & Future Enhancements
-### **Challenges Faced**
-- Implementing **real-time updates** for event changes
-- Enhancing **user experience** with responsive design
+### `npm start`
 
-### **Planned Improvements**
- **Integration of Payment Gateway**
- **Automated Notifications for Reminders**
- **User Reviews & Feedback System**
+Runs the app in the development mode.\
+Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
----
-## Badges
-![GitHub contributors](https://img.shields.io/github/contributors/your-repo-name/your-project)
-![GitHub issues](https://img.shields.io/github/issues/your-repo-name/your-project)
-![GitHub forks](https://img.shields.io/github/forks/your-repo-name/your-project)
-![GitHub stars](https://img.shields.io/github/stars/your-repo-name/your-project)
+The page will reload when you make changes.\
+You may also see any lint errors in the console.
 
-*Explore more badges at [shields.io](https://shields.io/)*
+### `npm test`
 
----
-## Getting Started
+Launches the test runner in the interactive watch mode.\
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### Setting Up the Frontend
-1. Open **VS Code** and navigate to the project folder.
-2. Install dependencies:
-   ```sh
-   npm install
-   ```
-3. Start the development server:
-   ```sh
-   npm start
-   ```
-4. The application will launch in **Google Chrome** automatically.
+### `npm run build`
 
-### Setting Up the Admin Panel
-1. Open the **VS Code terminal**.
-2. Run:
-   ```sh
-   npm install
-   ```
-3. Start the admin dashboard:
-   ```sh
-   npm start
-   ```
-4. Access the admin interface in your browser.
+Builds the app for production to the `build` folder.\
+It correctly bundles React in production mode and optimizes the build for the best performance.
 
-### Running the Backend
-1. Install **Node.js** from [here](https://nodejs.org/en/download).
-2. Navigate to the backend folder.
-3. Install dependencies:
-   ```sh
-   npm install
-   ```
-4. Start the server:
-   ```sh
-   node index.js
-   ```
+The build is minified and the filenames include the hashes.\
+Your app is ready to be deployed!
 
----
-## How to Use the Application
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### **For Users:**
-1. **Sign up/Login** using email and password.
-2. **Browse Events** – Search for upcoming events.
-3. **Book Tickets** – Secure your spot and get a confirmation.
-4. **Manage Bookings** – View and manage your reservations.
+### `npm run eject`
 
-### **For Admins:**
-1. **Login as Admin.**
-2. **Manage Events** – Add, update, or remove events.
-3. **User Management** – Track and handle user activities.
-4. **Handle Bookings** – Approve or modify event reservations.
+**Note: this is a one-way operation. Once you `eject`, you can't go back!**
 
-###  **Test Credentials:**
-- **User Login:** `user@example.com` | `password123`
-- **Admin Login:** `admin@example.com` | `adminpass`
+If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
----
-##  API Documentation
- **View complete API docs here:** [API Docs](https://docs.google.com/document/d/1MZCkpW8WzVyJrMvgeTBSW2otBgkqam9JyZnchVYmqO4/edit?usp=sharing)
+Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
 
----
-##  Development Roadmap
-| Phase | Task | Expected Completion |
-|-------|------|---------------------|
-|  Phase 1 | Frontend & Backend Setup | DD/MM/YYYY |
-|  Phase 2 | User Authentication | DD/MM/YYYY |
-|  Phase 2 | User Authentication | DD/MM/YYYY |
-|  Phase 3 | Event & Admin Features | DD/MM/YYYY |
-|  Phase 4 | Testing & Deployment | DD/MM/YYYY |
+You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
-*Updates will be added as the project evolves.*
+## Learn More
 
----
-##  How to Contribute
-We welcome contributions! Follow these steps:
-1. **Fork the Repository**
-2. **Create a Feature Branch**
-   ```sh
-   git checkout -b feature-name
-   ```
-3. **Commit Changes**
-   ```sh
-   git commit -m 'Add new feature'
-   ```
-4. **Push Branch**
-   ```sh
-   git push origin feature-name
-   ```
-5. **Submit a Pull Request**
+You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-**Contribution Guidelines:** Refer to the [Contributor Covenant](https://www.contributor-covenant.org/).
+To learn React, check out the [React documentation](https://reactjs.org/).
 
----
-##  Running Tests 
-### **How to Test the System:**
-**Login & Authentication Checks** – Verify correct logins & incorrect logins.
-**Event Booking Workflow** – Reserve a ticket and verify it appears in “My Bookings.”
-**Admin Controls** – Ensure admin users can create, update, and delete events.
-**Security Tests** – Check for unauthorized access attempts.
+### Code Splitting
 
----
-##  License
-This project is licensed under the **MIT License**. See the `LICENSE` file for full details.
+This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
 
----
-##  Contact Us
-For any queries, reach out via:
-- ** Email:** [sriramdasam1111@gmail.com](mailto:your-email@example.com)
-- ** Report Issues:** [GitHub Issues](https://github.com/your-repo-name/issues)
+### Analyzing the Bundle Size
 
----
+This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
 
+### Making a Progressive Web App
 
->>>>>>> origin/main
+This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+
+### Advanced Configuration
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+
+### Deployment
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+
+### `npm run build` fails to minify
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)

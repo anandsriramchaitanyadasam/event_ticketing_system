@@ -1,5 +1,4 @@
 import React from "react";
-<<<<<<< HEAD
 import "./Footer.css";
 import event from "../Images/event.jpg"
 import event1 from "../Images/event1.jpg"
@@ -63,29 +62,3 @@ const Footer = () => {
 };
 
 export default Footer;
-=======
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-export default function Footer() {
-  return (
-    <>
-      <footer style={{ backgroundColor: "#008000" }}>
-        <Container>
-          <Row>
-            <Col md={3}>
-              <h6>About Us</h6>
-              <ul style={{listStyleType:"none"}}>
-                <li>Lorem</li>
-                <li>Lorem</li>
-                <li>Lorem</li>
-                <li>Lorem</li>
-              </ul>
-            </Col>
-          </Row>
-        </Container>
-      </footer>
-    </>
-  );
-}
->>>>>>> 4470dcc363f614e28f589f2214d595ce2d6d96a7

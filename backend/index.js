@@ -7,16 +7,18 @@ const path = require('path');
 const fs = require('fs');
 
 const dotenv = require('dotenv');
-
+const session = require('express-session');
+const passport = require('passport');
 
 dotenv.config();  // Load environment variables
+require("./config/passport"); // Import Passport Conf
 
 
+const http = require('http');
+const https = require('https');
 
 
-
-
-
+// const multer = require('multer')
 const mongoose = require('mongoose')
 const db = require('./models/db.connection.on');
 const { appendFileSync } = require('fs');
@@ -48,6 +50,16 @@ db.mongoose.connect(db.url, {
     })
 
 
+// Session middleware (needed for Passport.js)
+app.use(session({
+    secret: "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",
+    resave: false,
+    saveUninitialized: true
+}));
+
+// Initialize Passport.js
+app.use(passport.initialize());
+app.use(passport.session());
 
 
 
@@ -60,9 +72,29 @@ require('./routes/user.routes')(app);
 
 
 
+// Google Authentication Routes
+app.get("/auth/google", passport.authenticate("google", { scope: ["profile", "email"] }));
 
+app.get("/auth/google/callback", 
+    passport.authenticate("google", { failureRedirect: "/" }),
+    (req, res) => {
+        res.redirect("/dashboard"); // Redirect to Dashboard after successful login
+    }
+);
 
+// Logout
+app.get("/logout", (req, res) => {
+    req.logout();
+    res.redirect("/");
+});
 
+// Protected Route Example
+app.get("/dashboard", (req, res) => {
+    if (!req.isAuthenticated()) {
+        return res.redirect("/auth/google");
+    }
+    res.json({ user: req.user });
+});
 
 
 
@@ -82,7 +114,9 @@ app.get('/',function(req,res){
 
 
 
-
+  
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'website')));
 app.use(express.static(path.join(__dirname, 'website/admin-panel')))
 
 // Serve static files from the 'uploads' folder
