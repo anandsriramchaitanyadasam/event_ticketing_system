@@ -2,7 +2,15 @@
 
 import axios from "axios";
 
+<<<<<<< HEAD
 export const serverUrl = "http://localhost:80/api";
+=======
+// export const serverUrl = "http://localhost:3000/api";
+export const serverUrl = "http://localhost:80/api";
+// export const serverUrl = "http://51.20.106.9/api";
+// export const awsUrl = "https://maalikdesigners3.s3.eu-north-1.amazonaws.com/";
+// export const imageUrl = "https://raadharani.s3.ap-south-1.amazonaws.com/";
+>>>>>>> 4470dcc363f614e28f589f2214d595ce2d6d96a7
 
 export const formatDate = (dateString) => {
   const date = new Date(dateString);
@@ -21,7 +29,11 @@ export const getApihandler = async (endPoint) => {
 export const getbyidApihandler = async (endPoint) => {
   try {
     const getres = await axios.get(serverUrl + endPoint);
+<<<<<<< HEAD
 
+=======
+    // console.log("getresbyid=>", getres);
+>>>>>>> 4470dcc363f614e28f589f2214d595ce2d6d96a7
     return getres.data;
   } catch (error) {
     return { error };
@@ -31,7 +43,11 @@ export const getbyidApihandler = async (endPoint) => {
 export const postLoginApihandler = async (endPoint, value) => {
   try {
     const postRes = await axios.post(serverUrl + endPoint, value);
+<<<<<<< HEAD
 
+=======
+    // console.log("apipost=>", postRes);
+>>>>>>> 4470dcc363f614e28f589f2214d595ce2d6d96a7
     return postRes.data;
   } catch (error) {
     return { error };
@@ -39,6 +55,11 @@ export const postLoginApihandler = async (endPoint, value) => {
 };
 
 export const postApihandler = async (endPoint, value) => {
+<<<<<<< HEAD
+=======
+  console.log("postvalue=>", endPoint);
+  console.log("postvalue=>", value);
+>>>>>>> 4470dcc363f614e28f589f2214d595ce2d6d96a7
   try {
     const postRes = await axios.post(serverUrl + endPoint, value);
     console.log("apipost=>", postRes);
@@ -64,7 +85,23 @@ export const putApihandler = async (endPoint, value) => {
     // Axios Method ----
     const res = await axios.put(serverUrl + endPoint, value);
     return res.data;
+<<<<<<< HEAD
   } catch (error) {
+=======
+
+    // Fetch Method ----
+    // const res = await fetch(serverUrl + endPoint, {
+    //   method: "put",
+    //   body: JSON.stringify(value),
+    //   headers: {
+    //     "Access-Control-Allow-Origin": "*",
+    //     "Content-Type": "application/json",
+    //   },
+    // });
+    // return res.data;
+  } catch (error) {
+    // console.log("error ");
+>>>>>>> 4470dcc363f614e28f589f2214d595ce2d6d96a7
     return { error };
   }
 };

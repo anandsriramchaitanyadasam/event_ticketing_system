@@ -1,9 +1,13 @@
+<<<<<<< HEAD
 /** @format */
 
+=======
+>>>>>>> 4470dcc363f614e28f589f2214d595ce2d6d96a7
 import React, { useState, useEffect } from "react";
 import AdminLayout from "../../Layout/AdminLayout";
 import { getApihandler } from "../../Apihandler";
 import { Card, CardContent, Typography, Grid } from "@mui/material";
+<<<<<<< HEAD
 import { LineChart, Line, ResponsiveContainer, Tooltip } from "recharts";
 import PeopleIcon from "@mui/icons-material/People";
 import StorefrontIcon from "@mui/icons-material/Storefront";
@@ -46,10 +50,28 @@ export default function Dashboard() {
       trend: [2, 10, 20, 35, 50, data?.totalEvents || 0],
     },
   ];
+=======
+
+export default function Dashboard() {
+  // const [data, setData] = useState(null);
+
+  // useEffect(() => {
+  //   getCount();
+  // }, []);
+
+  // const getCount = async () => {
+  //   const res = await getApihandler("/getCount");
+  //   console.log("get count api response is -->", res);
+  //   if (res.message === "Counts get successfully") {
+  //     setData(res);
+  //   }
+  // };
+>>>>>>> 4470dcc363f614e28f589f2214d595ce2d6d96a7
 
   return (
     <AdminLayout>
       <h1>Dashboard</h1>
+<<<<<<< HEAD
       <Grid container spacing={3}>
         {stats.map((stat, index) => (
           <Grid item xs={12} sm={4} key={index}>
@@ -97,6 +119,38 @@ export default function Dashboard() {
           </Grid>
         ))}
       </Grid>
+=======
+      {/* <Grid container spacing={3}>
+        <Grid item xs={12} sm={4}>
+          <Card
+            sx={{ minWidth: 275, textAlign: "center", background: "#f5f5f5" }}
+          >
+            <CardContent>
+              <Typography variant="h4" color="primary">
+                {data?.userCount || 0}
+              </Typography>
+              <Typography variant="h5" component="div">
+                Users Count
+              </Typography>
+            </CardContent>
+          </Card>
+        </Grid>
+        <Grid item xs={12} sm={4}>
+          <Card
+            sx={{ minWidth: 275, textAlign: "center", background: "#f5f5f5" }}
+          >
+            <CardContent>
+              <Typography variant="h4" color="secondary">
+                {data?.plantCount || 0}
+              </Typography>
+              <Typography variant="h5" component="div">
+                Plants Count
+              </Typography>
+            </CardContent>
+          </Card>
+        </Grid>
+      </Grid> */}
+>>>>>>> 4470dcc363f614e28f589f2214d595ce2d6d96a7
     </AdminLayout>
   );
 }

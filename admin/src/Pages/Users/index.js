@@ -1,5 +1,8 @@
+<<<<<<< HEAD
 /** @format */
 
+=======
+>>>>>>> 4470dcc363f614e28f589f2214d595ce2d6d96a7
 import React, { useEffect, useState } from "react";
 import AdminLayout from "../../Layout/AdminLayout";
 import {
@@ -49,7 +52,11 @@ export default function Users() {
 
   // ****** Delete API ******
   const deleteUser = async (id) => {
+<<<<<<< HEAD
     const res = await deleteApihandler(`/admin/deleteUser/${id}`);
+=======
+    const res = await deleteApihandler(`/deleteUser/${id}`);
+>>>>>>> 4470dcc363f614e28f589f2214d595ce2d6d96a7
     if (res.status === 200) {
       Swal.fire({
         icon: "success",
@@ -85,7 +92,11 @@ export default function Users() {
       mobile_no: mobileno,
     };
 
+<<<<<<< HEAD
     const res = await putApihandler(`/admin/editUser/${userid}`, item);
+=======
+    const res = await putApihandler(`/editUser/${userid}`, item);
+>>>>>>> 4470dcc363f614e28f589f2214d595ce2d6d96a7
     console.log("Update API response:", res);
 
     if (res.status === 200) {
@@ -113,7 +124,11 @@ export default function Users() {
               <TableCell sx={{ fontWeight: "bold" }}>Name</TableCell>
               <TableCell sx={{ fontWeight: "bold" }}>Email</TableCell>
               <TableCell sx={{ fontWeight: "bold" }}>Mobile</TableCell>
+<<<<<<< HEAD
               <TableCell sx={{ fontWeight: "bold" }}>Action</TableCell>
+=======
+              {/* <TableCell sx={{ fontWeight: "bold" }}>Action</TableCell> */}
+>>>>>>> 4470dcc363f614e28f589f2214d595ce2d6d96a7
             </TableRow>
           </TableHead>
           <TableBody>
@@ -124,7 +139,11 @@ export default function Users() {
                 <TableCell>{user.mobile_no}</TableCell>
                 <TableCell>
                   {/* Edit User */}
+<<<<<<< HEAD
                   <IconButton
+=======
+                  {/* <IconButton
+>>>>>>> 4470dcc363f614e28f589f2214d595ce2d6d96a7
                     color="primary"
                     onClick={() => {
                       setUserId(user._id);
@@ -133,10 +152,17 @@ export default function Users() {
                     }}
                   >
                     <EditIcon />
+<<<<<<< HEAD
                   </IconButton>
 
                   {/* Delete User with Confirmation */}
                   <IconButton
+=======
+                  </IconButton> */}
+
+                  {/* Delete User with Confirmation */}
+                  {/* <IconButton
+>>>>>>> 4470dcc363f614e28f589f2214d595ce2d6d96a7
                     onClick={() => {
                       Swal.fire({
                         title: "Are you sure?",
@@ -155,7 +181,11 @@ export default function Users() {
                     color="error"
                   >
                     <DeleteIcon />
+<<<<<<< HEAD
                   </IconButton>
+=======
+                  </IconButton> */}
+>>>>>>> 4470dcc363f614e28f589f2214d595ce2d6d96a7
                 </TableCell>
               </TableRow>
             ))}

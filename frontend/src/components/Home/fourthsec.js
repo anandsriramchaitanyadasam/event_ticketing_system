@@ -34,7 +34,11 @@ export default function FourthSec() {
                       alt="Plant"
                       style={{
                         width: "100%",
+<<<<<<< HEAD
                      
+=======
+                        // height: 100,
+>>>>>>> 4470dcc363f614e28f589f2214d595ce2d6d96a7
                         marginRight: 10,
                         borderRadius: 5,
                       }}
