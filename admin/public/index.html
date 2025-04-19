@@ -1,43 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+  <head> 
+    <!-- Sets the character encoding for the document -->
     <meta charset="utf-8" />
-    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+  
+   <!-- Sets browser tab icon (favicon) -->
+  <link rel="icon" href="%PUBLIC_URL%/eventIcon.png" />
+
+  <!-- Meta preview image (used in social media cards etc.) -->
+  <meta property="og:image" content="%PUBLIC_URL%/eventBanner.png" />
+    <!-- Ensures the site is mobile-friendly and responsive -->
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#000000" />
+  
+    <!-- Theme color used for address bar styling on supported devices -->
+    <meta name="theme-color" content="#0056b3" />
+  
+    <!-- Description used by search engines and browser previews -->
     <meta
       name="description"
-      content="Web site created using create-react-app"
+      content="Admin dashboard to manage event organizers, users, ticket bookings, and notifications."
     />
+  
+    <!-- ✅ SOCIAL MEDIA PREVIEW TAGS (Open Graph for Facebook, LinkedIn, etc.) -->
+    <meta property="og:title" content="Event Management Admin Dashboard" />
+    <meta property="og:description" content="Monitor and control all event operations in one place." />
+    <meta property="og:image" content="%PUBLIC_URL%/event-banner.png" />
+    <meta property="og:type" content="website" />
+  
+    <!-- Twitter Card preview configuration -->
+    <meta name="twitter:card" content="summary_large_image" />
+  
+    <!-- Apple touch icon for iOS home screen bookmark -->
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
-    <!--
-      manifest.json provides metadata used when your web app is installed on a
-      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
-    -->
+  
+    <!-- Manifest for progressive web app metadata -->
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <!--
-      Notice the use of %PUBLIC_URL% in the tags above.
-      It will be replaced with the URL of the `public` folder during the build.
-      Only files inside the `public` folder can be referenced from the HTML.
-
-      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
-      work correctly both with client-side routing and a non-root public URL.
-      Learn how to configure a non-root public URL by running `npm run build`.
-    -->
-    <title>React App</title>
+  
+    <!-- Sets the browser tab title -->
+    <title>Admin Dashboard - Event Management System</title>
   </head>
+  
+  
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
-    <!--
-      This HTML file is a template.
-      If you open it directly in the browser, you will see an empty page.
-
-      You can add webfonts, meta tags, or analytics to this file.
-      The build step will place the bundled scripts into the <body> tag.
-
-      To begin the development, run `npm start` or `yarn start`.
-      To create a production bundle, use `npm run build` or `yarn build`.
-    -->
+    
+    <!-- Fallback loading image while React initializes -->
+    <body>
+      <div id="root"></div>
+    
+      <!-- Add your banner image below -->
+      <div style="text-align: center; margin-top: 20px;">
+        <img src="%PUBLIC_URL%/eventBanner.png" alt="Event Management Banner" style="max-width: 100%;" />
+      </div>
+    </body>
+    
   </body>
+  
 </html>

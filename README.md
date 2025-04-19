@@ -145,11 +145,14 @@ We welcome contributions! Follow these steps:
 This project is licensed under the **MIT License**. See the `LICENSE` file for full details.
 
 ---
-##  Contact Us
-For any queries, reach out via:
-- ** Email:** [sriramdasam1111@gmail.com](mailto:your-email@example.com)
-- ** Report Issues:** [GitHub Issues](https://github.com/your-repo-name/issues)
+## 📬 Contact Us
 
----
+For any queries or support, feel free to reach out:
+
+- **Email:** [sriramdasam1111@gmail.com](mailto:sriramdasam1111@gmail.com)
+- **Report Issues:** [GitHub Issues](https://github.com/anandsriramchaitanyadasam/event_ticketing_system/issues)
+
+
+
 
 
