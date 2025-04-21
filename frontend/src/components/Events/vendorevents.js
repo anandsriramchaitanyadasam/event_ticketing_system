@@ -39,7 +39,7 @@ export default function VendorEvents() {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const [loading, setLoading] = useState(true);
+ 
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedCategoryId, setSelectedCategoryId] = useState("");
@@ -145,7 +145,7 @@ export default function VendorEvents() {
   const [eventid, setEventId] = useState("");
   const [index, setIndex] = useState("");
   const [open1, setOpen1] = useState(false);
-  const handleOpen1 = () => setOpen1(true);
+
   const handleClose1 = () => setOpen1(false);
   useEffect(() => {
     if (index !== "") {

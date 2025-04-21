@@ -1,28 +1,28 @@
 import React from "react";
-import "./Footer.css";
-import event from "../Images/event.jpg"
-import event1 from "../Images/event1.jpg"
+import "./Footer.css"; // Importing custom footer styles
+import event from "../Images/event.jpg"; // Gallery image 1
+import event1 from "../Images/event1.jpg"; // Gallery image 2
 
+// Predefined categories
 const categories = ["Business", "Concert", "Conference", "Festival", "Sport", "Travel"];
+
+// Predefined tags for events
 const tags = [
   "Business", "Conference", "Festival", "Festival Theme",
   "Game", "Happy", "Marketing", "Marries",
   "Phanxipang", "Rugby", "Summer", "Technology",
   "Toronto Concert", "Tour", "Tourist"
 ];
-const galleryImages = [
-  event,
-  event1,
-  event
-  
-];
+
+// Gallery image array (can be dynamic in future)
+const galleryImages = [event, event1, event];
 
 const Footer = () => {
   return (
     <footer className="footer">
       <div className="footer-container">
-        
-        {/* Categories Section */}
+
+        {/* Section: Categories */}
         <div className="footer-section">
           <h3>All Categories</h3>
           <div className="underline"></div>
@@ -33,7 +33,7 @@ const Footer = () => {
           </ul>
         </div>
 
-        {/* Gallery Section */}
+        {/* Section: Gallery */}
         <div className="footer-section">
           <h3>Our Gallery</h3>
           <div className="underline"></div>
@@ -45,7 +45,7 @@ const Footer = () => {
           <p className="all-gallery">All Gallery</p>
         </div>
 
-        {/* Tag Events Section */}
+        {/* Section: Tags */}
         <div className="footer-section">
           <h3>Tag Event</h3>
           <div className="underline"></div>

@@ -1,49 +1,43 @@
-import React, { useState } from "react";
-import Header from "../../layout/header";
+import React, { useState } from "react";  // React import and useState for state management
+import Header from "../../layout/header";  // Importing Header component for the page layout
 import {
   Box,
   Button,
   Card,
   MenuItem,
   Select,
-  TextField,
   Typography,
-} from "@mui/material";
-import { postApihandler } from "../../Apihandler";
-import swal from "sweetalert";
-import { Navigate, useNavigate, useParams } from "react-router-dom";
+} from "@mui/material";  // MUI components for UI elements
+import { postApihandler } from "../../Apihandler";  // Helper function to handle API requests
+import swal from "sweetalert";  // For showing alert messages
+import { useNavigate, useParams } from "react-router-dom";  // React Router hooks for navigation and parameter extraction
 
 export default function Payment() {
-  // ******* calendar*******
-  const currentYear = new Date().getFullYear();
-  const years = Array.from(new Array(12), (val, index) => currentYear + index);
+  // Calendar setup for years and months dropdown
+  const currentYear = new Date().getFullYear();  // Get the current year
+  const years = Array.from(new Array(12), (val, index) => currentYear + index);  // Array for next 12 years
   const months = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
+    "January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"
+  ];  // Array for months
+  
+  // State management for the form fields
+  const [cardNumber, setCardNumber] = useState("");  // For card number input
+  const [expiryMonth, setExpiryMonth] = useState("");  // For expiry month
+  const [expiryYear, setExpiryYear] = useState("");  // For expiry year
+  const [cardHolderName, setCardHolderName] = useState("");  // For cardholder name
+  const [cvvnumber, setCvvNumber] = useState("");  // For CVV number
+  
+  const { id } = useParams();  // Extract booking ID from the URL parameters
+  const navigate = useNavigate();  // Hook to navigate programmatically
 
-  const [cardNumber, setCardNumber] = useState("");
-  const [expiryMonth, setExpiryMonth] = useState("");
-  const [expiryYear, setExpiryYear] = useState("");
-  const [cardHolderName, setCardHolderName] = useState("");
-  const [cvvnumber, setCvvNumber] = useState("");
-  const { id } = useParams();
-  const navigate = useNavigate();
+  // Handle form submission
   const handleSubmit = async (e) => {
-    e.preventDefault();
-
+    e.preventDefault();  // Prevent default form submission
+    
+    // Payment data to be sent to the server
     const paymentData = {
-      bookingId: id,
+      bookingId: id,  // Booking ID from URL parameters
       cardDetails: {
         cardNumber: cardNumber,
         expiryMonth: expiryMonth,
@@ -52,20 +46,23 @@ export default function Payment() {
         cvv: cvvnumber,
       },
     };
-    console.log("payment data", paymentData);
+    console.log("payment data", paymentData);  // Log payment data for debugging
 
+    // API call to process payment
     const res = await postApihandler("/processPayment", paymentData);
-    console.log("payment api res is --->", res);
+    console.log("payment api res is --->", res);  // Log response from the API
+
+    // Handle success and error responses
     if (res.status === 200) {
       swal({
         icon: "success",
-        title: "payment submit successfully",
+        title: "Payment submitted successfully",  // Success alert
       });
-      navigate("/booking");
+      navigate("/booking");  // Redirect to the booking page after successful payment
     } else {
       swal(
         "Error",
-        res.error.response.data.message || "An unknown error occurred.",
+        res.error.response.data.message || "An unknown error occurred.",  // Error alert
         "error"
       );
     }
@@ -73,29 +70,31 @@ export default function Payment() {
 
   return (
     <>
-      <Header />
-      <Card
-        sx={{ padding: 3, maxWidth: 400, margin: "auto", mt: 5, boxShadow: 3 }}
-      >
+      <Header />  {/* Header component */}
+      
+      <Card sx={{ padding: 3, maxWidth: 400, margin: "auto", mt: 5, boxShadow: 3 }}>
         <Typography variant="h5" gutterBottom>
-          Enter Payment Details
+          Enter Payment Details  {/* Heading */}
         </Typography>
 
         <form onSubmit={handleSubmit}>
+          {/* Card Number Input */}
           <input
             fullWidth
             placeholder="Card Number"
-            maxLength="16"
+            maxLength="16"  // Card number length (16 digits)
             value={cardNumber}
-            onChange={(e) => setCardNumber(e.target.value)}
-            required
+            onChange={(e) => setCardNumber(e.target.value)}  // Update state on change
+            required  // Make the field required
             margin="normal"
             className="form-control mb-3"
           />
+          
           <Box display="flex" gap={2}>
+            {/* Expiry Month Dropdown */}
             <Select
               value={expiryMonth}
-              onChange={(e) => setExpiryMonth(e.target.value)}
+              onChange={(e) => setExpiryMonth(e.target.value)}  // Update month on change
               displayEmpty
               required
               sx={{ width: "50%" }}
@@ -111,9 +110,10 @@ export default function Payment() {
               ))}
             </Select>
 
+            {/* Expiry Year Dropdown */}
             <Select
               value={expiryYear}
-              onChange={(e) => setExpiryYear(e.target.value)}
+              onChange={(e) => setExpiryYear(e.target.value)}  // Update year on change
               displayEmpty
               required
               sx={{ width: "50%" }}
@@ -129,26 +129,31 @@ export default function Payment() {
               ))}
             </Select>
           </Box>
+          
+          {/* Cardholder Name Input */}
           <input
             fullWidth
             placeholder="Cardholder Name"
             value={cardHolderName}
-            onChange={(e) => setCardHolderName(e.target.value)}
+            onChange={(e) => setCardHolderName(e.target.value)}  // Update cardholder name on change
             required
             margin="normal"
             className="form-control mb-3"
           />
+          
+          {/* CVV Input */}
           <input
             fullWidth
             placeholder="CVV Number"
             value={cvvnumber}
-            maxLength="3"
-            onChange={(e) => setCvvNumber(e.target.value)}
+            maxLength="3"  // CVV length (3 digits)
+            onChange={(e) => setCvvNumber(e.target.value)}  // Update CVV on change
             required
             margin="normal"
             className="form-control mb-3"
           />
 
+          {/* Submit Button */}
           <Button type="submit" variant="contained" color="primary" fullWidth>
             Pay Now
           </Button>

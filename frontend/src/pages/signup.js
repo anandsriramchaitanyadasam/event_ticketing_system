@@ -1225,21 +1225,25 @@ const countryCodeList = [
   },
 ];
 export default function Signup() {
-  const [value, setValue] = React.useState("1");
-
-  const handleChange = (event: React.SyntheticEvent, newValue: string) => {
-    setValue(newValue);
-  };
+  // State management for user sign-up form fields
+  const [value, setValue] = React.useState("1");  // This could be a tab selection or form step indicator
+  const handleChange = (event, newValue) => { setValue(newValue); };  // Updates tab or step value on change
+  
+  // Navigation hook to redirect after successful signup
   const navigate = useNavigate();
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmpassword, setConfirmPassword] = useState("");
-  const [phonenumber, setphonenumber] = useState("");
+  
+  // User-related form fields for signup
+  const [name, setName] = useState("");  // User's name
+  const [email, setEmail] = useState("");  // User's email
+  const [password, setPassword] = useState("");  // User's password
+  const [confirmpassword, setConfirmPassword] = useState("");  // User's password confirmation
+  const [phonenumber, setphonenumber] = useState("");  // User's phone number
 
-  const [country_code, setCountryCode] = React.useState();
+  const [country_code, setCountryCode] = React.useState();  // User's country code
+  
+  // Handles user sign-up form submission
   const userSignup = async (e) => {
-    e.preventDefault();
+    e.preventDefault();  // Prevents the default form submission
     const data = {
       user_Name: name,
       user_Email: email,
@@ -1248,26 +1252,30 @@ export default function Signup() {
       mobile_no: phonenumber,
       country_code: country_code,
     };
-    console.log("signup data is ---->", data);
-    const res = await postApihandler("/userSignup", data);
-    console.log("signup api response is ----->", res);
+    console.log("signup data is ---->", data);  // Logs the user data for debugging
+    const res = await postApihandler("/userSignup", data);  // API call to sign up the user
+    console.log("signup api response is ----->", res);  // Logs the API response for debugging
+    
+    // Handle success and error responses
     if (res.status === 200) {
-      swal("Successfully Signup");
-      navigate("/login");
+      swal("Successfully Signup");  // Success notification
+      navigate("/login");  // Redirects to the login page after successful signup
     } else {
-      swal("Error", res.message || "An unknown error occurred.", "error");
+      swal("Error", res.message || "An unknown error occurred.", "error");  // Displays an error message if the signup fails
     }
   };
 
-  // ******** vendor signup ***********
-  const [vendorname, setVendorName] = useState("");
-  const [vendoremail, setVendorEmail] = useState("");
-  const [vendorCountryCode, setVendorCountryCode] = useState("");
-  const [vendornumber, setVendorNumber] = useState("");
-  const [vendorpassword, setVendorPassword] = useState("");
-  const [vendorConfirmpassword, setVendorConfirmPassword] = useState("");
+  // Vendor-related form fields for sign-up
+  const [vendorname, setVendorName] = useState("");  // Vendor's name
+  const [vendoremail, setVendorEmail] = useState("");  // Vendor's email
+  const [vendorCountryCode, setVendorCountryCode] = useState("");  // Vendor's country code
+  const [vendornumber, setVendorNumber] = useState("");  // Vendor's phone number
+  const [vendorpassword, setVendorPassword] = useState("");  // Vendor's password
+  const [vendorConfirmpassword, setVendorConfirmPassword] = useState("");  // Vendor's password confirmation
+  
+  // Handles vendor sign-up form submission
   const vendorSignup = async (e) => {
-    e.preventDefault();
+    e.preventDefault();  // Prevents the default form submission
     const data = {
       vendor_Name: vendorname,
       vendor_Email: vendoremail,
@@ -1276,14 +1284,17 @@ export default function Signup() {
       password: vendorpassword,
       confirmPassword: vendorConfirmpassword,
     };
-    const res = await postApihandler("/vendorSignUp", data);
-    console.log("vendor api res", res);
+    const res = await postApihandler("/vendorSignUp", data);  // API call to sign up the vendor
+    console.log("vendor api res", res);  // Logs the vendor API response for debugging
+    
+    // Handle success and error responses
     if (res.status === 200) {
-      swal("Successfully Vendor Signup");
-      navigate("/login");
+      swal("Successfully Vendor Signup");  // Success notification
+      navigate("/login");  // Redirects to the login page after successful vendor signup
     } else {
-      swal("Error", res.message || "An unknown error occurred.", "error");
+      swal("Error", res.message || "An unknown error occurred.", "error");  // Displays an error message if the signup fails
     }
+
   };
   return (
     <div>

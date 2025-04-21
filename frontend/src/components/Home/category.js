@@ -1,21 +1,14 @@
 import React, { useEffect, useState } from "react";
-import {
-  FaShoppingBag,
-  FaMusic,
-  FaMicrophone,
-  FaMapMarkerAlt,
-  FaPlane,
-} from "react-icons/fa";
 import { getApihandler } from "../../Apihandler";
 
-const categories = [
+/*const categories = [
   { icon: <FaShoppingBag />, name: "Business" },
   { icon: <FaMusic />, name: "Concert" },
   { icon: <FaMicrophone />, name: "Conference" },
   { icon: <FaShoppingBag />, name: "Festival" },
   { icon: <FaMapMarkerAlt />, name: "Sport" },
   { icon: <FaPlane />, name: "Travel" },
-];
+];*/
 
 const CategoryCards = () => {
   const [data, setData] = useState([]);
@@ -46,6 +39,7 @@ const CategoryCards = () => {
               <img
                 style={{ width: "50%" }}
                 src={`http://localhost:80/uploads/${category.photoUrl}`}
+                alt={category.category_name}
               />
             </div>
             <div className="category-text">{category.category_name}</div>

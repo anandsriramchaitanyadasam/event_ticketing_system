@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
-import AdminLayout from "../../Layout/AdminLayout";
-import { getApihandler } from "../../Apihandler";
+import { useEffect, useState } from "react";         // React hooks for lifecycle & state
+import AdminLayout from "../../Layout/AdminLayout";  // Layout wrapper for admin pages
+import { getApihandler } from "../../Apihandler";    // API helper for GET requests
+// MUI components for table display
 import {
   Paper,
   Table,
@@ -12,10 +13,15 @@ import {
 } from "@mui/material";
 
 export default function Reviews() {
+  // State to hold the list of reviews
   const [data, setData] = useState([]);
+
+  // On component mount, fetch all reviews
   useEffect(() => {
     getReviews();
   }, []);
+
+  // Fetch reviews from the backend and store in state
   const getReviews = async () => {
     const res = await getApihandler("/getAllReviews");
     console.log("get review api res--->", res);
@@ -23,31 +29,43 @@ export default function Reviews() {
       setData(res.data);
     }
   };
+
   return (
+    // Wrap content in the admin dashboard layout
     <AdminLayout>
       <h4>Reviews</h4>
+      {/* Table container */}
       <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+        {/* Main table */}
+        <Table sx={{ minWidth: 650 }} aria-label="reviews table">
           <TableHead>
             <TableRow>
-              <TableCell>Event Name</TableCell>
-              <TableCell>Rating</TableCell>
-              <TableCell>Review</TableCell>
-              <TableCell>User Name</TableCell>
-              <TableCell>Vendor Name</TableCell>
+              {/* Table headers */}
+              <TableCell><strong>Event Name</strong></TableCell>
+              <TableCell><strong>Rating</strong></TableCell>
+              <TableCell><strong>Review</strong></TableCell>
+              <TableCell><strong>User Name</strong></TableCell>
+              <TableCell><strong>Vendor Name</strong></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {data.map((review) => (
+            {/* Map over each review and render a row */}
+            {data.map((review, idx) => (
               <TableRow
+                key={idx}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
+                {/* Event name cell */}
                 <TableCell component="th" scope="row">
                   {review.event_name}
                 </TableCell>
+                {/* Rating cell */}
                 <TableCell>{review.rating}</TableCell>
+                {/* Review text cell */}
                 <TableCell>{review.review}</TableCell>
+                {/* User name cell */}
                 <TableCell>{review.user_name}</TableCell>
+                {/* Vendor name cell */}
                 <TableCell>{review.vendor_name}</TableCell>
               </TableRow>
             ))}

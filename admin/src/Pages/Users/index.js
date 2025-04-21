@@ -1,12 +1,15 @@
 /** @format */
 
 import React, { useEffect, useState } from "react";
+// Layout wrapper for admin pages
 import AdminLayout from "../../Layout/AdminLayout";
+// Reusable API handlers for GET, DELETE, and PUT requests
 import {
   deleteApihandler,
   getApihandler,
   putApihandler,
 } from "../../Apihandler";
+// MUI components for table, modal, buttons, etc.
 import {
   Table,
   TableBody,
@@ -21,24 +24,33 @@ import {
   Box,
   Button,
 } from "@mui/material";
+// Icons for actions
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
+// SweetAlert2 for nicer confirmation & alerts
 import Swal from "sweetalert2";
 
 export default function Users() {
+  // State for table data
   const [data, setData] = useState([]);
+  // ID of the user currently being edited
   const [userid, setUserId] = useState("");
+  // Form fields in the edit modal
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [countrycode, setCountryCode] = useState("");
   const [mobileno, setMobileNumber] = useState("");
+  // Index of the selected row (to populate form when modal opens)
   const [index, setIndex] = useState(null);
+  // Modal open/close flag
   const [open, setOpen] = useState(false);
 
+  // On mount, fetch all users
   useEffect(() => {
     getUsers();
   }, []);
 
+  // Fetch users from API and store in state
   const getUsers = async () => {
     const res = await getApihandler("/admin/getAllUsers");
     console.log("get userapi ", res);
@@ -47,7 +59,7 @@ export default function Users() {
     }
   };
 
-  // ****** Delete API ******
+  // Delete a user by ID, then refresh the list
   const deleteUser = async (id) => {
     const res = await deleteApihandler(`/admin/deleteUser/${id}`);
     if (res.status === 200) {
@@ -64,11 +76,11 @@ export default function Users() {
     }
   };
 
-  // ****** Set Modal Data ******
+  // When `index` changes (i.e. a row was selected), populate the modal form fields
   useEffect(() => {
     if (index !== null && data[index]) {
       const { user_Name, user_Email, country_code, mobile_no } =
-        data[index] || {};
+        data[index];
       setName(user_Name || "");
       setEmail(user_Email || "");
       setCountryCode(country_code || "");
@@ -76,7 +88,7 @@ export default function Users() {
     }
   }, [index, data]);
 
-  // ****** Update API ******
+  // Send updated user data to the server, then refresh & close modal
   const handleUpdateUser = async () => {
     const item = {
       user_Name: name,
@@ -104,8 +116,11 @@ export default function Users() {
   };
 
   return (
+    // Wrap the content in the AdminLayout (e.g. sidebar, header)
     <AdminLayout>
       <h1>Users List</h1>
+
+      {/* Table container */}
       <TableContainer component={Paper} sx={{ maxWidth: 900, margin: "auto" }}>
         <Table>
           <TableHead>
@@ -117,26 +132,27 @@ export default function Users() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {data.map((user, index) => (
+            {data.map((user, idx) => (
               <TableRow key={user._id}>
                 <TableCell>{user.user_Name}</TableCell>
                 <TableCell>{user.user_Email}</TableCell>
                 <TableCell>{user.mobile_no}</TableCell>
                 <TableCell>
-                  {/* Edit User */}
+                  {/* Edit button: set selected user, open modal */}
                   <IconButton
                     color="primary"
                     onClick={() => {
                       setUserId(user._id);
-                      setIndex(index);
+                      setIndex(idx);
                       setOpen(true);
                     }}
                   >
                     <EditIcon />
                   </IconButton>
 
-                  {/* Delete User with Confirmation */}
+                  {/* Delete button with confirmation dialog */}
                   <IconButton
+                    color="error"
                     onClick={() => {
                       Swal.fire({
                         title: "Are you sure?",
@@ -152,7 +168,6 @@ export default function Users() {
                         }
                       });
                     }}
-                    color="error"
                   >
                     <DeleteIcon />
                   </IconButton>
@@ -163,7 +178,7 @@ export default function Users() {
         </Table>
       </TableContainer>
 
-      {/* Update User Modal */}
+      {/* Modal for editing a user */}
       <Modal open={open} onClose={() => setOpen(false)}>
         <Box
           sx={{
@@ -179,6 +194,8 @@ export default function Users() {
           }}
         >
           <h2>Edit User</h2>
+
+          {/* Editable form fields */}
           <TextField
             label="Name"
             fullWidth
@@ -207,6 +224,8 @@ export default function Users() {
             value={mobileno}
             onChange={(e) => setMobileNumber(e.target.value)}
           />
+
+          {/* Action buttons */}
           <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 2 }}>
             <Button onClick={() => setOpen(false)} sx={{ mr: 2 }}>
               Cancel

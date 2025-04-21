@@ -1,11 +1,16 @@
 import React, { useEffect, useState } from "react";
 
+// Wraps page in the admin dashboard layout (e.g., sidebar, header)
 import AdminLayout from "../../Layout/AdminLayout";
+
+// Generic API handlers for GET, DELETE, and PUT requests
 import {
   deleteApihandler,
   getApihandler,
   putApihandler,
 } from "../../Apihandler";
+
+// MUI components for table display and modal dialog
 import {
   Paper,
   Table,
@@ -20,20 +25,39 @@ import {
   Box,
   Button,
 } from "@mui/material";
-import Swal from "sweetalert2";
-import EditIcon from "@mui/icons-material/Edit";
 
+// For nicer alert/confirmation dialogs
+import Swal from "sweetalert2";
+
+// Icons for edit/delete actions
+import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+
 export default function Vendors() {
+  // Holds the list of vendors fetched from the server
   const [data, setData] = useState([]);
+
+  // Form fields for editing a vendor
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [countrycode, setCountryCode] = useState("");
   const [mobileno, setMobileNumber] = useState("");
+
+  // Whether the Edit modal is open
   const [open, setOpen] = useState(false);
+
+  // ID of the vendor currently being edited
+  const [vendorid, setVendorId] = useState();
+
+  // Index in `data` of the vendor being edited (to pre-fill form)
+  const [index, setIndex] = useState("");
+
+  // On component mount, fetch all vendors
   useEffect(() => {
     getVendors();
   }, []);
+
+  // Fetch vendor list from backend
   const getVendors = async () => {
     const res = await getApihandler("/admin/getAllVendors");
     console.log("get vendors ", res);
@@ -42,7 +66,7 @@ export default function Vendors() {
     }
   };
 
-  // ********** delete vendors *********
+  // Delete a vendor by ID, then refresh the list
   const deleteVendor = async (id) => {
     const res = await deleteApihandler(`/deleteVendor/${id}`);
     if (res.status === 200) {
@@ -59,13 +83,11 @@ export default function Vendors() {
     }
   };
 
-  // ******** update vendors ********
-  const [vendorid, setVendorId] = useState();
-  const [index, setIndex] = useState("");
+  // Whenever `index` or `data` changes, populate the edit form fields
   useEffect(() => {
     if (index !== "" && data[index]) {
       const { vendor_Name, vendor_Email, country_code, mobile_no } =
-        data[index] || {};
+        data[index];
       setName(vendor_Name || "");
       setEmail(vendor_Email || "");
       setCountryCode(country_code || "");
@@ -73,6 +95,7 @@ export default function Vendors() {
     }
   }, [index, data]);
 
+  // Send updated vendor data to server, then refresh and close modal
   const UpdateVendors = async () => {
     const item = {
       vendor_Name: name,
@@ -93,7 +116,7 @@ export default function Vendors() {
     } else {
       Swal.fire({
         icon: "error",
-        text: "Failed to update user!",
+        text: "Failed to update vendor!",
       });
     }
   };
@@ -101,6 +124,8 @@ export default function Vendors() {
   return (
     <AdminLayout>
       <h3>Vendors</h3>
+
+      {/* Table of vendors */}
       <TableContainer component={Paper} sx={{ maxWidth: 900, margin: "auto" }}>
         <Table>
           <TableHead>
@@ -112,26 +137,27 @@ export default function Vendors() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {data.map((user, index) => (
+            {data.map((user, idx) => (
               <TableRow key={user._id}>
                 <TableCell>{user.vendor_Name}</TableCell>
                 <TableCell>{user.vendor_Email}</TableCell>
                 <TableCell>{user.mobile_no}</TableCell>
                 <TableCell>
-                  {/* Edit User */}
+                  {/* Edit button: store ID & index, then open modal */}
                   <IconButton
                     color="primary"
                     onClick={() => {
                       setVendorId(user._id);
-                      setIndex(index);
+                      setIndex(idx);
                       setOpen(true);
                     }}
                   >
                     <EditIcon />
                   </IconButton>
 
-                  {/* Delete User with Confirmation */}
+                  {/* Delete button with confirmation dialog */}
                   <IconButton
+                    color="error"
                     onClick={() => {
                       Swal.fire({
                         title: "Are you sure?",
@@ -147,7 +173,6 @@ export default function Vendors() {
                         }
                       });
                     }}
-                    color="error"
                   >
                     <DeleteIcon />
                   </IconButton>
@@ -157,6 +182,8 @@ export default function Vendors() {
           </TableBody>
         </Table>
       </TableContainer>
+
+      {/* Modal dialog for editing a vendor */}
       <Modal open={open} onClose={() => setOpen(false)}>
         <Box
           sx={{
@@ -171,7 +198,9 @@ export default function Vendors() {
             borderRadius: 2,
           }}
         >
-          <h2>Edit User</h2>
+          <h2>Edit Vendor</h2>
+
+          {/* Form fields bound to state */}
           <TextField
             label="Name"
             fullWidth
@@ -200,6 +229,8 @@ export default function Vendors() {
             value={mobileno}
             onChange={(e) => setMobileNumber(e.target.value)}
           />
+
+          {/* Cancel / Save buttons */}
           <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 2 }}>
             <Button onClick={() => setOpen(false)} sx={{ mr: 2 }}>
               Cancel

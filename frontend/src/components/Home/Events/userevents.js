@@ -1,6 +1,6 @@
 /** @format */
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { getApihandler, postApihandler } from "../../Apihandler";
 import {
   Box,
@@ -13,6 +13,7 @@ import {
   Modal,
 } from "@mui/material";
 
+// Styling for the Modal box
 const style = {
   position: "absolute",
   top: "50%",
@@ -26,25 +27,28 @@ const style = {
 };
 
 export default function UserEvents() {
+  // State to manage Modal open/close
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+  // Category-related states
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedCategoryId, setSelectedCategoryId] = useState("");
-  console.log("category id is ", selectedCategoryId);
-  // Retrieve vendorId from localStorage
+
+  // Get vendor ID from localStorage
   const vendorId = localStorage.getItem("vendor_Id");
-  console.log("vendor id is --->", vendorId);
+
+  // Fetch categories when component mounts
   useEffect(() => {
     getCategory();
   }, []);
 
+  // API call to fetch categories
   const getCategory = async () => {
     try {
       const res = await getApihandler("/admin/getAllCategories");
-      console.log("Get Category API Response:", res);
       if (res.message === "Categories fetched successfully") {
         setCategories(res.data);
       }
@@ -53,6 +57,7 @@ export default function UserEvents() {
     }
   };
 
+  // Form input states
   const [eventname, setEventName] = useState("");
   const [country, setCountry] = useState("");
   const [state, setState] = useState("");
@@ -60,10 +65,12 @@ export default function UserEvents() {
   const [eventprice, setEventPrice] = useState("");
   const [photos, setPhotos] = useState([]);
 
+  // Handle file input change
   const handleFileChange = (e) => {
-    setPhotos(Array.from(e.target.files));
+    setPhotos(Array.from(e.target.files)); // Convert FileList to array
   };
 
+  // Submit event form
   const addEvents = async () => {
     const formData = new FormData();
     formData.append("vendor_Id", vendorId);
@@ -78,8 +85,6 @@ export default function UserEvents() {
       formData.append("photo", photo);
     });
 
-    console.log("FormData is ---->", formData);
-
     try {
       const res = await postApihandler("/api/addEvent", formData);
       console.log("Events added successfully:", res);
@@ -87,21 +92,26 @@ export default function UserEvents() {
       console.error("Error adding event:", error);
     }
   };
+
+  // State to store all events
   const [events, setEvents] = useState([]);
-  console.log("events is ", events);
+
+  // Fetch all events on component mount
   useEffect(() => {
     getEvents();
   }, []);
-  // ****** get events ******
+
+  // API call to fetch all events
   const getEvents = async () => {
     const res = await getApihandler("/getAllEvents");
-    console.log("get api res is --->", res);
     if (res.message === "Events fetched successfully") {
       setEvents(res.data);
     }
   };
+
   return (
     <div>
+      {/* Button to open the modal */}
       <div className="mt-5 mb-5">
         <Button
           onClick={handleOpen}
@@ -114,6 +124,8 @@ export default function UserEvents() {
           Add Events
         </Button>
       </div>
+
+      {/* Modal for adding events */}
       <Modal
         open={open}
         onClose={handleClose}
@@ -159,7 +171,7 @@ export default function UserEvents() {
             onChange={(e) => setEventPrice(e.target.value)}
           />
 
-          {/* Category Dropdown */}
+          {/* Dropdown for selecting category */}
           <FormControl fullWidth margin="normal">
             <InputLabel>Category</InputLabel>
             <Select
@@ -180,9 +192,12 @@ export default function UserEvents() {
             </Select>
           </FormControl>
 
+          {/* File input for event images */}
           <div className="mt-4">
             <input type="file" multiple onChange={handleFileChange} />
           </div>
+
+          {/* Submit button */}
           <Button variant="contained" className="mt-3" onClick={addEvents}>
             Add Event
           </Button>

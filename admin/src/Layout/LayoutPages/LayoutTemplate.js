@@ -13,13 +13,13 @@ import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import Badge from "@mui/material/Badge";
 import Container from "@mui/material/Container";
-import Link from "@mui/material/Link";
+
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import NestedList from "./NestedList";
-import { alpha } from "@mui/material/styles";
-import InputBase from "@mui/material/InputBase";
+/*import { alpha } from "@mui/material/styles";
+import InputBase from "@mui/material/InputBase";*/
 
 const drawerWidth = 240;
 
@@ -74,7 +74,7 @@ export default function LayoutTemplate({ children }) {
   const toggleDrawer = () => {
     setOpen(!open);
   };
-  // **************** search *******************
+  /*// **************** search *******************
   const Search = styled("div")(({ theme }) => ({
     position: "relative",
     borderRadius: theme.shape.borderRadius,
@@ -115,7 +115,7 @@ export default function LayoutTemplate({ children }) {
         },
       },
     },
-  }));
+  }));*/
 
   return (
     <ThemeProvider theme={mdTheme}>

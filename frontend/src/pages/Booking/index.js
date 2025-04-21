@@ -1,6 +1,13 @@
+// Importing React and necessary hooks
 import React, { useEffect, useState } from "react";
+
+// Importing custom API handlers
 import { getApihandler, postApihandler } from "../../Apihandler";
+
+// Importing the Header layout component
 import Header from "../../layout/header";
+
+// Importing MUI (Material-UI) components
 import {
   Box,
   Button,
@@ -19,11 +26,18 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+
+// React Router's Link for navigation
 import { Link } from "react-router-dom";
+
+// Icon for reviews
 import StarIcon from "@mui/icons-material/Star";
+
+// Alert libraries
 import Swal from "sweetalert2";
 import swal from "sweetalert";
 
+// Modal style configuration
 const style = {
   position: "absolute",
   top: "50%",
@@ -36,21 +50,30 @@ const style = {
   p: 4,
 };
 
+// Booking component starts here
 export default function Booking() {
+  // State for modal open/close
   const [open, setOpen] = React.useState(false);
   const [selectedEventId, setSelectedEventId] = useState();
+
+  // Open modal and set event ID for review
   const handleOpen = (eventId) => {
     setSelectedEventId(eventId);
     setOpen(true);
   };
 
+  // Close modal and reset state
   const handleClose = () => {
     setOpen(false);
     setSelectedEventId(null);
   };
+
+  // State for user role and fetched booking data
   const [role, setRole] = useState("");
   const [data, setData] = useState([]);
   console.log("data is ---->", data);
+
+  // Check user role and load corresponding booking data
   useEffect(() => {
     const check = localStorage.getItem("role");
     if (check) {
@@ -62,6 +85,8 @@ export default function Booking() {
       getVendorBookings();
     }
   }, []);
+
+  // API call to get bookings made by the user
   const getUserBookings = async () => {
     const userData = JSON.parse(localStorage.getItem("userData"));
     const userId = userData._id;
@@ -72,6 +97,7 @@ export default function Booking() {
     }
   };
 
+  // API call to get bookings for events created by the vendor
   const getVendorBookings = async () => {
     const userData = JSON.parse(localStorage.getItem("userData"));
     const vendorId = userData._id;
@@ -82,13 +108,15 @@ export default function Booking() {
     }
   };
 
-  // ********* submit review api **********
+  // State for review submission
   const [rating, setRating] = useState(0);
   const [reviewText, setReviewText] = useState("");
 
+  // Get user ID from localStorage
   const userData = JSON.parse(localStorage.getItem("userData"));
   const userid = userData._id;
 
+  // Submit review API call
   const handleSubmit = async () => {
     const data = {
       userId: userid,
@@ -115,11 +143,14 @@ export default function Booking() {
 
   return (
     <>
+      {/* Top Header */}
       <Header />
 
+      {/* Conditional UI for user or vendor */}
       {role === "user" ? (
         <div className="container">
           <Grid container spacing={3}>
+            {/* Map user bookings to cards */}
             {data.map((booking, index) => (
               <Grid item xs={12} md={6} lg={4} key={index}>
                 <Card sx={{ borderRadius: 3, boxShadow: 3 }}>
@@ -159,6 +190,8 @@ export default function Booking() {
                     >
                       {booking.paymentStatus}
                     </Typography>
+
+                    {/* View booking details */}
                     <Link
                       to={`/bookingdetails/${booking._id}`}
                       style={{ textDecoration: "none" }}
@@ -174,6 +207,8 @@ export default function Booking() {
                         View
                       </Button>
                     </Link>
+
+                    {/* Review button */}
                     <Button
                       startIcon={<StarIcon sx={{ color: "orange" }} />}
                       sx={{
@@ -193,6 +228,7 @@ export default function Booking() {
           </Grid>
         </div>
       ) : (
+        // Vendor view: bookings table
         <div className="container">
           <TableContainer component={Paper}>
             <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -208,6 +244,7 @@ export default function Booking() {
               <TableBody>
                 {data.map((booking) => (
                   <TableRow
+                    key={booking._id}
                     sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                   >
                     <TableCell component="th" scope="row">
@@ -228,6 +265,8 @@ export default function Booking() {
           </TableContainer>
         </div>
       )}
+
+      {/* Modal for submitting review */}
       <Modal
         open={open}
         onClose={handleClose}
@@ -242,6 +281,8 @@ export default function Booking() {
           <Typography component="legend" mb={1}>
             Rating
           </Typography>
+
+          {/* Rating component */}
           <Rating
             name="event-rating"
             precision={0.5}
@@ -250,6 +291,7 @@ export default function Booking() {
             }}
           />
 
+          {/* Review Text Field */}
           <TextField
             fullWidth
             multiline
@@ -260,6 +302,7 @@ export default function Booking() {
             onChange={(e) => setReviewText(e.target.value)}
           />
 
+          {/* Submit Button */}
           <Button
             variant="contained"
             fullWidth

@@ -93,7 +93,7 @@ export default function Category() {
   const [categoryid, setCategoryId] = useState();
   const [index, setIndex] = useState("");
   const [open1, setOpen1] = React.useState(false);
-  const handleOpen1 = () => setOpen1(true);
+ // const handleOpen1 = () => setOpen1(true);
   const handleClose1 = () => setOpen1(false);
 
   useEffect(() => {
@@ -176,6 +176,7 @@ export default function Category() {
                     <img
                       style={{ width: "10%" }}
                       src={`http://localhost:80/uploads/${category.photoUrl}`}
+                      alt={category.category_name || "Category Image"}
                     />
                   }
                 </TableCell>

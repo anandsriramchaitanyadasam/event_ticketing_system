@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
-import { getApihandler } from "../../Apihandler";
-import AdminLayout from "../../Layout/AdminLayout";
+import { useEffect, useState } from "react";              // React hooks for side effects & state
+import { getApihandler } from "../../Apihandler";        // API helper for GET requests
+import AdminLayout from "../../Layout/AdminLayout";      // Wraps page in admin dashboard layout
+// MUI components for table display and pagination
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -11,18 +12,22 @@ import Paper from "@mui/material/Paper";
 import TablePagination from "@mui/material/TablePagination";
 
 export default function BookedEvents() {
+  // State for the full list of booked events
   const [data, setData] = useState([]);
+  // State for current table page (zero‑based)
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5); // You can change this default rows per page
+  // State for number of rows per page; default is 5
+  const [rowsPerPage, setRowsPerPage] = useState(5);
 
+  // Fetch booked events once on component mount
   useEffect(() => {
     getBookedEvents();
   }, []);
 
+  // Retrieves all booked events and sorts them by creation date (newest first)
   const getBookedEvents = async () => {
     const res = await getApihandler("/getAllBookedEvents");
     if (res.status === 200) {
-      // Sort data so the latest event comes first
       const sortedData = res.data.sort(
         (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
       );
@@ -30,10 +35,12 @@ export default function BookedEvents() {
     }
   };
 
+  // Handler when the user changes the page
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
 
+  // Handler when the user changes rows per page; resets to first page
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
@@ -42,23 +49,27 @@ export default function BookedEvents() {
   return (
     <AdminLayout>
       <h4>Booked Events</h4>
+
+      {/* Table container with pagination controls at the bottom */}
       <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+        <Table sx={{ minWidth: 650 }} aria-label="booked events table">
           <TableHead>
             <TableRow>
-              <TableCell>Event Name</TableCell>
-              <TableCell>Quantity</TableCell>
-              <TableCell>User Name</TableCell>
-              <TableCell>Ticket Type</TableCell>
-              <TableCell>Payment Status</TableCell>
+              <TableCell><strong>Event Name</strong></TableCell>
+              <TableCell><strong>Quantity</strong></TableCell>
+              <TableCell><strong>User Name</strong></TableCell>
+              <TableCell><strong>Ticket Type</strong></TableCell>
+              <TableCell><strong>Payment Status</strong></TableCell>
             </TableRow>
           </TableHead>
+
           <TableBody>
+            {/* Slice data array to show only the rows for the current page */}
             {data
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((booking) => (
                 <TableRow
-                  key={booking._id} // assuming you have _id or unique ID
+                  key={booking._id}  // Use unique identifier for React key
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
                   <TableCell component="th" scope="row">
@@ -72,14 +83,16 @@ export default function BookedEvents() {
               ))}
           </TableBody>
         </Table>
+
+        {/* Pagination controls */}
         <TablePagination
           component="div"
-          count={data.length}
-          page={page}
-          onPageChange={handleChangePage}
-          rowsPerPage={rowsPerPage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
-          rowsPerPageOptions={[5, 10, 25]}
+          count={data.length}                  // Total number of rows
+          page={page}                          // Current page
+          onPageChange={handleChangePage}      // Page change handler
+          rowsPerPage={rowsPerPage}            // Rows per page
+          onRowsPerPageChange={handleChangeRowsPerPage}  // Rows‑per‑page handler
+          rowsPerPageOptions={[5, 10, 25]}     // Options for rows per page
         />
       </TableContainer>
     </AdminLayout>
