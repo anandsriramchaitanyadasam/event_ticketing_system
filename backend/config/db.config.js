@@ -1,5 +1,4 @@
 module.exports = {
-    
-    url:"mongodb://127.0.0.1:27017/OnlineTicketingSystem"
-
-}
+    url: "mongodb+srv://eventuser:TicketingPass123!@eventticketing.z42o4zj.mongodb.net/OnlineTicketingSystem?retryWrites=true&w=majority&appName=eventticketing"
+  }
+  
