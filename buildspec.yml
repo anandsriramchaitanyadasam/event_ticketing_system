@@ -8,7 +8,7 @@ phases:
       - echo Installing dependencies...
       - cd backend
       - npm install
-
+      - cd ..
   build:
     commands:
       - echo Preparing backend for Elastic Beanstalk deployment...
@@ -17,4 +17,4 @@ phases:
 artifacts:
   files:
     - '**/*'
-  base-directory: backend
+  base-directory: .
