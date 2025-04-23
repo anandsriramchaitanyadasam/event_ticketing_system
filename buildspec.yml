@@ -9,18 +9,6 @@ phases:
       - cd backend
       - npm install
 
-  build:
-    commands:
-      - echo Preparing backend for Elastic Beanstalk deployment...
-      - cp -r backend/* .
-
-  post_build:
-    commands:
-      - echo "✅ Listing final build output structure:"
-      - ls -la
-      - echo "✅ Showing full structure recursively:"
-      - find . -type f
-
 artifacts:
   files:
     - '**/*'
