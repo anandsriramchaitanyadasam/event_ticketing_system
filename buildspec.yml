@@ -10,9 +10,10 @@ phases:
       - npm install
   build:
     commands:
-      - echo Copying backend files to root for Elastic Beanstalk deployment...
-      - cp -r backend/* .
+      - echo Copying files to build root for Elastic Beanstalk...
+      - cp -r * ../
 
 artifacts:
   files:
     - '**/*'
+  base-directory: .
