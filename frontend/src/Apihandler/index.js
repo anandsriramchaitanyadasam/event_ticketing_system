@@ -3,7 +3,8 @@
 import axios from "axios";
 
 // ✅ Base URL for your backend API
-export const serverUrl = "http://localhost:80/api";
+export const serverUrl = "http://event-ticketing-backend-env.eba-ps2zgbhw.us-east-1.elasticbeanstalk.com/api";
+
 
 // ✅ Helper function to format dates into readable format
 export const formatDate = (dateString) => {

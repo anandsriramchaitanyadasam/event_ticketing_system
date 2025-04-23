@@ -58,6 +58,9 @@ app.get('/admin-panel', (req, res) => {
 });
 
 // ✅ Start the server
-app.listen(80, () => {
-    console.log("Server Started on port 80");
+// ✅ Use Elastic Beanstalk-provided port or fallback to 8080
+const port = process.env.PORT || 8080;
+
+app.listen(port, () => {
+    console.log(`Server started on port ${port}`);
 });

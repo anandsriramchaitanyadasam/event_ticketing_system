@@ -2,7 +2,8 @@
 import axios from "axios";
 
 // Base URL for the server, used as a prefix for all API requests
-export const serverUrl = "http://localhost:80/api";
+export const serverUrl = "http://event-ticketing-backend-env.eba-ps2zgbhw.us-east-1.elasticbeanstalk.com/api";
+
 
 // Function to format a date string into a human-readable date format
 export const formatDate = (dateString) => {
