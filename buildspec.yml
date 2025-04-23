@@ -8,12 +8,13 @@ phases:
       - echo Installing dependencies...
       - cd backend
       - npm install
+
   build:
     commands:
-      - echo Copying files to build root for Elastic Beanstalk...
-      - cp -r * ../
+      - echo Preparing backend for Elastic Beanstalk deployment...
+      - cp -r backend/* .
 
 artifacts:
   files:
     - '**/*'
-  base-directory: .
+  base-directory: backend
