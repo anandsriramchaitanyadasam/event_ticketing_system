@@ -92,9 +92,8 @@ export default function VendorEvents() {
     formData.append("event_address", eventAddress);
     formData.append("category_id", selectedCategoryId);
     formData.append("category", selectedCategory);
-    photos.forEach((photo) => {
-      formData.append("photo", photo);
-    });
+    formData.append("photo", photos[0]);
+
 
     try {
       const res = await postApihandler("/addEvent", formData);
@@ -191,9 +190,8 @@ export default function VendorEvents() {
     formData.append("event_address", eventAddress);
     formData.append("category_id", selectedCategoryId);
     formData.append("category", selectedCategory);
-    photos.forEach((photo) => {
-      formData.append("photo", photo);
-    });
+    formData.append("photo", photos[0]); 
+
 
     const res = await putApihandler(`/editEventByVendor/${eventid}`, formData);
     console.log("update api res is --->", res);
@@ -322,7 +320,7 @@ export default function VendorEvents() {
             </FormControl>
 
             <div className="mt-4">
-              <input type="file" multiple onChange={handleFileChange} />
+            <input type="file" onChange={handleFileChange} />
             </div>
             <Button variant="contained" className="mt-3" onClick={addEvents}>
               Add Event
@@ -342,11 +340,12 @@ export default function VendorEvents() {
                 height="200"
                 image={
                   event.photoUrl
-                    ? `http://localhost:8080/uploads/${event.photoUrl}`
+                    ? `http://event-ticketing-backend-env.eba-ps2zgbhw.us-east-1.elasticbeanstalk.com/uploads/${event.photoUrl}`
                     : "https://via.placeholder.com/300x200?text=No+Image"
                 }
                 alt={event.event_name}
               />
+
 
                 <CardContent>
                   <Typography variant="h6">{event.event_name}</Typography>
@@ -518,7 +517,7 @@ export default function VendorEvents() {
             </FormControl>
 
             <div className="mt-4">
-              <input type="file" multiple onChange={handleFileChange} />
+              <input type="file" onChange={handleFileChange} />
             </div>
             <Button variant="contained" className="mt-3" onClick={updateEvents}>
               Update Event

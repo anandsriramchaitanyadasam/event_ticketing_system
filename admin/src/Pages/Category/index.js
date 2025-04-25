@@ -54,14 +54,31 @@ export default function Category() {
     photos.forEach((photo) => {
       formData.append("photo", photo);
     });
+  
+    // ✅ Check if category already exists
+    const alreadyExists = data.some(
+      (item) => item.category_name.toLowerCase() === categoryname.trim().toLowerCase()
+    );
+  
+    if (alreadyExists) {
+      Swal.fire({
+        title: "Category Already Exists!",
+        text: "Please enter a different category name.",
+        icon: "warning",
+      });
+      return; // stop here, don't call API
+    }
+  
     const res = await postApihandler("/admin/categories", formData);
-    console.log("add ctegory res -->", res);
+    console.log("add category res -->", res);
+  
     if (res.message === "Category added successfully") {
-      Swal.fire({ title: "Add category Successfully", icon: "success" });
+      Swal.fire({ title: "Category Added Successfully", icon: "success" });
       getCategory();
       setOpen(false);
     }
   };
+  
 
   //   ***** get category api *********
   useEffect(() => {
@@ -172,12 +189,17 @@ export default function Category() {
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
                 <TableCell component="th" scope="row">
-                  <img
-                    src={`http://localhost:8080/uploads/${category.photoUrl}`} // ✅ FIXED
-                    alt={category.category_name}
-                    width="50"
-                    height="30"
-                  />
+                <img
+                  src={
+                    category.photoUrl
+                      ? `http://event-ticketing-backend-env.eba-ps2zgbhw.us-east-1.elasticbeanstalk.com/uploads/${category.photoUrl}`
+                      : "https://via.placeholder.com/300x200?text=No+Image"
+                  }
+                  alt={category.category_name}
+                  width="50"
+                  height="30"
+                />
+
                 </TableCell>
 
                 <TableCell component="th" scope="row">

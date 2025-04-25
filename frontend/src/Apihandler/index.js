@@ -45,13 +45,21 @@ export const postLoginApihandler = async (endPoint, value) => {
 // ✅ Generic POST request handler (e.g., adding events, categories, etc.)
 export const postApihandler = async (endPoint, value) => {
   try {
-    const postRes = await axios.post(serverUrl + endPoint, value);
-    console.log("apipost=>", postRes); // 🔍 Debug log
+    const isFormData = value instanceof FormData;  // 🔥 Check if uploading a file
+
+    const postRes = await axios.post(serverUrl + endPoint, value, {
+      headers: {
+        'Content-Type': isFormData ? 'multipart/form-data' : 'application/json',
+      },
+    });
+
+    console.log("apipost=>", postRes); 
     return postRes.data;
   } catch (error) {
     return { error };
   }
 };
+
 
 // ✅ DELETE request handler
 export const deleteApihandler = async (endPoint) => {
