@@ -22,12 +22,17 @@ let corsOptions = {
 };
 app.use(cors(corsOptions));
 
+
+
 // ✅ Create uploads directory if it doesn't exist
 const uploadsDir = path.join(__dirname, 'uploads');
 if (!fs.existsSync(uploadsDir)) {
     fs.mkdirSync(uploadsDir);
 }
-app.use('/uploads', express.static('uploads'));
+
+// ✅ Serve uploads statically with absolute path
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
 
 // ✅ Connect to MongoDB
 db.mongoose.connect(db.url, {}).then(() => {

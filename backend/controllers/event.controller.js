@@ -51,58 +51,34 @@ exports.addEvent = async (req, res) => {
         });
     }
 };
-
-// Edit Event by Vendor
+// edit event vendor
 exports.editEventByVendor = async (req, res) => {
     try {
         const eventId = req.params.eventId;
-        const vendorId = req.body.vendor_Id; // Vendor ID from request body
-        const { event_name, country, state, city, standard_price, vip_price, event_date, event_address, event_start_time, event_end_time, category_id } = req.body;
+        const vendorId = req.body.vendor_Id;
 
-
-
-        //  Ensure required fields are provided
-            if (!event_name || !country || !state || !city || !standard_price || !vip_price || !event_date || !event_address || !event_start_time || !event_end_time || !category_id) {
-            return res.status(400).json({ message: "All fields are required", status: 400 });
-        }
-
-        //  Check if event exists and belongs to the vendor
         const existingEvent = await Event.findOne({ _id: eventId, vendor_Id: vendorId });
         if (!existingEvent) {
             return res.status(404).json({ message: "Event not found or unauthorized", status: 404 });
         }
 
-        // Validate Category
-        const category = await Category.findById(category_id);
-        if (!category) {
-            return res.status(400).json({ message: "Invalid category ID", status: 400 });
-        }
+        const updateFields = { ...req.body };
 
-        //  Update event data
-        const updatedData = {
-            event_name,
-            country,
-            state,
-            city,
-            standard_price,  
-            vip_price, 
-            event_date,
-            event_address,
-            event_start_time,
-            event_end_time,     
-            category_id,
-            category_name: category.category_name, // Store category name
-        };
-
-        // Handle optional photo update
         if (req.file) {
-            updatedData.photoUrl = req.file.filename; //  Save new file name
+            updateFields.photoUrl = req.file.filename;
         }
 
-        //  Update the event in DB
+        if (updateFields.category_id) {
+            const category = await Category.findById(updateFields.category_id);
+            if (!category) {
+                return res.status(400).json({ message: "Invalid category ID", status: 400 });
+            }
+            updateFields.category_name = category.category_name;
+        }
+
         const updatedEvent = await Event.findOneAndUpdate(
-            { _id: eventId, vendor_Id: vendorId }, // Ensure vendor owns the event
-            { $set: updatedData },
+            { _id: eventId, vendor_Id: vendorId },
+            { $set: updateFields },
             { new: true }
         );
 
@@ -116,7 +92,6 @@ exports.editEventByVendor = async (req, res) => {
         return res.status(500).json({ message: error.message || "Error updating event", status: 500 });
     }
 };
-
 // Delete Event by Vendor
 exports.deleteEvent = async (req, res) => {
     try {

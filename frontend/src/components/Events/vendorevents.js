@@ -337,12 +337,17 @@ export default function VendorEvents() {
           {events.map((event, index) => (
             <Grid item key={event._id} xs={12} sm={6} md={4} lg={3}>
               <Card>
-                <CardMedia
-                  component="img"
-                  height="200"
-                  image={`http://localhost:80/uploads/${event.photoUrl}`}
-                  alt={event.event_name}
-                />
+              <CardMedia
+                component="img"
+                height="200"
+                image={
+                  event.photoUrl
+                    ? `http://localhost:8080/uploads/${event.photoUrl}`
+                    : "https://via.placeholder.com/300x200?text=No+Image"
+                }
+                alt={event.event_name}
+              />
+
                 <CardContent>
                   <Typography variant="h6">{event.event_name}</Typography>
                   <Typography variant="body2" color="textSecondary">

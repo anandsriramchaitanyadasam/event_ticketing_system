@@ -79,9 +79,14 @@ const UserEvents = () => {
                   <CardMedia
                     component="img"
                     height="200"
-                    image={`http://localhost:80/uploads/${event.photoUrl}`}
-                    alt={event.event_name} // accessible alt tag
+                    image={
+                      event.photoUrl
+                        ? `http://localhost:8080/uploads/${event.photoUrl}`
+                        : "https://via.placeholder.com/300x200?text=No+Image"
+                    }
+                    alt={event.event_name}
                   />
+
                   <CardContent>
                     {/* ✅ Event title */}
                     <Typography variant="h6">{event.event_name}</Typography>

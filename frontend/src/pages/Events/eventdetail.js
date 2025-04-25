@@ -75,11 +75,12 @@ export default function EventDetail() {
       <section>
         <div className="container">
           <div>
-            <img
-              src={`http://localhost:80/uploads/${events.photoUrl}`}
+          <img
+              src={`http://localhost:8080/uploads/${events.photoUrl}`}
               alt={events.event_name}
               style={{ width: "100%", height: "60vh", objectFit: "cover" }}
             />
+
             <div style={{ textAlign: "left" }}>
               <Typography variant="h4">{events.event_name}</Typography>
               <Typography variant="h5" color="textSecondary">

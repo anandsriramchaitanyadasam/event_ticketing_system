@@ -172,14 +172,14 @@ export default function Category() {
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
                 <TableCell component="th" scope="row">
-                  {
-                    <img
-                      style={{ width: "10%" }}
-                      src={`http://localhost:80/uploads/${category.photoUrl}`}
-                      alt={category.category_name || "Category Image"}
-                    />
-                  }
+                  <img
+                    src={`http://localhost:8080/uploads/${category.photoUrl}`} // ✅ FIXED
+                    alt={category.category_name}
+                    width="50"
+                    height="30"
+                  />
                 </TableCell>
+
                 <TableCell component="th" scope="row">
                   {category.category_name}
                 </TableCell>
